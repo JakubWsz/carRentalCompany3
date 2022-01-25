@@ -1,11 +1,13 @@
-package com.kuba.carrentalcompany3.entity;
+package com.kuba.carrentalcompany3.infrastructure.database.jpa;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@MappedSuperclass
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,6 +19,10 @@ public class BaseEntity {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public LocalDateTime getModificationDate() {

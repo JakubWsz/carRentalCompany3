@@ -1,14 +1,40 @@
-package com.kuba.carrentalcompany3.entity;
+package com.kuba.carrentalcompany3.infrastructure.database.jpa.client.entity;
 
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.BaseEntity;
+
+import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Client extends BaseEntity{
+@Entity
+public class ClientDao extends BaseEntity {
+    private String domainId;
     private String firstname;
     private String lastname;
     private String email;
     private String password;
     private LocalDate birthdate;
+
+    public ClientDao() {
+    }
+
+    public ClientDao(String domainId, String firstname, String lastname, String email, String password,
+                     LocalDate birthdate) {
+        this.domainId = domainId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.birthdate = birthdate;
+    }
+
+    public String getDomainId() {
+        return domainId;
+    }
+
+    public void setDomainId(String domainId) {
+        this.domainId = domainId;
+    }
 
     public String getFirstname() {
         return firstname;
@@ -55,7 +81,7 @@ public class Client extends BaseEntity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Client client = (Client) o;
+        ClientDao client = (ClientDao) o;
         return Objects.equals(firstname, client.firstname) && Objects.equals(lastname, client.lastname) && Objects.equals(email, client.email) && Objects.equals(password, client.password) && Objects.equals(birthdate, client.birthdate);
     }
 
