@@ -7,11 +7,11 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClientRepositoryJPAImpl implements ClientRepository {
+public class ClientRepositoryAdapterJPA implements ClientRepository {
     private final ClientRepositoryJPA clientRepositoryJPA;
     private final ConversionService conversionService;
 
-    public ClientRepositoryJPAImpl(ClientRepositoryJPA clientRepositoryJPA, ConversionService conversionService) {
+    public ClientRepositoryAdapterJPA(ClientRepositoryJPA clientRepositoryJPA, ConversionService conversionService) {
         this.clientRepositoryJPA = clientRepositoryJPA;
         this.conversionService = conversionService;
     }
