@@ -1,6 +1,7 @@
 package com.kuba.carrentalcompany3.domain.client;
 
 import com.kuba.carrentalcompany3.domain.client.model.Client;
+import com.kuba.carrentalcompany3.infrastructure.validator.ClientValidator;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -13,13 +14,14 @@ public class ClientService {
     }
 
     public Client createAccount(String firstname, String lastname, String email, String password, LocalDate birthdate) {
-        //todo create validate method
-        return clientRepository.save(new Client(
+        Client client = new Client(
                 UUID.randomUUID().toString(),
                 firstname,
                 lastname,
                 email,
                 password,
-                birthdate));
+                birthdate);
+        ClientValidator.validateClient(client);
+        return clientRepository.save(client);
     }
 }

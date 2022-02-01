@@ -15,8 +15,9 @@ public class ApplicationConfig {
         return new ClientService(clientRepository);
     }
 
-//    public ClientRepository clientRepositoryJPAImpl(ClientRepositoryJPA clientRepositoryJPA,
-//                                                    ConversionService conversionService) {
-//        return new ClientRepositoryAdapterJPA(clientRepositoryJPA, conversionService);
-//    }
+    @Bean
+    public ClientRepository clientRepositoryAdapterJPA(ClientRepositoryJPA clientRepositoryJPA,
+                                                    ConversionService conversionService) {
+        return new ClientRepositoryAdapterJPA(clientRepositoryJPA, conversionService);
+    }
 }
