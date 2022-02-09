@@ -19,6 +19,7 @@ public class Client {
         this.birthdate = birthdate;
     }
 
+
     public String getId() {
         return id;
     }
@@ -41,5 +42,17 @@ public class Client {
 
     public LocalDate getBirthdate() {
         return birthdate;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id='" + id + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", birthdate=" + birthdate +
+                '}';
     }
 }
