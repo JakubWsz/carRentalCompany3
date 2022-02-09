@@ -20,4 +20,9 @@ public class ClientRepositoryAdapterJPA implements ClientRepository {
         ClientDao clientDao = clientRepositoryJPA.save(conversionService.convert(client, ClientDao.class));
         return conversionService.convert(clientDao, Client.class);
     }
+
+    @Override
+    public boolean isEmailExists(String email) {
+       return clientRepositoryJPA.existsByEmail(email);
+    }
 }

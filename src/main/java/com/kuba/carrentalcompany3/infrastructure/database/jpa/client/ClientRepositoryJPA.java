@@ -4,4 +4,5 @@ import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.entity.Clie
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClientRepositoryJPA extends JpaRepository<ClientDao, Long> {
+    boolean existsByEmail(String email);
 }

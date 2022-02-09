@@ -14,6 +14,7 @@ public class ClientService {
     }
 
     public Client createAccount(String firstname, String lastname, String email, String password, LocalDate birthdate) {
+       validateEmailDuplication(email);
         Client client = new Client(
                 UUID.randomUUID().toString(),
                 firstname,
@@ -23,5 +24,10 @@ public class ClientService {
                 birthdate);
         ClientValidator.validateClient(client);
         return clientRepository.save(client);
+    }
+
+    private void validateEmailDuplication(String email){
+       if (clientRepository.isEmailExists(email))
+           throw new RuntimeException(String.format("Provided email '%s' already exists", email));
     }
 }

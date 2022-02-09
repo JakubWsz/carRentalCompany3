@@ -2,6 +2,7 @@ package com.kuba.carrentalcompany3.domain.client;
 
 import com.kuba.carrentalcompany3.domain.client.model.Client;
 import com.kuba.config.junit.repository.ClientRepositoryMock;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -18,6 +19,11 @@ class ClientServiceTest {
 
     private static final ClientRepositoryMock repo = new ClientRepositoryMock();
     private static final ClientService clientService = new ClientService(repo);
+
+    @BeforeEach
+    void setUp() {
+        repo.clean();
+    }
 
     @Test
     void shouldSetPassedPersonalData() {
