@@ -1,7 +1,7 @@
 package com.kuba.carrentalcompany3.domain.client;
 
 import com.kuba.carrentalcompany3.domain.client.model.Client;
-import com.kuba.carrentalcompany3.infrastructure.validator.ClientValidator;
+import com.kuba.carrentalcompany3.domain.validator.ClientValidator;
 
 import java.time.LocalDate;
 import java.util.UUID;

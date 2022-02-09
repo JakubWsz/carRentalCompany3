@@ -4,7 +4,6 @@ import com.kuba.carrentalcompany3.api.dto.request.CreateAccountRequest;
 import com.kuba.carrentalcompany3.api.dto.response.ClientView;
 import com.kuba.carrentalcompany3.domain.client.ClientService;
 import com.kuba.carrentalcompany3.domain.client.model.Client;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +29,7 @@ public class ClientController {
                 createAccountRequest.getBirthdate());
         return conversionService.convert(client, ClientView.class);
     }
+
 //
 //    @PostMapping("login")
 //    public void login(@RequestParam String email, @RequestParam String password) {

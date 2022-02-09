@@ -1,4 +1,4 @@
-package com.kuba.carrentalcompany3.infrastructure.validator;
+package com.kuba.carrentalcompany3.domain.validator;
 
 import com.kuba.carrentalcompany3.domain.client.model.Client;
 
@@ -8,8 +8,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClientValidator {
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-" +
+                    "\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c" +
+                    "\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*" +
+                    "[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]" +
+                    "|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a" +
+                    "\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)" +
+                    "\\])", Pattern.CASE_INSENSITIVE);
 
     public static void validateClient(Client client) {
         if ((client.getFirstname() == null)) {
@@ -34,13 +40,13 @@ public class ClientValidator {
             throw new RuntimeException("Client password is too long");
         } else if (client.getPassword().length() < 8) {
             throw new RuntimeException("Client password is too short");
-        } else if (!findAtLeastOneCapitalCharacter(client.getPassword())) {
+        } else if (!isAtLeastOneCapitalCharacter(client.getPassword())) {
             throw new RuntimeException("Client password don't include any capital letter");
-        } else if (!findAtLeastOneSmallCharacterCharacter(client.getPassword())) {
+        } else if (!isAtLeastOneSmallCharacterCharacter(client.getPassword())) {
             throw new RuntimeException("Client password don't include any small letter");
-        } else if (!findAtLeastOneNumberSign(client.getPassword())) {
+        } else if (!isAtLeastOneNumberSign(client.getPassword())) {
             throw new RuntimeException("Client password don't include any numbers");
-        } else if (!findAtLeastOneSpecialSign(client.getPassword())) {
+        } else if (!isAtLeastOneSpecialSign(client.getPassword())) {
             throw new RuntimeException("Client password don't include any special signs");
         }
     }
@@ -50,7 +56,7 @@ public class ClientValidator {
         return matcher.find();
     }
 
-    private static boolean findAtLeastOneCapitalCharacter(String passwordStr) {
+    private static boolean isAtLeastOneCapitalCharacter(String passwordStr) {
         char[] passwordCharArray = passwordStr.toCharArray();
         boolean include = false;
         for (int i = 0; i <= passwordStr.length() - 1; i++) {
@@ -62,7 +68,7 @@ public class ClientValidator {
         return include;
     }
 
-    private static boolean findAtLeastOneSmallCharacterCharacter(String passwordStr) {
+    private static boolean isAtLeastOneSmallCharacterCharacter(String passwordStr) {
         char[] passwordCharArray = passwordStr.toCharArray();
         boolean include = false;
         for (int i = 0; i <= passwordStr.length() - 1; i++) {
@@ -74,7 +80,7 @@ public class ClientValidator {
         return include;
     }
 
-    private static boolean findAtLeastOneNumberSign(String passwordStr) {
+    private static boolean isAtLeastOneNumberSign(String passwordStr) {
         char[] passwordCharArray = passwordStr.toCharArray();
         boolean include = false;
         for (int i = 0; i <= passwordStr.length() - 1; i++) {
@@ -86,7 +92,7 @@ public class ClientValidator {
         return include;
     }
 
-    private static boolean findAtLeastOneSpecialSign(String passwordStr) {
+    private static boolean isAtLeastOneSpecialSign(String passwordStr) {
         char[] passwordCharArray = passwordStr.toCharArray();
         boolean include = false;
         for (int i = 0; i <= passwordStr.length() - 1; i++) {
@@ -101,9 +107,9 @@ public class ClientValidator {
         return include;
     }
 
-    private static boolean isAdult (LocalDate birthdate) {
+    private static boolean isAdult(LocalDate birthdate) {
         Period period;
         period = Period.between(birthdate, LocalDate.now());
-        return period.getYears() > Period.of(18,0,0).getYears();
+        return period.getYears() > Period.of(18, 0, 0).getYears();
     }
 }
