@@ -1,10 +1,13 @@
 package com.kuba.carrentalcompany3.domain.client;
 
 import com.kuba.carrentalcompany3.domain.client.model.Client;
+import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.domain.validator.ClientValidator;
 
 import java.time.LocalDate;
 import java.util.UUID;
+
+import static com.kuba.carrentalcompany3.domain.exception.ExceptionCode.EMAIL_ALREADY_EXISTS;
 
 public class ClientService {
     private final ClientRepository clientRepository;
@@ -14,7 +17,7 @@ public class ClientService {
     }
 
     public Client createAccount(String firstname, String lastname, String email, String password, LocalDate birthdate) {
-       validateEmailDuplication(email);
+        validateEmailDuplication(email);
         Client client = new Client(
                 UUID.randomUUID().toString(),
                 firstname,
@@ -23,11 +26,12 @@ public class ClientService {
                 password,
                 birthdate);
         ClientValidator.validateClient(client);
+        // ClientValidator.validateIsEmailNotNull(client.getEmail());
         return clientRepository.save(client);
     }
 
-    private void validateEmailDuplication(String email){
-       if (clientRepository.isEmailExists(email))
-           throw new RuntimeException(String.format("Provided email '%s' already exists", email));
+    private void validateEmailDuplication(String email) {
+        if (clientRepository.isEmailExists(email))
+            throw new DomainException(EMAIL_ALREADY_EXISTS, email);
     }
 }

@@ -1,9 +1,11 @@
 package com.kuba.carrentalcompany3.domain.validator;
 
 import com.kuba.carrentalcompany3.domain.client.model.Client;
+import com.kuba.carrentalcompany3.domain.exception.DomainException;
+import com.kuba.carrentalcompany3.domain.exception.ExceptionCode;
+import com.kuba.carrentalcompany3.lib.Assertion;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,100 +18,83 @@ public class ClientValidator {
                     "|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a" +
                     "\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)" +
                     "\\])", Pattern.CASE_INSENSITIVE);
+    public static final String NAME = "name";
+    public static final String MESSAGE = "message";
+    public static final int MAX_SIZE = 30;
+    public static final int MIN_SIZE = 8;
 
     public static void validateClient(Client client) {
-        if ((client.getFirstname() == null)) {
-            throw new RuntimeException("Client firstname is null");
-        } else if (client.getFirstname().length() > 30) {
-            throw new RuntimeException("Client firstname is loner then 30 signs");
-        } else if (client.getLastname() == null) {
-            throw new RuntimeException("Client lastname is null");
-        } else if (client.getLastname().length() > 30) {
-            throw new RuntimeException("Client lastname is loner then 30 signs");
-        } else if (client.getBirthdate() == null) {
-            throw new RuntimeException("Client birthdate is null");
-        } else if (!isAdult(client.getBirthdate())) {
-            throw new RuntimeException("Client is underage");
-        } else if (client.getEmail() == null) {
-            throw new RuntimeException("Client email is null");
-        } else if (client.getPassword() == null) {
-            throw new RuntimeException("Client password is null");
-        } else if (!validateEmail(client.getEmail())) {
-            throw new RuntimeException("Client email is invalid");
-        } else if (client.getPassword().length() > 30) {
-            throw new RuntimeException("Client password is too long");
-        } else if (client.getPassword().length() < 8) {
-            throw new RuntimeException("Client password is too short");
-        } else if (!isAtLeastOneCapitalCharacter(client.getPassword())) {
-            throw new RuntimeException("Client password don't include any capital letter");
-        } else if (!isAtLeastOneSmallCharacterCharacter(client.getPassword())) {
-            throw new RuntimeException("Client password don't include any small letter");
-        } else if (!isAtLeastOneNumberSign(client.getPassword())) {
-            throw new RuntimeException("Client password don't include any numbers");
-        } else if (!isAtLeastOneSpecialSign(client.getPassword())) {
-            throw new RuntimeException("Client password don't include any special signs");
-        }
+        validateIsFirstnameNotNull(client.getFirstname());
+        validateFirstnameSize(client.getFirstname());
+        validateIsLastnameNotNull(client.getLastname());
+        validateLastnameSize(client.getLastname());
+        validateIsBirthdateNotNull(client.getBirthdate());
+        validateClientMajority(client.getBirthdate());
+        validateIsEmailValid(client.getEmail());
+        validatePassword(client.getPassword());
     }
 
-    private static boolean validateEmail(String emailStr) {
+    private static void validateIsFirstnameNotNull(String firstname) {
+        Assertion.notNull(firstname, () -> new DomainException(ExceptionCode.FIRSTNAME_CANT_BE_NULL));
+    }
+
+    private static void validateFirstnameSize(String firstname) {
+        Assertion.isBiggerEqualsThan(MAX_SIZE, firstname,
+                () -> new DomainException(ExceptionCode.FIRSTNAME_IS_TOO_LONG, NAME));
+    }
+
+    private static void validateIsLastnameNotNull(String lastname) {
+        Assertion.notNull(lastname, () -> new DomainException(ExceptionCode.LASTNAME_CANT_BE_NULL));
+    }
+
+    private static void validateLastnameSize(String firstname) {
+        Assertion.isBiggerEqualsThan(MAX_SIZE, firstname,
+                () -> new DomainException(ExceptionCode.LASTNAME_IS_TOO_LONG, NAME));
+    }
+
+    private static void validateIsBirthdateNotNull(LocalDate birthdate) {
+        Assertion.notNull(birthdate, () -> new DomainException(ExceptionCode.FIRSTNAME_CANT_BE_NULL));
+    }
+
+    private static void validateClientMajority(LocalDate birthdate) {
+        Assertion.isTrue(ValidatorAlgorithms.isAdult(birthdate),
+                () -> new DomainException(ExceptionCode.CLIENT_IS_UNDERAGE, MESSAGE));
+    }
+
+    private static void validateIsPasswordNotNull(String password) {
+        Assertion.notNull(password, () -> new DomainException(ExceptionCode.PASSWORD_CANT_BE_NULL));
+    }
+
+    private static void validatePasswordSize(String password) {
+        Assertion.isBiggerEqualsThan(MAX_SIZE, password, () -> new DomainException(ExceptionCode.PASSWORD_IS_TOO_LONG));
+        Assertion.isSmallerEqualsThan(MIN_SIZE, password, () -> new DomainException(ExceptionCode.PASSWORD_IS_TOO_SHORT));
+    }
+
+    private static void validatePassword(String password) {
+        validateIsPasswordNotNull(password);
+        validatePasswordSize(password);
+        Assertion.isTrue(ValidatorAlgorithms.isAtLeastOneCapitalCharacter(password),
+                () -> new DomainException(ExceptionCode.PASSWORD_DONT_INCLUDE_CAPITALS));
+        Assertion.isTrue(ValidatorAlgorithms.isAtLeastOneSmallCharacterCharacter(password),
+                () -> new DomainException(ExceptionCode.PASSWORD_DONT_INCLUDE_SMALL_LETTERS));
+        Assertion.isTrue(ValidatorAlgorithms.isAtLeastOneNumberSign(password),
+                () -> new DomainException(ExceptionCode.PASSWORD_DONT_INCLUDE_NUMBERS));
+        Assertion.isTrue(ValidatorAlgorithms.isAtLeastOneSpecialSign(password),
+                () -> new DomainException(ExceptionCode.PASSWORD_DONT_INCLUDE_SPECIALS));
+    }
+
+    private static void validateIsEmailValid(String email) {
+        validateIsEmailNotNull(email);
+        Assertion.isTrue(matchEmailRegex(email),
+                () -> new DomainException(ExceptionCode.EMAIL_IS_INVALID, MESSAGE));
+    }
+
+    private static void validateIsEmailNotNull(String email) {
+        Assertion.notNull(email, () -> new DomainException(ExceptionCode.EMAIL_CANT_BE_NULL));
+    }
+
+    private static boolean matchEmailRegex(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
-    }
-
-    private static boolean isAtLeastOneCapitalCharacter(String passwordStr) {
-        char[] passwordCharArray = passwordStr.toCharArray();
-        boolean include = false;
-        for (int i = 0; i <= passwordStr.length() - 1; i++) {
-            if (passwordCharArray[i] >= 65 && passwordCharArray[i] <= 90) {
-                include = true;
-                break;
-            }
-        }
-        return include;
-    }
-
-    private static boolean isAtLeastOneSmallCharacterCharacter(String passwordStr) {
-        char[] passwordCharArray = passwordStr.toCharArray();
-        boolean include = false;
-        for (int i = 0; i <= passwordStr.length() - 1; i++) {
-            if (passwordCharArray[i] >= 97 && passwordCharArray[i] <= 122) {
-                include = true;
-                break;
-            }
-        }
-        return include;
-    }
-
-    private static boolean isAtLeastOneNumberSign(String passwordStr) {
-        char[] passwordCharArray = passwordStr.toCharArray();
-        boolean include = false;
-        for (int i = 0; i <= passwordStr.length() - 1; i++) {
-            if (passwordCharArray[i] >= 48 && passwordCharArray[i] <= 57) {
-                include = true;
-                break;
-            }
-        }
-        return include;
-    }
-
-    private static boolean isAtLeastOneSpecialSign(String passwordStr) {
-        char[] passwordCharArray = passwordStr.toCharArray();
-        boolean include = false;
-        for (int i = 0; i <= passwordStr.length() - 1; i++) {
-            if ((passwordCharArray[i] >= 33 && passwordCharArray[i] <= 47)
-                    || (passwordCharArray[i] >= 58 && passwordCharArray[i] <= 64)
-                    || (passwordCharArray[i] >= 91 && passwordCharArray[i] <= 96)
-                    || (passwordCharArray[i] >= 123 && passwordCharArray[i] <= 126)) {
-                include = true;
-                break;
-            }
-        }
-        return include;
-    }
-
-    private static boolean isAdult(LocalDate birthdate) {
-        Period period;
-        period = Period.between(birthdate, LocalDate.now());
-        return period.getYears() > Period.of(18, 0, 0).getYears();
     }
 }

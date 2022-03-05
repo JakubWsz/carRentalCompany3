@@ -1,12 +1,9 @@
 package com.kuba.carrentalcompany3.api.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kuba.carrentalcompany3.api.dto.request.CreateAccountRequest;
 import com.kuba.carrentalcompany3.api.dto.response.ClientView;
-import com.kuba.carrentalcompany3.domain.client.ClientRepository;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.ClientRepositoryJPA;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +18,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -92,7 +88,7 @@ class ClientControllerTest {
                 "short1!", CLIENT_BIRTHDATE);
 
         createAccountRequest(request)
-                .andExpect(status().isForbidden())
+                .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
@@ -102,7 +98,7 @@ class ClientControllerTest {
                 "tooooooooooLoooooooooongPasssssssword1!", CLIENT_BIRTHDATE);
 
         createAccountRequest(request)
-                .andExpect(status().isForbidden())
+                .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
@@ -112,7 +108,7 @@ class ClientControllerTest {
                 "smallpasword1!", CLIENT_BIRTHDATE);
 
         createAccountRequest(request)
-                .andExpect(status().isForbidden())
+                .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
@@ -122,7 +118,7 @@ class ClientControllerTest {
                 "BIGPASSWORD1!", CLIENT_BIRTHDATE);
 
         createAccountRequest(request)
-                .andExpect(status().isForbidden())
+                .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
@@ -132,7 +128,7 @@ class ClientControllerTest {
                 "Password!", CLIENT_BIRTHDATE);
 
         createAccountRequest(request)
-                .andExpect(status().isForbidden())
+                .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
@@ -142,7 +138,7 @@ class ClientControllerTest {
                 "Password1", CLIENT_BIRTHDATE);
 
         createAccountRequest(request)
-                .andExpect(status().isForbidden())
+                .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
