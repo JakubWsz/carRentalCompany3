@@ -5,6 +5,8 @@ import com.kuba.carrentalcompany3.api.dto.response.ClientView;
 import com.kuba.carrentalcompany3.domain.client.ClientService;
 import com.kuba.carrentalcompany3.domain.client.model.Client;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,24 +22,13 @@ public class ClientController {
     }
 
     @PostMapping("create-account")
-    public ClientView createAccount(@RequestBody CreateAccountRequest createAccountRequest) {
+    public ResponseEntity<ClientView> createAccount(@RequestBody CreateAccountRequest createAccountRequest) {
         Client client = clientService.createAccount(
                 createAccountRequest.getFirstname(),
                 createAccountRequest.getLastname(),
                 createAccountRequest.getEmail(),
                 createAccountRequest.getPassword(),
                 createAccountRequest.getBirthdate());
-        return conversionService.convert(client, ClientView.class);
+        return new ResponseEntity<>(conversionService.convert(client, ClientView.class), HttpStatus.CREATED);
     }
-
-//
-//    @PostMapping("login")
-//    public void login(@RequestParam String email, @RequestParam String password) {
-//        return clientService.login(email, password);
-//    }
-//
-//    @PostMapping("logout")
-//    public void logout(@RequestParam long id) {
-//        return clientService.logout(id);
-//    }
 }

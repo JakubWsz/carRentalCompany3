@@ -9,6 +9,17 @@ public class CreateAccountRequest {
     private String password;
     private LocalDate birthdate;
 
+    public CreateAccountRequest(String firstname, String lastname, String email, String password, LocalDate birthdate) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.birthdate = birthdate;
+    }
+
+    public CreateAccountRequest() {
+    }
+
     public String getFirstname() {
         return firstname;
     }

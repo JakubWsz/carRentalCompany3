@@ -36,4 +36,15 @@ public class ClientView {
     public LocalDate getBirthdate() {
         return birthdate;
     }
+
+    @Override
+    public String toString() {
+        return "ClientView{" +
+                "id='" + id + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", birthdate=" + birthdate +
+                '}';
+    }
 }

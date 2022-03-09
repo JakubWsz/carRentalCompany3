@@ -12,17 +12,30 @@ public class ClientRepositoryMock implements ClientRepository {
 
     @Override
     public Client save(Client client) {
-         clients.add(client);
-         return client;
+        clients.add(client);
+        return client;
     }
 
-    public Client getClient(){
+    @Override
+    public boolean isEmailExists(String email) {
+        return clients.stream()
+                .anyMatch(client -> client.getEmail().equals(email));
+    }
+
+    public Client getClient() {
         return clients.get(0);
     }
 
-    public Optional<Client> getClientById(String id){
-      return clients.stream()
-              .filter(client -> client.getId().equals(id))
-              .findAny();
+    public Optional<Client> getClientById(String id) {
+        return clients.stream()
+                .filter(client -> client.getId().equals(id))
+                .findAny();
+    }
+
+    public void clean() {
+        Object[] clientsArray = clients.toArray();
+        for (int i = 0; clientsArray.length - 1 >= i; i++) {
+            clients.remove(clientsArray[i]);
+        }
     }
 }
