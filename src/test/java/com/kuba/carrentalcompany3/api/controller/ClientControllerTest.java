@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -29,6 +30,7 @@ class ClientControllerTest {
     private static final String CLIENT_EMAIL = "asd@gmail.com";
     private static final String CLIENT_PASSWORD = "Password6^";
     private static final LocalDate CLIENT_BIRTHDATE = LocalDate.ofYearDay(1992, 246);
+    private static final String CREATE_ACCOUNT_ENDPOINT = "/client/create-account";
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -150,7 +152,7 @@ class ClientControllerTest {
     }
 
     private ResultActions createAccountRequest(CreateAccountRequest request) throws Exception {
-        return mvc.perform(MockMvcRequestBuilders.post("/create-account")
+        return mvc.perform(MockMvcRequestBuilders.post(CREATE_ACCOUNT_ENDPOINT)
                 .content(mapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
     }

@@ -9,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/client")
 public class ClientController {
     private final ConversionService conversionService;
     private final ClientService clientService;
@@ -21,7 +23,7 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @PostMapping("create-account")
+    @PostMapping("/create-account")
     public ResponseEntity<ClientView> createAccount(@RequestBody CreateAccountRequest createAccountRequest) {
         Client client = clientService.createAccount(
                 createAccountRequest.getFirstname(),

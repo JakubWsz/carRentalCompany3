@@ -2,8 +2,11 @@ package com.kuba.carrentalcompany3.infrastructure.config;
 
 import com.kuba.carrentalcompany3.domain.client.ClientRepository;
 import com.kuba.carrentalcompany3.domain.client.ClientService;
+import com.kuba.carrentalcompany3.domain.office.OfficeRepository;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.ClientRepositoryAdapterJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.ClientRepositoryJPA;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryAdapterJPA;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryJPA;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
@@ -24,6 +27,11 @@ public class ApplicationConfig {
     public ClientRepository clientRepositoryAdapterJPA(ClientRepositoryJPA clientRepositoryJPA,
                                                     ConversionService conversionService) {
         return new ClientRepositoryAdapterJPA(clientRepositoryJPA, conversionService);
+    }
+
+    @Bean
+    public OfficeRepositoryAdapterJPA officeRepositoryAdapterJPA(OfficeRepositoryJPA officeRepositoryJPA){
+        return new OfficeRepositoryAdapterJPA(officeRepositoryJPA);
     }
 
     @Bean
