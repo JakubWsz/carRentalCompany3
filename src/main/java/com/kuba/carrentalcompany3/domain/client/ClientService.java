@@ -26,7 +26,6 @@ public class ClientService {
                 password,
                 birthdate);
         ClientValidator.validateClient(client);
-        // ClientValidator.validateIsEmailNotNull(client.getEmail());
         return clientRepository.save(client);
     }
 

@@ -1,4 +1,4 @@
-package com.kuba.carrentalcompany3.infrastructure.database.jpa.client.converter;
+package com.kuba.carrentalcompany3.infrastructure.converter.client.jpa;
 
 import com.kuba.carrentalcompany3.domain.client.model.Client;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.entity.ClientDao;

@@ -17,9 +17,12 @@ public enum ExceptionCode {
     PASSWORD_DONT_INCLUDE_SMALL_LETTERS("C_013", "Podane hasło nie zawierda minimum jednej małej litery.",
             409),
     PASSWORD_DONT_INCLUDE_NUMBERS("C_014", "Podane hasło nie zawierda minimum jednej cyfry.", 409),
-    PASSWORD_DONT_INCLUDE_SPECIALS("C_015", "Podane hasło nie zawierda minimum jednego znaku specjlanego."
-            , 409),
-    EMAIL_ALREADY_EXISTS("C_016", "Konto o podanym e-mailu '%s' już istnieje.", 409);
+    PASSWORD_DONT_INCLUDE_SPECIALS("C_015", "Podane hasło nie zawierda minimum jednego znaku specjlanego.",
+            409),
+    EMAIL_ALREADY_EXISTS("C_016", "Konto o podanym e-mailu '%s' już istnieje.", 409),
+    OFFICE_DOESNT_EXISTS("C_17", "Biuro nie istnieje.",404),
+    OFFICE_ALREADY_DELETED("C_18","Biuro zostało już usunięte.",409);
+
 
     private final String code;
     private final String message;
