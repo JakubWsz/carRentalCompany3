@@ -11,7 +11,7 @@ public class OfficeAddressToOfficeAddressDao implements Converter<OfficeAddressD
     public OfficeAddress convert(OfficeAddressDao officeAddressDao) {
         return new OfficeAddress(
                 officeAddressDao.getOfficeStreetAddress(),
-                officeAddressDao.getOfficeCityCode(),
+                officeAddressDao.getOfficePostalCode(),
                 officeAddressDao.getOfficeCityName()
         );
     }

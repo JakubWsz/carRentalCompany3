@@ -1,9 +1,10 @@
 package com.kuba.carrentalcompany3.domain.office;
 
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
-import com.kuba.carrentalcompany3.domain.exception.ExceptionCode;
+import com.kuba.carrentalcompany3.domain.exception.ClientExceptionCode;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
+import com.kuba.carrentalcompany3.domain.office.valiator.OfficeValidator;
 
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ public class OfficeService {
                 websiteUrl,
                 officeCeo,
                 false);
+        OfficeValidator.validateOffice(office);
         return officeRepository.save(office);
     }
 
@@ -59,12 +61,12 @@ public class OfficeService {
     }
 
     private Office getOffice(String id) {
-        return officeRepository.getOffice(id).orElseThrow(() -> new DomainException(ExceptionCode.OFFICE_DOESNT_EXISTS));
+        return officeRepository.getOffice(id).orElseThrow(() -> new DomainException(ClientExceptionCode.OFFICE_DOESNT_EXISTS));
     }
 
     private void isOfficeDeletedValidator(boolean isDeleted) {
         if (isDeleted) {
-            throw new DomainException(ExceptionCode.OFFICE_ALREADY_DELETED);
+            throw new DomainException(ClientExceptionCode.OFFICE_ALREADY_DELETED);
         }
     }
 }

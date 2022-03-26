@@ -3,15 +3,12 @@ package com.kuba.carrentalcompany3.api.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kuba.carrentalcompany3.api.dto.OfficeAddressDTO;
 import com.kuba.carrentalcompany3.api.dto.request.CreateOfficeRequest;
-import com.kuba.carrentalcompany3.api.dto.response.ClientView;
 import com.kuba.carrentalcompany3.api.dto.response.OfficeView;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryAdapterJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeDao;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.convert.ConversionService;
@@ -70,7 +67,7 @@ public class OfficeControllerTest {
         assertFalse(office.getId().isBlank());
         assertEquals(OFFICE_STREET_ADDRESS, office.getOfficeAddress().getOfficeStreetAddress());
         assertEquals(OFFICE_CITY_NAME, office.getOfficeAddress().getOfficeCityName());
-        assertEquals(OFFICE_CITY_CODE, office.getOfficeAddress().getOfficeCityCode());
+        assertEquals(OFFICE_CITY_CODE, office.getOfficeAddress().getOfficePostalCode());
         assertEquals(WEBSITE_URL, office.getWebsiteURL());
         assertEquals(OFFICE_CEO, office.getOfficeCEO());
     }

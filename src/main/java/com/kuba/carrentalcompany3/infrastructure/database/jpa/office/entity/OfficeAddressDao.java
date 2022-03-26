@@ -5,7 +5,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class OfficeAddressDao {
     private String officeStreetAddress;
-    private String officeCityCode;
+    private String officePostalCode;
     private String officeCityName;
 
     public String getOfficeStreetAddress() {
@@ -16,12 +16,12 @@ public class OfficeAddressDao {
         this.officeStreetAddress = officeStreetAddress;
     }
 
-    public String getOfficeCityCode() {
-        return officeCityCode;
+    public String getOfficePostalCode() {
+        return officePostalCode;
     }
 
-    public void setOfficeCityCode(String officeCityCode) {
-        this.officeCityCode = officeCityCode;
+    public void setOfficePostalCode(String officeCityCode) {
+        this.officePostalCode = officeCityCode;
     }
 
     public String getOfficeCityName() {

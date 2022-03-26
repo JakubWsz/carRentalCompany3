@@ -11,7 +11,7 @@ public class OfficeAddressDTOToOfficeAddress  implements Converter<OfficeAddress
     public OfficeAddress convert(OfficeAddressDTO officeAddressDTO) {
         return new OfficeAddress(
                 officeAddressDTO.getOfficeStreetAddress(),
-                officeAddressDTO.getOfficeCityCode(),
+                officeAddressDTO.getOfficePostalCode(),
                 officeAddressDTO.getOfficeCityName()
         );
     }

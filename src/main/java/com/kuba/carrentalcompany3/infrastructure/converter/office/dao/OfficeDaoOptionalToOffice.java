@@ -1,7 +1,7 @@
 package com.kuba.carrentalcompany3.infrastructure.converter.office.dao;
 
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
-import com.kuba.carrentalcompany3.domain.exception.ExceptionCode;
+import com.kuba.carrentalcompany3.domain.exception.ClientExceptionCode;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeDao;
@@ -31,6 +31,6 @@ public class OfficeDaoOptionalToOffice implements Converter<Optional<OfficeDao>,
                     optionalOfficeDao.get().getOfficeCEO(),
                     optionalOfficeDao.get().isDeleted()
             );
-        } else throw new DomainException(ExceptionCode.OFFICE_DOESNT_EXISTS);
+        } else throw new DomainException(ClientExceptionCode.OFFICE_DOESNT_EXISTS);
     }
 }

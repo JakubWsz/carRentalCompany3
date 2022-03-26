@@ -2,12 +2,12 @@ package com.kuba.carrentalcompany3.domain.client;
 
 import com.kuba.carrentalcompany3.domain.client.model.Client;
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
-import com.kuba.carrentalcompany3.domain.validator.ClientValidator;
+import com.kuba.carrentalcompany3.domain.client.validator.ClientValidator;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static com.kuba.carrentalcompany3.domain.exception.ExceptionCode.EMAIL_ALREADY_EXISTS;
+import static com.kuba.carrentalcompany3.domain.exception.ClientExceptionCode.EMAIL_ALREADY_EXISTS;
 
 public class ClientService {
     private final ClientRepository clientRepository;

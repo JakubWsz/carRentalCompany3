@@ -1,9 +1,9 @@
-package com.kuba.carrentalcompany3.domain.validator;
+package com.kuba.carrentalcompany3.domain.client.validator;
 
 import java.time.LocalDate;
 import java.time.Period;
 
-public class ValidatorAlgorithms {
+public class ClientValidatorAlgorithms {
 
     public static boolean isAtLeastOneCapitalCharacter(String passwordStr) {
         char[] passwordCharArray = passwordStr.toCharArray();
