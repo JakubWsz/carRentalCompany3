@@ -1,11 +1,15 @@
 package com.kuba.carrentalcompany3.infrastructure.database.jpa.office;
 
+import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import com.kuba.carrentalcompany3.domain.office.OfficeRepository;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.EmployeeDao;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeDao;
 import org.springframework.core.convert.ConversionService;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class OfficeRepositoryAdapterJPA implements OfficeRepository {
     private final OfficeRepositoryJPA officeRepositoryJPA;
@@ -37,4 +41,21 @@ public class OfficeRepositoryAdapterJPA implements OfficeRepository {
     public void update(Office office) {
         save(office);
     }
+
+    @Override
+    public List<Employee> getEmployeeList(String id) {
+        return officeRepositoryJPA.getEmployeeListByOfficeDomainId(id).stream()
+                 .map(employeeDao -> conversionService.convert(employeeDao,Employee.class))
+                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Employee> saveEmployee(String officeId, Employee employee) {
+      Optional<OfficeDao> optionalOfficeDao = officeRepositoryJPA.getByDomainId(officeId);
+        if (optionalOfficeDao.isPresent()){
+           optionalOfficeDao.get().getEmployeeDaoList()
+                    .add(conversionService.convert(employee,EmployeeDao.class));
+           save(conversionService.convert(optionalOfficeDao.get(),Office.class));
+    }
+        return optionalOfficeDao.get().getEmployeeDaoList();
 }

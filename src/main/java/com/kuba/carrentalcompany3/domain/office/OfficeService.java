@@ -1,11 +1,13 @@
 package com.kuba.carrentalcompany3.domain.office;
 
+import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.domain.exception.ClientExceptionCode;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
 import com.kuba.carrentalcompany3.domain.office.valiator.OfficeValidator;
 
+import java.util.List;
 import java.util.UUID;
 
 public class OfficeService {
@@ -47,7 +49,7 @@ public class OfficeService {
         Office officeWithNewCEO;
         isOfficeDeletedValidator(office.isDeleted());
         officeWithNewCEO = new Office(office.getId(), office.getOfficeAddress(), office.getWebsiteURL(),
-               newCEO, false);
+                newCEO, false);
         officeRepository.update(officeWithNewCEO);
     }
 
@@ -55,9 +57,17 @@ public class OfficeService {
         Office office = getOffice(id);
         Office officeWithNewWebsite;
         isOfficeDeletedValidator(office.isDeleted());
-        officeWithNewWebsite = new Office(office.getId(),office.getOfficeAddress(),
-                newWebsite,office.getOfficeCEO(),office.isDeleted());
+        officeWithNewWebsite = new Office(office.getId(), office.getOfficeAddress(),
+                newWebsite, office.getOfficeCEO(), office.isDeleted());
         officeRepository.update(officeWithNewWebsite);
+    }
+
+    public List<Employee> getEmployees(String officeId) {
+        return officeRepository.getEmployeeList(officeId);
+    }
+
+    public List<Employee> addEmployeeToOffice(String officeId, Employee employee) {
+        return officeRepository.saveEmployee(officeId,employee);
     }
 
     private Office getOffice(String id) {

@@ -2,10 +2,14 @@ package com.kuba.carrentalcompany3.infrastructure.config;
 
 import com.kuba.carrentalcompany3.domain.client.ClientRepository;
 import com.kuba.carrentalcompany3.domain.client.ClientService;
+import com.kuba.carrentalcompany3.domain.employee.EmployeeRepository;
+import com.kuba.carrentalcompany3.domain.employee.EmployeeService;
 import com.kuba.carrentalcompany3.domain.office.OfficeRepository;
 import com.kuba.carrentalcompany3.domain.office.OfficeService;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.ClientRepositoryAdapterJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.ClientRepositoryJPA;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.EmployeeRepositoryAdapterJPA;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.EmployeeRepositoryJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryAdapterJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryJPA;
 import org.springframework.context.annotation.Bean;
@@ -49,7 +53,17 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public OfficeService officeService(OfficeRepository officeRepository,ConversionService conversionService){
+    public OfficeService officeService(OfficeRepository officeRepository){
         return new OfficeService(officeRepository);
+    }
+
+    @Bean
+    public EmployeeRepositoryAdapterJPA employeeRepositoryAdapterJPA(EmployeeRepositoryJPA employeeRepositoryJPA){
+        return new EmployeeRepositoryAdapterJPA(employeeRepositoryJPA);
+    }
+
+    @Bean
+    public EmployeeService employeeService (EmployeeRepository employeeRepository,OfficeService officeService){
+        return new EmployeeService(employeeRepository, officeService);
     }
 }
