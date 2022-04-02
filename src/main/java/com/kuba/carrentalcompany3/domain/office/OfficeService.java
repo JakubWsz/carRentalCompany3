@@ -64,8 +64,8 @@ public class OfficeService {
         return officeRepository.getOffice(id).orElseThrow(() -> new DomainException(ClientExceptionCode.OFFICE_DOESNT_EXISTS));
     }
 
-    private void isOfficeDeletedValidator(boolean isDeleted) {
-        if (isDeleted) {
+    private void isOfficeDeletedValidator(boolean deleted) {
+        if (deleted) {
             throw new DomainException(ClientExceptionCode.OFFICE_ALREADY_DELETED);
         }
     }

@@ -4,9 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kuba.carrentalcompany3.api.dto.OfficeAddressDTO;
 import com.kuba.carrentalcompany3.api.dto.request.CreateOfficeRequest;
 import com.kuba.carrentalcompany3.api.dto.response.OfficeView;
+import com.kuba.carrentalcompany3.domain.office.OfficeRepository;
+import com.kuba.carrentalcompany3.domain.office.OfficeService;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
+import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryAdapterJPA;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeDao;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,7 +35,7 @@ public class OfficeControllerTest {
     private static final String CREATE_OFFICE_ENDPOINT = "/office/create";
     private static final String OFFICE_STREET_ADDRESS = "Szkolna 17";
     private static final String OFFICE_CITY_CODE = "23-407";
-    private static final String OFFICE_CITY_NAME = "Białystok";
+    private static final String OFFICE_CITY_NAME = "Lublin";
     private static final String WEBSITE_URL = "https://www.fura.pl";
     private static final String OFFICE_CEO = "Jan Rodo";
     @Autowired
@@ -41,6 +46,15 @@ public class OfficeControllerTest {
     private OfficeRepositoryAdapterJPA officeRepository;
     @Autowired
     private ConversionService converter;
+    @Autowired
+    private OfficeService officeService;
+    @Autowired
+    private OfficeRepositoryJPA officeRepositoryJPA;
+
+    @BeforeEach
+    void setUp() {
+        officeRepositoryJPA.deleteAll();
+    }
 
     @Test
     public void createOffice_ShouldReturnValidResponse() throws Exception {
@@ -59,6 +73,18 @@ public class OfficeControllerTest {
         OfficeDao officeDao = officeRepository.getByDomainId(officeView.getId());
         Office office = converter.convert(officeDao, Office.class);
         validateOffice(office);
+    }
+
+    @Test
+    public void deleteOffice_ShouldSetIsDeletedTrue() throws Exception {
+        //when
+        Office office = officeService.createOffice(new OfficeAddress(OFFICE_STREET_ADDRESS,
+                OFFICE_CITY_CODE, OFFICE_CITY_NAME), WEBSITE_URL, OFFICE_CEO);
+        officeService.deleteOffice(office.getId());
+        //then
+        OfficeDao officeDao = officeRepository.getByDomainId(office.getId());
+        Office office2 = converter.convert(officeDao, Office.class);
+        assertTrue(office2.isDeleted());
     }
 
     private void validateOffice(Office office) {

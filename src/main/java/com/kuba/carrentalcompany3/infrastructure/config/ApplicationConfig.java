@@ -10,6 +10,7 @@ import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepos
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryJPA;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.convert.ConversionService;
 
 import java.time.Clock;
@@ -26,13 +27,13 @@ public class ApplicationConfig {
 
     @Bean
     public ClientRepository clientRepositoryAdapterJPA(ClientRepositoryJPA clientRepositoryJPA,
-                                                    ConversionService conversionService) {
+                                                       ConversionService conversionService) {
         return new ClientRepositoryAdapterJPA(clientRepositoryJPA, conversionService);
     }
 
     @Bean
     public OfficeRepositoryAdapterJPA officeRepositoryAdapterJPA(OfficeRepositoryJPA officeRepositoryJPA,
-                                                                 ConversionService conversionService){
+                                                                 ConversionService conversionService) {
         return new OfficeRepositoryAdapterJPA(officeRepositoryJPA, conversionService);
     }
 
@@ -49,7 +50,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public OfficeService officeService(OfficeRepository officeRepository,ConversionService conversionService){
+    public OfficeService officeService(OfficeRepository officeRepository) {
         return new OfficeService(officeRepository);
     }
 }

@@ -6,14 +6,14 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OfficeAddressToOfficeAddressDao implements Converter< OfficeAddress,OfficeAddressDao> {
+public class OfficeAddressDaoToOfficeAddress implements Converter<OfficeAddressDao, OfficeAddress> {
 
     @Override
-    public OfficeAddressDao convert(OfficeAddress officeAddress) {
-        return new OfficeAddressDao(
-                officeAddress.getOfficeStreetAddress(),
-                officeAddress.getOfficePostalCode(),
-                officeAddress.getOfficeCityName()
+    public OfficeAddress convert(OfficeAddressDao officeAddressDao) {
+        return new OfficeAddress(
+                officeAddressDao.getOfficeStreetAddress(),
+                officeAddressDao.getOfficePostalCode(),
+                officeAddressDao.getOfficeCityName()
         );
     }
 }

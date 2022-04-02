@@ -39,9 +39,8 @@ class ClientControllerTest {
     private ClientRepositoryJPA clientRepository;
 
     @BeforeEach
-    void setUp() {
-        clientRepository.deleteAll();
-    }
+    void setUp() { clientRepository.deleteAll(); }
+
 
     @Test
     public void createAccount_ShouldReturn201Status() throws Exception {
@@ -81,7 +80,7 @@ class ClientControllerTest {
         //when then
         createDefaultAccountRequest()
                 .andExpect(status().isConflict());
-                //.andExpect(content().string());
+        //.andExpect(content().string());
     }
 
     @Test

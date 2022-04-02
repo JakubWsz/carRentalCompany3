@@ -13,12 +13,12 @@ import java.time.format.DateTimeFormatter;
 
 
 @ControllerAdvice
-public class ClientExceptionHandler {
+public class AppExceptionHandler {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final DateTimeFormatter formatter;
     private final Clock clock;
 
-    public ClientExceptionHandler(DateTimeFormatter formatter, Clock clock) {
+    public AppExceptionHandler(DateTimeFormatter formatter, Clock clock) {
         this.formatter = formatter;
         this.clock = clock;
     }

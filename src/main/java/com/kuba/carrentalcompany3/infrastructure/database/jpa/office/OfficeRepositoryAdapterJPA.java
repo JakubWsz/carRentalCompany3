@@ -29,8 +29,7 @@ public class OfficeRepositoryAdapterJPA implements OfficeRepository {
     @Override
     public Optional<Office> getOffice(String id) {
         Optional<OfficeDao> officeDaoOptional = officeRepositoryJPA.getByDomainId(id);
-        return Optional.of(conversionService.convert(officeDaoOptional, Office.class));
-
+        return Optional.ofNullable(conversionService.convert(officeDaoOptional.get(), Office.class));
     }
 
     @Override

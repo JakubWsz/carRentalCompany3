@@ -27,7 +27,6 @@ public class OfficeValidator {
     private static final int CITY_NAME_MAX_SIZE = 50;
     private static final int CITY_NAME_MIN_SIZE = 3;
     private static final int NAME_MAX_SIZE = 30;
-    private static final int NAME_MIN_SIZE = 2;
 
     public static void validateOffice(Office office) {
         validateIsOfficeAddressNotNull(office.getOfficeAddress());
