@@ -18,13 +18,15 @@ public class ClientService {
 
     public Client createAccount(String firstname, String lastname, String email, String password, LocalDate birthdate) {
         validateEmailDuplication(email);
-        Client client = new Client(
-                UUID.randomUUID().toString(),
-                firstname,
-                lastname,
-                email,
-                password,
-                birthdate);
+        Client client = new Client.ClientBuilder()
+                .setId( UUID.randomUUID().toString())
+                .setFirstname(firstname)
+                .setLastname(lastname)
+                .setEmail(email)
+                .setPassword(password)
+                .setBirthdate(birthdate)
+                .build();
+
         ClientValidator.validateClient(client);
         return clientRepository.save(client);
     }
