@@ -18,7 +18,7 @@ public class ClientService {
 
     public Client createAccount(String firstname, String lastname, String email, String password, LocalDate birthdate) {
         validateEmailDuplication(email);
-        Client client = new Client(
+        Client client = Client.ClientBuilder.setId()
                 UUID.randomUUID().toString(),
                 firstname,
                 lastname,
