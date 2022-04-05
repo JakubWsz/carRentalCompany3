@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface OfficeRepositoryJPA extends JpaRepository<OfficeDao, Long> {
     Optional<OfficeDao> getByDomainId(String domainId);
+
+    //todo create query that update officeDao by domain ID
 }

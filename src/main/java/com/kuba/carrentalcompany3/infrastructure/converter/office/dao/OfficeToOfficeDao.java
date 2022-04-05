@@ -26,7 +26,8 @@ public class OfficeToOfficeDao implements Converter<Office, OfficeDao> {
                new OfficeAddressDao(officeAddress.getOfficeStreetAddress(),officeAddress.getOfficePostalCode(),
                        officeAddress.getOfficeCityName()),
                 office.getWebsiteURL(),
-                office.getOfficeCEO()
+                office.getOfficeCEO(),
+                office.isDeleted()
         );
     }
 }

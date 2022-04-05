@@ -32,7 +32,7 @@ public class OfficeController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteOffice(String id){
+    public void deleteOffice(@RequestParam String id){
         officeService.deleteOffice(id);
     }
 

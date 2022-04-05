@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kuba.carrentalcompany3.api.dto.OfficeAddressDTO;
 import com.kuba.carrentalcompany3.api.dto.request.CreateOfficeRequest;
 import com.kuba.carrentalcompany3.api.dto.response.OfficeView;
-import com.kuba.carrentalcompany3.domain.office.OfficeRepository;
 import com.kuba.carrentalcompany3.domain.office.OfficeService;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
@@ -33,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class OfficeControllerTest {
     private static final String CREATE_OFFICE_ENDPOINT = "/office/create";
+    private static final String DELETE_OFFICE_ENDPOINT = "/office/delete";
     private static final String OFFICE_STREET_ADDRESS = "Szkolna 17";
     private static final String OFFICE_CITY_CODE = "23-407";
     private static final String OFFICE_CITY_NAME = "Lublin";
@@ -45,7 +45,7 @@ public class OfficeControllerTest {
     @Autowired
     private OfficeRepositoryAdapterJPA officeRepository;
     @Autowired
-    private ConversionService converter;
+    private ConversionService conversionService;
     @Autowired
     private OfficeService officeService;
     @Autowired
@@ -61,7 +61,7 @@ public class OfficeControllerTest {
         //when
         OfficeView officeView = createExpectedOfficeViewResponse(status().isCreated());
         //then
-        Office office = converter.convert(officeView, Office.class);
+        Office office = conversionService.convert(officeView, Office.class);
         validateOffice(office);
     }
 
@@ -71,20 +71,19 @@ public class OfficeControllerTest {
         OfficeView officeView = createExpectedOfficeViewResponse(status().isCreated());
         //then
         OfficeDao officeDao = officeRepository.getByDomainId(officeView.getId());
-        Office office = converter.convert(officeDao, Office.class);
+        Office office = conversionService.convert(officeDao, Office.class);
         validateOffice(office);
     }
 
     @Test
     public void deleteOffice_ShouldSetIsDeletedTrue() throws Exception {
         //when
-        Office office = officeService.createOffice(new OfficeAddress(OFFICE_STREET_ADDRESS,
-                OFFICE_CITY_CODE, OFFICE_CITY_NAME), WEBSITE_URL, OFFICE_CEO);
-        officeService.deleteOffice(office.getId());
+        OfficeView office = createExpectedOfficeViewResponse(status().isCreated());
+        deleteOfficeRequest(office.getId());
         //then
-        OfficeDao officeDao = officeRepository.getByDomainId(office.getId());
-        Office office2 = converter.convert(officeDao, Office.class);
-        assertTrue(office2.isDeleted());
+        Office officeFromDB = conversionService.convert(officeRepository.getByDomainId(office.getId()), Office.class);
+        assertNotNull(officeFromDB);
+        assertTrue(officeFromDB.isDeleted());
     }
 
     private void validateOffice(Office office) {
@@ -114,5 +113,11 @@ public class OfficeControllerTest {
         return mvc.perform(MockMvcRequestBuilders.post(CREATE_OFFICE_ENDPOINT)
                 .content(mapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
+    }
+
+    private void deleteOfficeRequest(String id) throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                .delete(DELETE_OFFICE_ENDPOINT).param("id", id))
+                .andReturn();
     }
 }

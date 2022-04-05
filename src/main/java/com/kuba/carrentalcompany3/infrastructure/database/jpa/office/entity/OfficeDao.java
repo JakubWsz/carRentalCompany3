@@ -1,6 +1,5 @@
 package com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity;
 
-import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.BaseEntity;
 
 import javax.persistence.Embedded;
@@ -19,6 +18,15 @@ public class OfficeDao extends BaseEntity {
         this.officeAddress = officeAddress;
         this.websiteURL = websiteURL;
         this.officeCEO = officeCEO;
+    }
+
+    public OfficeDao(String domainId, OfficeAddressDao officeAddress, String websiteURL, String officeCEO,
+                     boolean deleted) {
+        this.domainId = domainId;
+        this.officeAddress = officeAddress;
+        this.websiteURL = websiteURL;
+        this.officeCEO = officeCEO;
+        this.setDeleted(deleted);
     }
 
     public OfficeDao() {
