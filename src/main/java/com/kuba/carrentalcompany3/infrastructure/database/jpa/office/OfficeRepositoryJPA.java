@@ -9,5 +9,4 @@ import java.util.Optional;
 
 public interface OfficeRepositoryJPA extends JpaRepository<OfficeDao, Long> {
     Optional<OfficeDao> getByDomainId(String domainId);
-    List<EmployeeDao> getEmployeeListByOfficeDomainId(String id);
 }

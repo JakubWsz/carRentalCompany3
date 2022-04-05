@@ -8,6 +8,15 @@ public class OfficeAddressDao {
     private String officePostalCode;
     private String officeCityName;
 
+    public OfficeAddressDao() {
+    }
+
+    public OfficeAddressDao(String officeStreetAddress, String officePostalCode, String officeCityName) {
+        this.officeStreetAddress = officeStreetAddress;
+        this.officePostalCode = officePostalCode;
+        this.officeCityName = officeCityName;
+    }
+
     public String getOfficeStreetAddress() {
         return officeStreetAddress;
     }

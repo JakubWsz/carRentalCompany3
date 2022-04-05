@@ -8,20 +8,18 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-@Component
 public class OfficeToOfficeDao implements Converter<Office, OfficeDao> {
-    @Lazy
-    private final ConversionService converter;
+    private final ConversionService conversionService;
 
-    public OfficeToOfficeDao(ConversionService converter) {
-        this.converter = converter;
+    public OfficeToOfficeDao(ConversionService conversionService) {
+        this.conversionService = conversionService;
     }
 
     @Override
     public OfficeDao convert(Office office) {
         return new OfficeDao(
                 office.getId(),
-                converter.convert(office.getOfficeAddress(), OfficeAddressDao.class),
+                conversionService.convert(office.getOfficeAddress(), OfficeAddressDao.class),
                 office.getWebsiteURL(),
                 office.getOfficeCEO()
         );

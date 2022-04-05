@@ -9,7 +9,6 @@ import org.springframework.core.convert.ConversionService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class OfficeRepositoryAdapterJPA implements OfficeRepository {
     private final OfficeRepositoryJPA officeRepositoryJPA;
@@ -44,18 +43,17 @@ public class OfficeRepositoryAdapterJPA implements OfficeRepository {
 
     @Override
     public List<Employee> getEmployeeList(String id) {
-        return officeRepositoryJPA.getEmployeeListByOfficeDomainId(id).stream()
-                 .map(employeeDao -> conversionService.convert(employeeDao,Employee.class))
-                 .collect(Collectors.toList());
+        return null;
     }
 
     @Override
     public List<Employee> saveEmployee(String officeId, Employee employee) {
-      Optional<OfficeDao> optionalOfficeDao = officeRepositoryJPA.getByDomainId(officeId);
-        if (optionalOfficeDao.isPresent()){
-           optionalOfficeDao.get().getEmployeeDaoList()
-                    .add(conversionService.convert(employee,EmployeeDao.class));
-           save(conversionService.convert(optionalOfficeDao.get(),Office.class));
+        Optional<OfficeDao> optionalOfficeDao = officeRepositoryJPA.getByDomainId(officeId);
+        if (optionalOfficeDao.isPresent()) {
+            optionalOfficeDao.get().getEmployeeDaoList()
+                    .add(conversionService.convert(employee, EmployeeDao.class));
+            save(conversionService.convert(optionalOfficeDao.get(), Office.class));
+        }
+        return null;
     }
-        return optionalOfficeDao.get().getEmployeeDaoList();
 }

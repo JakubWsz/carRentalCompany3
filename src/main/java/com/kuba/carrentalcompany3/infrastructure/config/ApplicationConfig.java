@@ -23,6 +23,8 @@ import java.util.Locale;
 
 @Configuration
 public class ApplicationConfig {
+
+
     @Bean
     public ClientService clientService(ClientRepository clientRepository) {
         return new ClientService(clientRepository);

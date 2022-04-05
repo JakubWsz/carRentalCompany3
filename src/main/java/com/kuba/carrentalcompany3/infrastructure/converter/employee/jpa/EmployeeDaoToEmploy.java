@@ -3,9 +3,7 @@ package com.kuba.carrentalcompany3.infrastructure.converter.employee.jpa;
 import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.EmployeeDao;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Component;
 
-@Component
 public class EmployeeDaoToEmploy implements Converter<EmployeeDao, Employee> {
     @Override
     public Employee convert(EmployeeDao employeeDao) {
