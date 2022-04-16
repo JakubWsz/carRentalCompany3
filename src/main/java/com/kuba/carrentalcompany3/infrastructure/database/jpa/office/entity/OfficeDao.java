@@ -15,9 +15,7 @@ public class OfficeDao extends BaseEntity {
     private OfficeAddressDao officeAddress;
     private String websiteURL;
     private String officeCEO;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<EmployeeDao> employeeDaoList;
+
 
     public OfficeDao(String domainId, OfficeAddressDao officeAddress, String websiteURL, String officeCEO) {
         this.domainId = domainId;
@@ -54,7 +52,4 @@ public class OfficeDao extends BaseEntity {
         return officeCEO;
     }
 
-    public List<EmployeeDao> getEmployeeDaoList() {
-        return employeeDaoList;
-    }
 }

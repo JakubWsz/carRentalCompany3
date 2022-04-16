@@ -66,10 +66,6 @@ public class OfficeService {
         return officeRepository.getEmployeeList(officeId);
     }
 
-    public List<Employee> addEmployeeToOffice(String officeId, Employee employee) {
-        return officeRepository.saveEmployee(officeId,employee);
-    }
-
     private Office getOffice(String id) {
         return officeRepository.getOffice(id).orElseThrow(() -> new DomainException(ClientExceptionCode.OFFICE_DOESNT_EXISTS));
     }

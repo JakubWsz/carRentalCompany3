@@ -32,11 +32,6 @@ public class OfficeRepositoryMock implements OfficeRepository {
         return null;
     }
 
-    @Override
-    public List<Employee> saveEmployee(String officeId, Employee employee) {
-        return null;
-    }
-
     public void clean() {
         Object[] clientsArray = offices.toArray();
         for (int i = 0; clientsArray.length - 1 >= i; i++) {

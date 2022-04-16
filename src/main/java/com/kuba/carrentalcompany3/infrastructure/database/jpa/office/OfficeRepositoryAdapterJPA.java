@@ -46,15 +46,4 @@ public class OfficeRepositoryAdapterJPA implements OfficeRepository {
     public List<Employee> getEmployeeList(String id) {
         return null;
     }
-
-    @Override
-    public List<Employee> saveEmployee(String officeId, Employee employee) {
-        Optional<OfficeDao> optionalOfficeDao = officeRepositoryJPA.getByDomainId(officeId);
-        if (optionalOfficeDao.isPresent()) {
-            optionalOfficeDao.get().getEmployeeDaoList()
-                    .add(conversionService.convert(employee, EmployeeDao.class));
-            save(conversionService.convert(optionalOfficeDao.get(), Office.class));
-        }
-        return null;
-    }
 }

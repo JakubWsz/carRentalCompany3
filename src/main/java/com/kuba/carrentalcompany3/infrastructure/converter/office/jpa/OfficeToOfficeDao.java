@@ -21,7 +21,8 @@ public class OfficeToOfficeDao implements Converter<Office, OfficeDao> {
                 office.getId(),
                 conversionService.convert(office.getOfficeAddress(), OfficeAddressDao.class),
                 office.getWebsiteURL(),
-                office.getOfficeCEO()
+                office.getOfficeCEO(),
+                office.isDeleted()
         );
     }
 }

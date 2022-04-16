@@ -14,6 +14,4 @@ public interface OfficeRepository {
     void update(Office office);
 
     List<Employee> getEmployeeList(String officeId);
-
-    List<Employee> saveEmployee(String officeId, Employee employee);
 }
