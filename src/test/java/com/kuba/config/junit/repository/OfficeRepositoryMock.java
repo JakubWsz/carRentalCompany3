@@ -1,5 +1,6 @@
 package com.kuba.config.junit.repository;
 
+import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import com.kuba.carrentalcompany3.domain.office.OfficeRepository;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 
@@ -24,6 +25,16 @@ public class OfficeRepositoryMock implements OfficeRepository {
     @Override
     public void update(Office office) {
         save(office);
+    }
+
+    @Override
+    public List<Employee> getEmployeeList(String officeId) {
+        return null;
+    }
+
+    @Override
+    public List<Employee> saveEmployee(String officeId, Employee employee) {
+        return null;
     }
 
     public void clean() {

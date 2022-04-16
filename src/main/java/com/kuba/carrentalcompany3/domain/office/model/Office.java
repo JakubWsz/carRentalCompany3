@@ -39,5 +39,14 @@ public class Office {
         deleted = true;
     }
 
-
+    @Override
+    public String toString() {
+        return "Office{" +
+                "id='" + id + '\'' +
+                ", officeAddress=" + officeAddress +
+                ", websiteURL='" + websiteURL + '\'' +
+                ", officeCEO='" + officeCEO + '\'' +
+                ", deleted=" + deleted +
+                '}';
+    }
 }
