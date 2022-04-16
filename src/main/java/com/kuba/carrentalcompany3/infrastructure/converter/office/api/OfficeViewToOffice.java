@@ -11,24 +11,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OfficeViewToOffice implements Converter<OfficeView, Office> {
-//    @Lazy
-//    private final ConversionService conversionService;
-//
-//    public OfficeViewToOffice(ConversionService conversionService) {
-//        this.conversionService = conversionService;
-//    }
 
     @Override
     public Office convert(OfficeView officeView) {
-       OfficeAddressDTO officeAddressDTO = officeView.getOfficeAddress();
-        return new Office(
-                officeView.getId(),
-               // conversionService.convert(officeView.getOfficeAddress(), OfficeAddress.class),
-                new OfficeAddress(officeAddressDTO.getOfficeStreetAddress(),officeAddressDTO.getOfficePostalCode(),
-                        officeAddressDTO.getOfficeCityName()),
-                officeView.getWebsiteURL(),
-                officeView.getOfficeCEO(),
-                false
-        );
+        OfficeAddressDTO officeAddressDTO = officeView.getOfficeAddress();
+        return new Office.OfficeBuilder()
+                .setId(officeView.getId())
+                .setOfficeAddress(new OfficeAddress(officeAddressDTO.getOfficeStreetAddress(),
+                                officeAddressDTO.getOfficePostalCode(),
+                                officeAddressDTO.getOfficeCityName()))
+                .setWebsiteURL(officeView.getWebsiteURL())
+                .setOfficeCEO(officeView.getOfficeCEO())
+                .setDeleted(false)
+                .build();
     }
 }

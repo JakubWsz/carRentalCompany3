@@ -69,8 +69,14 @@ class ClientServiceTest {
         //given
         ClientRepositoryMock repo = new ClientRepositoryMock();
         ClientService clientService = new ClientService(repo);
-        Client client = new Client("xyz", "Jan", "Rodo", "asd@gmail.com", "Password6^",
-                LocalDate.ofYearDay(1992, 246));
+        Client client = new Client.ClientBuilder()
+                .setId("xyz")
+                .setFirstname("Jan")
+                .setLastname("Rodo")
+                .setEmail("asd@gmail.com")
+                .setPassword("Password6^")
+                .setBirthdate(LocalDate.ofYearDay(1992, 246))
+                .build();
         //when
         //then
         RuntimeException runtimeException = assertThrows(

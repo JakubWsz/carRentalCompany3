@@ -13,13 +13,14 @@ public class OfficeDaoToOffice implements Converter<OfficeDao, Office> {
     @Override
     public Office convert(OfficeDao officeDao) {
         OfficeAddressDao officeAddressDao = officeDao.getOfficeAddress();
-        return new Office(
-                officeDao.getDomainId(),
-                new OfficeAddress(officeAddressDao.getOfficeStreetAddress(), officeAddressDao.getOfficePostalCode(),
-                        officeAddressDao.getOfficeCityName()),
-                officeDao.getWebsiteURL(),
-                officeDao.getOfficeCEO(),
-                officeDao.isDeleted()
-        );
+        return new Office.OfficeBuilder()
+                .setId(officeDao.getDomainId())
+                .setOfficeAddress(new OfficeAddress(officeAddressDao.getOfficeStreetAddress(),
+                        officeAddressDao.getOfficePostalCode(),
+                        officeAddressDao.getOfficeCityName()))
+                .setWebsiteURL(officeDao.getWebsiteURL())
+                .setOfficeCEO(officeDao.getOfficeCEO())
+                .setDeleted(officeDao.isDeleted())
+                .build();
     }
 }

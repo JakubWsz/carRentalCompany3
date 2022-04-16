@@ -9,12 +9,13 @@ import org.springframework.stereotype.Component;
 public class ClientDaoToClientConverter implements Converter<ClientDao, Client> {
     @Override
     public Client convert(ClientDao clientDao) {
-        return new Client(
-                clientDao.getDomainId(),
-                clientDao.getFirstname(),
-                clientDao.getLastname(),
-                clientDao.getEmail(),
-                clientDao.getPassword(),
-                clientDao.getBirthdate());
+        return new Client.ClientBuilder()
+                .setId(clientDao.getDomainId())
+                .setFirstname(clientDao.getFirstname())
+                .setLastname(clientDao.getLastname())
+                .setEmail(clientDao.getEmail())
+                .setPassword(clientDao.getPassword())
+                .setBirthdate(clientDao.getBirthdate())
+                .build();
     }
 }

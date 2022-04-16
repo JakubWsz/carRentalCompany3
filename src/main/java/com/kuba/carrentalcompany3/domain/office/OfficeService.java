@@ -1,7 +1,7 @@
 package com.kuba.carrentalcompany3.domain.office;
 
-import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.domain.exception.ClientExceptionCode;
+import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
 import com.kuba.carrentalcompany3.domain.office.valiator.OfficeValidator;
@@ -16,12 +16,13 @@ public class OfficeService {
     }
 
     public Office createOffice(OfficeAddress officeAddress, String websiteUrl, String officeCeo) {
-        Office office = new Office(
-                UUID.randomUUID().toString(),
-                officeAddress,
-                websiteUrl,
-                officeCeo,
-                false);
+        Office office = new Office.OfficeBuilder()
+                .setId(UUID.randomUUID().toString())
+                .setOfficeAddress(officeAddress)
+                .setWebsiteURL(websiteUrl)
+                .setOfficeCEO(officeCeo)
+                .setDeleted(false)
+                .build();
         OfficeValidator.validateOffice(office);
         return officeRepository.save(office);
     }
@@ -37,8 +38,13 @@ public class OfficeService {
         Office exOffice = getOffice(id);
         Office newOffice;
         isOfficeDeletedValidator(exOffice.isDeleted());
-        newOffice = new Office(exOffice.getId(), officeAddress, exOffice.getWebsiteURL(),
-                exOffice.getOfficeCEO(), false);
+        newOffice = new Office.OfficeBuilder()
+                .setId(exOffice.getId())
+                .setOfficeAddress(officeAddress)
+                .setWebsiteURL(exOffice.getWebsiteURL())
+                .setOfficeCEO(exOffice.getOfficeCEO())
+                .setDeleted(exOffice.isDeleted())
+                .build();
         officeRepository.update(newOffice);
     }
 
@@ -46,8 +52,13 @@ public class OfficeService {
         Office office = getOffice(id);
         Office officeWithNewCEO;
         isOfficeDeletedValidator(office.isDeleted());
-        officeWithNewCEO = new Office(office.getId(), office.getOfficeAddress(), office.getWebsiteURL(),
-               newCEO, false);
+        officeWithNewCEO = new Office.OfficeBuilder()
+                .setId(office.getId())
+                .setOfficeAddress(office.getOfficeAddress())
+                .setWebsiteURL(office.getWebsiteURL())
+                .setOfficeCEO(newCEO)
+                .setDeleted(office.isDeleted())
+                .build();
         officeRepository.update(officeWithNewCEO);
     }
 
@@ -55,8 +66,13 @@ public class OfficeService {
         Office office = getOffice(id);
         Office officeWithNewWebsite;
         isOfficeDeletedValidator(office.isDeleted());
-        officeWithNewWebsite = new Office(office.getId(),office.getOfficeAddress(),
-                newWebsite,office.getOfficeCEO(),office.isDeleted());
+        officeWithNewWebsite = new Office.OfficeBuilder()
+                .setId(office.getId())
+                .setOfficeAddress(office.getOfficeAddress())
+                .setWebsiteURL(newWebsite)
+                .setOfficeCEO(office.getOfficeCEO())
+                .setDeleted(office.isDeleted())
+                .build();
         officeRepository.update(officeWithNewWebsite);
     }
 
