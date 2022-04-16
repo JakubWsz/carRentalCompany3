@@ -77,4 +77,14 @@ public class Office {
     }
 
     public String getId() {return id;}
+    @Override
+    public String toString() {
+        return "Office{" +
+                "id='" + id + '\'' +
+                ", officeAddress=" + officeAddress +
+                ", websiteURL='" + websiteURL + '\'' +
+                ", officeCEO='" + officeCEO + '\'' +
+                ", deleted=" + deleted +
+                '}';
+    }
 }

@@ -1,10 +1,13 @@
 package com.kuba.carrentalcompany3.infrastructure.database.jpa.office;
 
+import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import com.kuba.carrentalcompany3.domain.office.OfficeRepository;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.EmployeeDao;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeDao;
 import org.springframework.core.convert.ConversionService;
 
+import java.util.List;
 import java.util.Optional;
 
 public class OfficeRepositoryAdapterJPA implements OfficeRepository {
@@ -34,6 +37,13 @@ public class OfficeRepositoryAdapterJPA implements OfficeRepository {
 
     @Override
     public void update(Office office) {
-        save(office);
+        OfficeDao officeDao = conversionService.convert(office, OfficeDao.class);
+        officeDao.setId(getByDomainId(office.getId()).getId());
+        officeRepositoryJPA.save(officeDao);
+    }
+
+    @Override
+    public List<Employee> getEmployeeList(String id) {
+        return null;
     }
 }

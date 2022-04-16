@@ -1,10 +1,12 @@
 package com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity;
 
-import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.BaseEntity;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.EmployeeDao;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class OfficeDao extends BaseEntity {
@@ -14,11 +16,21 @@ public class OfficeDao extends BaseEntity {
     private String websiteURL;
     private String officeCEO;
 
+
     public OfficeDao(String domainId, OfficeAddressDao officeAddress, String websiteURL, String officeCEO) {
         this.domainId = domainId;
         this.officeAddress = officeAddress;
         this.websiteURL = websiteURL;
         this.officeCEO = officeCEO;
+    }
+
+    public OfficeDao(String domainId, OfficeAddressDao officeAddress, String websiteURL, String officeCEO,
+                     boolean deleted) {
+        this.domainId = domainId;
+        this.officeAddress = officeAddress;
+        this.websiteURL = websiteURL;
+        this.officeCEO = officeCEO;
+        this.setDeleted(deleted);
     }
 
     public OfficeDao() {
@@ -39,4 +51,5 @@ public class OfficeDao extends BaseEntity {
     public String getOfficeCEO() {
         return officeCEO;
     }
+
 }
