@@ -16,11 +16,12 @@ public class OfficeDaoOptionalToOffice implements Converter<OfficeDao, Office> {
 
     @Override
     public Office convert(OfficeDao optionalOfficeDao) {
-        return new Office(
-                optionalOfficeDao.getDomainId(),
-                conversionService.convert(optionalOfficeDao.getOfficeAddress(), OfficeAddress.class),
-                optionalOfficeDao.getWebsiteURL(),
-                optionalOfficeDao.getOfficeCEO(),
-                optionalOfficeDao.isDeleted());
+        return new Office.OfficeBuilder()
+                .setId(optionalOfficeDao.getDomainId())
+                .setOfficeAddress(conversionService.convert(optionalOfficeDao.getOfficeAddress(), OfficeAddress.class))
+                .setWebsiteURL(optionalOfficeDao.getWebsiteURL())
+                .setOfficeCEO(optionalOfficeDao.getOfficeCEO())
+                .setDeleted(optionalOfficeDao.isDeleted())
+                .build();
     }
 }

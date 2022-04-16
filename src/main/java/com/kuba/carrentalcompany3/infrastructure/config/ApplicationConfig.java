@@ -3,7 +3,6 @@ package com.kuba.carrentalcompany3.infrastructure.config;
 import com.kuba.carrentalcompany3.domain.client.ClientRepository;
 import com.kuba.carrentalcompany3.domain.client.ClientService;
 import com.kuba.carrentalcompany3.domain.employee.EmployeeRepository;
-import com.kuba.carrentalcompany3.domain.employee.EmployeeService;
 import com.kuba.carrentalcompany3.domain.office.OfficeRepository;
 import com.kuba.carrentalcompany3.domain.office.OfficeService;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.ClientRepositoryAdapterJPA;
@@ -62,10 +61,5 @@ public class ApplicationConfig {
     @Bean
     public EmployeeRepositoryAdapterJPA employeeRepositoryAdapterJPA(EmployeeRepositoryJPA employeeRepositoryJPA){
         return new EmployeeRepositoryAdapterJPA(employeeRepositoryJPA);
-    }
-
-    @Bean
-    public EmployeeService employeeService (EmployeeRepository employeeRepository,OfficeService officeService){
-        return new EmployeeService(employeeRepository, officeService);
     }
 }
