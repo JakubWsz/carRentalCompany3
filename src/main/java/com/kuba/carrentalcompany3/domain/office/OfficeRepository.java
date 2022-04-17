@@ -1,9 +1,7 @@
 package com.kuba.carrentalcompany3.domain.office;
 
-import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface OfficeRepository {
@@ -12,6 +10,4 @@ public interface OfficeRepository {
     Optional<Office> getOffice(String id);
 
     void update(Office office);
-
-    List<Employee> getEmployeeList(String officeId);
 }

@@ -7,18 +7,18 @@ import org.springframework.core.convert.converter.Converter;
 public class EmployeeDaoToEmploy implements Converter<EmployeeDao, Employee> {
     @Override
     public Employee convert(EmployeeDao employeeDao) {
-        return new Employee(
-                employeeDao.getDomainId(),
-                employeeDao.getFirstname(),
-                employeeDao.getLastname(),
-                employeeDao.getAddress(),
-                employeeDao.getPesel(),
-                employeeDao.getAccountNumber(),
-                employeeDao.getSalaryAmount(),
-                employeeDao.getTypeOfContract(),
-                employeeDao.getPosition(),
-                employeeDao.getAddress(),
-                employeeDao.isDeleted()
-        );
+        return new Employee.EmployeeBuilder()
+                .setId(employeeDao.getDomainId())
+                .setFirstname(employeeDao.getFirstname())
+                .setLastname(employeeDao.getLastname())
+                .setAddress(employeeDao.getAddress())
+                .setPesel(employeeDao.getPesel())
+                .setAccountNumber(employeeDao.getAccountNumber())
+                .setSalaryAmount(employeeDao.getSalaryAmount())
+                .setTypeOfContract(employeeDao.getTypeOfContract())
+                .setPosition(employeeDao.getPosition())
+                .setOfficeId(employeeDao.getAddress())
+                .setDeleted(employeeDao.isDeleted())
+                .build();
     }
 }

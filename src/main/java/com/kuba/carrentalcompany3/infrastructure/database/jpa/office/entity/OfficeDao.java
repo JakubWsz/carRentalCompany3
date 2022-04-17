@@ -1,12 +1,9 @@
 package com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity;
 
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.BaseEntity;
-import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.EmployeeDao;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 
 @Entity
 public class OfficeDao extends BaseEntity {

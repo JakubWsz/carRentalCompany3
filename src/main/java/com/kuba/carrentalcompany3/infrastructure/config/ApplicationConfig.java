@@ -62,4 +62,9 @@ public class ApplicationConfig {
     public EmployeeRepositoryAdapterJPA employeeRepositoryAdapterJPA(EmployeeRepositoryJPA employeeRepositoryJPA){
         return new EmployeeRepositoryAdapterJPA(employeeRepositoryJPA);
     }
+
+    @Bean
+    public EmployeeService employeeService (EmployeeRepository employeeRepository){
+        return new EmployeeService(employeeRepository);
+    }
 }

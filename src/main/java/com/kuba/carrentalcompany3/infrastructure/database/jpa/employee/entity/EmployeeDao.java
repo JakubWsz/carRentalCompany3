@@ -17,12 +17,13 @@ public class EmployeeDao extends BaseEntity {
     private BigDecimal salaryAmount;
     private String typeOfContract;
     private String position;
+    private String officeId;
 
     public EmployeeDao() {
     }
 
     public EmployeeDao(String domainId, String firstname, String lastname, String address, int pesel, int accountNumber,
-                       BigDecimal salaryAmount, String typeOfContract, String position) {
+                       BigDecimal salaryAmount, String typeOfContract, String position, String officeId) {
         this.domainId = domainId;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -32,6 +33,7 @@ public class EmployeeDao extends BaseEntity {
         this.salaryAmount = salaryAmount;
         this.typeOfContract = typeOfContract;
         this.position = position;
+        this.officeId = officeId;
     }
 
     public String getDomainId() {
