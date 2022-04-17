@@ -65,7 +65,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public EmployeeService employeeService (EmployeeRepository employeeRepository,OfficeService officeService){
-        return new EmployeeService(employeeRepository, officeService);
+    public EmployeeService employeeService (EmployeeRepository employeeRepository){
+        return new EmployeeService(employeeRepository);
     }
 }

@@ -2,7 +2,7 @@ package com.kuba.carrentalcompany3.api.dto.request;
 
 import java.math.BigDecimal;
 
-public class CreateEmployeeRequest {
+public class HireEmployeeRequest {
     private final String firstname;
     private final String lastname;
     private final String address;
@@ -11,13 +11,10 @@ public class CreateEmployeeRequest {
     private final BigDecimal salaryAmount;
     private final String typeOfContract;
     private final String position;
-    private final String officeStreetAddress;
-    private final boolean deleted;
     private final String officeId;
 
-    public CreateEmployeeRequest(String firstname, String lastname, String address, int pesel, int accountNumber,
-                                 BigDecimal salaryAmount, String typeOfContract, String position,
-                                 String officeStreetAddress, boolean deleted, String officeId) {
+    public HireEmployeeRequest(String firstname, String lastname, String address, int pesel, int accountNumber,
+                               BigDecimal salaryAmount, String typeOfContract, String position, String officeId) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
@@ -26,8 +23,6 @@ public class CreateEmployeeRequest {
         this.salaryAmount = salaryAmount;
         this.typeOfContract = typeOfContract;
         this.position = position;
-        this.officeStreetAddress = officeStreetAddress;
-        this.deleted = deleted;
         this.officeId = officeId;
     }
 
@@ -61,14 +56,6 @@ public class CreateEmployeeRequest {
 
     public String getPosition() {
         return position;
-    }
-
-    public String getOfficeStreetAddress() {
-        return officeStreetAddress;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
     }
 
     public String getOfficeId() {
