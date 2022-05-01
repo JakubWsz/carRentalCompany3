@@ -1,4 +1,4 @@
-package com.kuba.carrentalcompany3.api.dto.request;
+package com.kuba.carrentalcompany3.api.dto.employee.request;
 
 import java.math.BigDecimal;
 

@@ -1,6 +1,4 @@
-package com.kuba.carrentalcompany3.api.dto.response;
-
-import com.kuba.carrentalcompany3.api.dto.OfficeAddressDTO;
+package com.kuba.carrentalcompany3.api.dto.office;
 
 public class OfficeView {
     private final String id;

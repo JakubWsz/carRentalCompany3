@@ -1,14 +1,14 @@
 package com.kuba.carrentalcompany3.infrastructure.converter.client.jpa;
 
 import com.kuba.carrentalcompany3.domain.client.model.Client;
-import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.entity.ClientDao;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.entity.ClientDAO;
 import org.springframework.core.convert.converter.Converter;
 
-public class ClientToDaoClientConverter implements Converter<Client, ClientDao> {
+public class ClientToDAOClientConverter implements Converter<Client, ClientDAO> {
     @Override
-    public ClientDao convert(Client client) {
-        return new ClientDao(
-                client.getId(),
+    public ClientDAO convert(Client client) {
+        return new ClientDAO(
+                client.getDomainId(),
                 client.getFirstname(),
                 client.getLastname(),
                 client.getEmail(),

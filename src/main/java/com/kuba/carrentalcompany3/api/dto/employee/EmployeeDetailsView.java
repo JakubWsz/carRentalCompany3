@@ -1,24 +1,23 @@
-package com.kuba.carrentalcompany3.api.dto.response;
+package com.kuba.carrentalcompany3.api.dto.employee;
+
+import com.kuba.carrentalcompany3.api.dto.employee.EmployeeAddressDTO;
 
 import java.math.BigDecimal;
 
-public class EmployeeView {
-    private final String id;
+public class EmployeeDetailsView {
     private final String firstname;
     private final String lastname;
-    private final String address;
+    private final EmployeeAddressDTO address;
     private final int pesel;
     private final int accountNumber;
     private final BigDecimal salaryAmount;
     private final String typeOfContract;
     private final String position;
     private final String officeId;
-    private final boolean deleted;
 
-    public EmployeeView(String id, String firstname, String lastname, String address, int pesel, int accountNumber,
-                        BigDecimal salaryAmount, String typeOfContract, String position, String officeId,
-                        boolean deleted) {
-        this.id = id;
+    public EmployeeDetailsView( String firstname, String lastname, EmployeeAddressDTO address, int pesel,
+                               int accountNumber, BigDecimal salaryAmount, String typeOfContract,
+                               String position, String officeId) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
@@ -28,11 +27,6 @@ public class EmployeeView {
         this.typeOfContract = typeOfContract;
         this.position = position;
         this.officeId = officeId;
-        this.deleted = deleted;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getFirstname() {
@@ -43,7 +37,7 @@ public class EmployeeView {
         return lastname;
     }
 
-    public String getAddress() {
+    public EmployeeAddressDTO getAddress() {
         return address;
     }
 
@@ -69,9 +63,5 @@ public class EmployeeView {
 
     public String getOfficeId() {
         return officeId;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
     }
 }

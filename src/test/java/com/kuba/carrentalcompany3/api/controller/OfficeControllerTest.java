@@ -1,15 +1,14 @@
 package com.kuba.carrentalcompany3.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kuba.carrentalcompany3.api.dto.OfficeAddressDTO;
-import com.kuba.carrentalcompany3.api.dto.request.CreateOfficeRequest;
-import com.kuba.carrentalcompany3.api.dto.response.OfficeView;
+import com.kuba.carrentalcompany3.api.dto.office.OfficeAddressDTO;
+import com.kuba.carrentalcompany3.api.dto.office.CreateOfficeRequest;
+import com.kuba.carrentalcompany3.api.dto.office.OfficeView;
 import com.kuba.carrentalcompany3.domain.office.OfficeService;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
-import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryAdapterJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryJPA;
-import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeDao;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +69,7 @@ public class OfficeControllerTest {
         //when
         OfficeView officeView = createExpectedOfficeViewResponse(status().isCreated());
         //then
-        OfficeDao officeDao = officeRepository.getByDomainId(officeView.getId());
+        OfficeDAO officeDao = officeRepository.getByDomainId(officeView.getId());
         Office office = conversionService.convert(officeDao, Office.class);
         validateOffice(office);
     }
@@ -88,8 +87,8 @@ public class OfficeControllerTest {
 
     private void validateOffice(Office office) {
         assertTrue(Objects.nonNull(office));
-        assertTrue(Objects.nonNull(office.getId()));
-        assertFalse(office.getId().isBlank());
+        assertTrue(Objects.nonNull(office.getDomainId()));
+        assertFalse(office.getDomainId().isBlank());
         assertEquals(OFFICE_STREET_ADDRESS, office.getOfficeAddress().getOfficeStreetAddress());
         assertEquals(OFFICE_CITY_NAME, office.getOfficeAddress().getOfficeCityName());
         assertEquals(OFFICE_CITY_CODE, office.getOfficeAddress().getOfficePostalCode());

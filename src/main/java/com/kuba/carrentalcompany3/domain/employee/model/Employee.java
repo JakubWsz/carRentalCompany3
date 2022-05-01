@@ -1,23 +1,27 @@
 package com.kuba.carrentalcompany3.domain.employee.model;
 
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.EmployeeAddressDAO;
+
 import java.math.BigDecimal;
 
 public class Employee {
-    private String id;
+    private String domainId;
     private String firstname;
     private String lastname;
-    private String address;
+    private EmployeeAddress address;
     private int pesel;
-    private int accountNumber;
+    private String accountNumber;
     private BigDecimal salaryAmount;
     private String typeOfContract;
     private String position;
-    private String officeId;
+    private final String officeId;
     private boolean deleted;
 
-    private Employee(String id, String firstname, String lastname, String address, int pesel, int accountNumber,
-                     BigDecimal salaryAmount, String typeOfContract, String position, String officeId, boolean deleted) {
-        this.id = id;
+    private Employee(String id, String firstname, String lastname, EmployeeAddress address, int pesel,
+                     String accountNumber, BigDecimal salaryAmount, String typeOfContract, String position,
+                     String officeId, boolean deleted)
+    {
+        this.domainId = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
@@ -34,9 +38,9 @@ public class Employee {
         private String id;
         private String firstname;
         private String lastname;
-        private String address;
+        private EmployeeAddress address;
         private int pesel;
-        private int accountNumber;
+        private String accountNumber;
         private BigDecimal salaryAmount;
         private String typeOfContract;
         private String position;
@@ -58,7 +62,7 @@ public class Employee {
             return this;
         }
 
-        public EmployeeBuilder setAddress(String address) {
+        public EmployeeBuilder setAddress(EmployeeAddress address) {
             this.address = address;
             return this;
         }
@@ -68,7 +72,7 @@ public class Employee {
             return this;
         }
 
-        public EmployeeBuilder setAccountNumber(int accountNumber) {
+        public EmployeeBuilder setAccountNumber(String accountNumber) {
             this.accountNumber = accountNumber;
             return this;
         }
@@ -104,8 +108,8 @@ public class Employee {
         }
     }
 
-    public String getId() {
-        return id;
+    public String getDomainId() {
+        return domainId;
     }
 
     public String getFirstname() {
@@ -116,7 +120,7 @@ public class Employee {
         return lastname;
     }
 
-    public String getAddress() {
+    public EmployeeAddress getAddress() {
         return address;
     }
 
@@ -124,7 +128,7 @@ public class Employee {
         return pesel;
     }
 
-    public int getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
@@ -152,8 +156,8 @@ public class Employee {
         deleted = true;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDomainId(String domainId) {
+        this.domainId = domainId;
     }
 
     public void setFirstname(String firstname) {
@@ -164,7 +168,7 @@ public class Employee {
         this.lastname = lastname;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(EmployeeAddress address) {
         this.address = address;
     }
 
@@ -172,7 +176,7 @@ public class Employee {
         this.pesel = pesel;
     }
 
-    public void setAccountNumber(int accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -191,7 +195,7 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id='" + id + '\'' +
+                "id='" + domainId + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", address='" + address + '\'' +

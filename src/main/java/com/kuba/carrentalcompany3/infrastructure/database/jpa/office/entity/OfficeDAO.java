@@ -6,22 +6,22 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 @Entity
-public class OfficeDao extends BaseEntity {
+public class OfficeDAO extends BaseEntity {
     private String domainId;
     @Embedded
-    private OfficeAddressDao officeAddress;
+    private OfficeAddressDAO officeAddress;
     private String websiteURL;
     private String officeCEO;
 
 
-    public OfficeDao(String domainId, OfficeAddressDao officeAddress, String websiteURL, String officeCEO) {
+    public OfficeDAO(String domainId, OfficeAddressDAO officeAddress, String websiteURL, String officeCEO) {
         this.domainId = domainId;
         this.officeAddress = officeAddress;
         this.websiteURL = websiteURL;
         this.officeCEO = officeCEO;
     }
 
-    public OfficeDao(String domainId, OfficeAddressDao officeAddress, String websiteURL, String officeCEO,
+    public OfficeDAO(String domainId, OfficeAddressDAO officeAddress, String websiteURL, String officeCEO,
                      boolean deleted) {
         this.domainId = domainId;
         this.officeAddress = officeAddress;
@@ -30,14 +30,14 @@ public class OfficeDao extends BaseEntity {
         this.setDeleted(deleted);
     }
 
-    public OfficeDao() {
+    public OfficeDAO() {
     }
 
     public String getDomainId() {
         return domainId;
     }
 
-    public OfficeAddressDao getOfficeAddress() {
+    public OfficeAddressDAO getOfficeAddress() {
         return officeAddress;
     }
 

@@ -1,29 +1,31 @@
 package com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity;
 
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.BaseEntity;
-import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeAddressDao;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 @Entity
-public class EmployeeDao extends BaseEntity {
+public class EmployeeDAO extends BaseEntity {
     private String domainId;
     private String firstname;
     private String lastname;
-    private String address;
+    @Embedded
+    private EmployeeAddressDAO address;
     private int pesel;
-    private int accountNumber;
+    private String accountNumber;
     private BigDecimal salaryAmount;
     private String typeOfContract;
     private String position;
     private String officeId;
 
-    public EmployeeDao() {
+    public EmployeeDAO() {
     }
 
-    public EmployeeDao(String domainId, String firstname, String lastname, String address, int pesel, int accountNumber,
-                       BigDecimal salaryAmount, String typeOfContract, String position, String officeId) {
+    public EmployeeDAO(String domainId, String firstname, String lastname, EmployeeAddressDAO address, int pesel,
+                       String accountNumber, BigDecimal salaryAmount, String typeOfContract, String position,
+                       String officeId) {
         this.domainId = domainId;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -60,11 +62,11 @@ public class EmployeeDao extends BaseEntity {
         this.lastname = lastname;
     }
 
-    public String getAddress() {
+    public EmployeeAddressDAO getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(EmployeeAddressDAO address) {
         this.address = address;
     }
 
@@ -76,11 +78,11 @@ public class EmployeeDao extends BaseEntity {
         this.pesel = pesel;
     }
 
-    public int getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(int accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -107,4 +109,13 @@ public class EmployeeDao extends BaseEntity {
     public void setPosition(String position) {
         this.position = position;
     }
+
+    public String getOfficeId() {
+        return officeId;
+    }
+
+    public void setOfficeId(String officeId) {
+        this.officeId = officeId;
+    }
 }
+

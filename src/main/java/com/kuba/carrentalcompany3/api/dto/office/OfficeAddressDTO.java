@@ -1,4 +1,4 @@
-package com.kuba.carrentalcompany3.api.dto;
+package com.kuba.carrentalcompany3.api.dto.office;
 
 public class OfficeAddressDTO {
     private final String officeStreetAddress;

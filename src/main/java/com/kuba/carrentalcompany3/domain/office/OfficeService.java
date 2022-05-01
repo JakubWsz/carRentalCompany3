@@ -39,7 +39,7 @@ public class OfficeService {
         Office newOffice;
         isOfficeDeletedValidator(exOffice.isDeleted());
         newOffice = new Office.OfficeBuilder()
-                .setId(exOffice.getId())
+                .setId(exOffice.getDomainId())
                 .setOfficeAddress(officeAddress)
                 .setWebsiteURL(exOffice.getWebsiteURL())
                 .setOfficeCEO(exOffice.getOfficeCEO())
@@ -53,7 +53,7 @@ public class OfficeService {
         Office officeWithNewCEO;
         isOfficeDeletedValidator(office.isDeleted());
         officeWithNewCEO = new Office.OfficeBuilder()
-                .setId(office.getId())
+                .setId(office.getDomainId())
                 .setOfficeAddress(office.getOfficeAddress())
                 .setWebsiteURL(office.getWebsiteURL())
                 .setOfficeCEO(newCEO)
@@ -67,7 +67,7 @@ public class OfficeService {
         Office officeWithNewWebsite;
         isOfficeDeletedValidator(office.isDeleted());
         officeWithNewWebsite = new Office.OfficeBuilder()
-                .setId(office.getId())
+                .setId(office.getDomainId())
                 .setOfficeAddress(office.getOfficeAddress())
                 .setWebsiteURL(newWebsite)
                 .setOfficeCEO(office.getOfficeCEO())
@@ -77,7 +77,8 @@ public class OfficeService {
     }
 
     private Office getOffice(String id) {
-        return officeRepository.getOffice(id).orElseThrow(() -> new DomainException(ClientExceptionCode.OFFICE_DOESNT_EXISTS));
+        return officeRepository.getOffice(id).orElseThrow(() ->
+                new DomainException(ClientExceptionCode.OFFICE_DOESNT_EXISTS));
     }
 
     private void isOfficeDeletedValidator(boolean deleted) {

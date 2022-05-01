@@ -24,7 +24,6 @@ import java.util.Locale;
 @Configuration
 public class ApplicationConfig {
 
-
     @Bean
     public ClientService clientService(ClientRepository clientRepository) {
         return new ClientService(clientRepository);
@@ -60,8 +59,9 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public EmployeeRepositoryAdapterJPA employeeRepositoryAdapterJPA(EmployeeRepositoryJPA employeeRepositoryJPA){
-        return new EmployeeRepositoryAdapterJPA(employeeRepositoryJPA);
+    public EmployeeRepositoryAdapterJPA employeeRepositoryAdapterJPA(EmployeeRepositoryJPA employeeRepositoryJPA,
+                                                                     ConversionService conversionService){
+        return new EmployeeRepositoryAdapterJPA(employeeRepositoryJPA, conversionService);
     }
 
     @Bean

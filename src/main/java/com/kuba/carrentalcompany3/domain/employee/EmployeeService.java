@@ -1,27 +1,24 @@
 package com.kuba.carrentalcompany3.domain.employee;
 
-import com.kuba.carrentalcompany3.api.dto.request.ChangeEmployeePositionRequest;
-import com.kuba.carrentalcompany3.api.dto.request.UpdateEmployeeRequest;
-import com.kuba.carrentalcompany3.api.dto.response.EmployeeDetailsView;
+import com.kuba.carrentalcompany3.api.dto.employee.request.ChangeEmployeePositionRequest;
 import com.kuba.carrentalcompany3.domain.employee.model.Employee;
+import com.kuba.carrentalcompany3.domain.employee.model.EmployeeAddress;
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.domain.exception.EmployeeExceptionCode;
-import org.springframework.core.convert.ConversionService;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
-    private ConversionService conversionService;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee hireEmployee(String firstname, String lastname, String address, int pesel, int accountNumber,
-                                 BigDecimal salaryAmount, String typeOfContract, String position,
-                                 String officeId) {
+    public Employee createEmployee(String firstname, String lastname, EmployeeAddress address, int pesel,
+                                   String accountNumber, BigDecimal salaryAmount, String typeOfContract, String position,
+                                   String officeId) {
         Employee employee = new Employee.EmployeeBuilder()
                 .setId(UUID.randomUUID().toString())
                 .setFirstname(firstname)
@@ -44,18 +41,16 @@ public class EmployeeService {
         employeeRepository.update(employee);
     }
 
-    public EmployeeDetailsView updateEmployee(UpdateEmployeeRequest updateRequest, String pesel) {
+    public void updateEmployee(Employee updateRequest, String pesel) {
         Employee employee = getEmployee(pesel);
         updatePartiallyEmployee(employee,updateRequest);
         employeeRepository.save(employee);
-        return conversionService.convert(employee,EmployeeDetailsView.class);
     }
 
-    public EmployeeDetailsView changeEmployeePosition(ChangeEmployeePositionRequest request, String pesel) {
+    public void changeEmployeePosition(ChangeEmployeePositionRequest request, String pesel) {
         Employee employee = getEmployee(pesel);
         updatePositionAndSalary(employee,request);
         employeeRepository.save(employee);
-        return conversionService.convert(employee,EmployeeDetailsView.class);
     }
 
     private Employee getEmployee(String pesel) {
@@ -81,7 +76,7 @@ public class EmployeeService {
         }
     }
 
-    private void updatePartiallyEmployee(Employee primaryEmployee, UpdateEmployeeRequest updateRequest) {
+    private void updatePartiallyEmployee(Employee primaryEmployee, Employee updateRequest) {
         if (updateRequest.getFirstname() != null){
             primaryEmployee.setFirstname(updateRequest.getFirstname());
         }
@@ -95,7 +90,7 @@ public class EmployeeService {
         }
 
         if (updateRequest.getAccountNumber() != null) {
-            primaryEmployee.setAccountNumber(Integer.parseInt(updateRequest.getAccountNumber()));
+            primaryEmployee.setAccountNumber(updateRequest.getAccountNumber());
         }
 
         if (updateRequest.getSalaryAmount() != null) {

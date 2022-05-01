@@ -1,18 +1,14 @@
 package com.kuba.carrentalcompany3.domain.office.model;
 
-import com.kuba.carrentalcompany3.domain.client.model.Client;
-
-import java.time.LocalDate;
-
 public class Office {
-    private final String id;
+    private final String domainId;
     private final OfficeAddress officeAddress;
     private final String websiteURL;
     private final String officeCEO;
     private boolean deleted;
 
    private Office(String id, OfficeAddress officeAddress, String websiteURL, String officeCEO, boolean deleted) {
-        this.id = id;
+        this.domainId = id;
         this.officeAddress = officeAddress;
         this.websiteURL = websiteURL;
         this.officeCEO = officeCEO;
@@ -76,11 +72,11 @@ public class Office {
         deleted = true;
     }
 
-    public String getId() {return id;}
+    public String getDomainId() {return domainId;}
     @Override
     public String toString() {
         return "Office{" +
-                "id='" + id + '\'' +
+                "id='" + domainId + '\'' +
                 ", officeAddress=" + officeAddress +
                 ", websiteURL='" + websiteURL + '\'' +
                 ", officeCEO='" + officeCEO + '\'' +

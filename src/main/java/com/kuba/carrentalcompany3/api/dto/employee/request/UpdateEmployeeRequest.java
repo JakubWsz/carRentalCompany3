@@ -1,16 +1,18 @@
-package com.kuba.carrentalcompany3.api.dto.request;
+package com.kuba.carrentalcompany3.api.dto.employee.request;
+
+import com.kuba.carrentalcompany3.api.dto.employee.EmployeeAddressDTO;
 
 import java.math.BigDecimal;
 
 public class UpdateEmployeeRequest {
     private final String firstname;
     private final String lastname;
-    private final String address;
+    private final EmployeeAddressDTO address;
     private final String accountNumber;
     private final BigDecimal salaryAmount;
     private final String typeOfContract;
 
-    public UpdateEmployeeRequest(String firstname, String lastname, String address, String accountNumber,
+    public UpdateEmployeeRequest(String firstname, String lastname, EmployeeAddressDTO address, String accountNumber,
                                  BigDecimal salaryAmount, String typeOfContract) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -28,7 +30,7 @@ public class UpdateEmployeeRequest {
         return lastname;
     }
 
-    public String getAddress() {
+    public EmployeeAddressDTO getAddress() {
         return address;
     }
 

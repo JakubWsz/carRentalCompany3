@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public class ClientDao extends BaseEntity {
+public class ClientDAO extends BaseEntity {
     private String domainId;
     private String firstname;
     private String lastname;
@@ -15,10 +15,10 @@ public class ClientDao extends BaseEntity {
     private String password;
     private LocalDate birthdate;
 
-    public ClientDao() {
+    public ClientDAO() {
     }
 
-    public ClientDao(String domainId, String firstname, String lastname, String email, String password,
+    public ClientDAO(String domainId, String firstname, String lastname, String email, String password,
                      LocalDate birthdate) {
         this.domainId = domainId;
         this.firstname = firstname;
@@ -81,7 +81,7 @@ public class ClientDao extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        ClientDao client = (ClientDao) o;
+        ClientDAO client = (ClientDAO) o;
         return Objects.equals(firstname, client.firstname) && Objects.equals(lastname, client.lastname) && Objects.equals(email, client.email) && Objects.equals(password, client.password) && Objects.equals(birthdate, client.birthdate);
     }
 

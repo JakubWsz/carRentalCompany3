@@ -17,16 +17,14 @@ public enum EmployeeExceptionCode implements ExceptionCode{
 
     @Override
     public String getCode() {
-        return null;
+        return code;
     }
 
     @Override
-    public String getMessage() {
-        return null;
-    }
+    public String getMessage() {return message; }
 
     @Override
     public int getStatus() {
-        return 0;
+        return status;
     }
 }

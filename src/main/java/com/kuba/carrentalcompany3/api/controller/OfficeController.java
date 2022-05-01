@@ -1,8 +1,8 @@
 package com.kuba.carrentalcompany3.api.controller;
 
-import com.kuba.carrentalcompany3.api.dto.OfficeAddressDTO;
-import com.kuba.carrentalcompany3.api.dto.request.CreateOfficeRequest;
-import com.kuba.carrentalcompany3.api.dto.response.OfficeView;
+import com.kuba.carrentalcompany3.api.dto.office.OfficeAddressDTO;
+import com.kuba.carrentalcompany3.api.dto.office.CreateOfficeRequest;
+import com.kuba.carrentalcompany3.api.dto.office.OfficeView;
 import com.kuba.carrentalcompany3.domain.office.OfficeService;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
@@ -50,5 +50,4 @@ public class OfficeController {
     public void updateWebsite(String newWebsite, String id){
         officeService.updateWebsite(newWebsite,id);
     }
-
 }

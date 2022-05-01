@@ -16,7 +16,7 @@ public class OfficeServiceTest {
     private static final String OFFICE_CITY_NAME = "Wodogrzmotów";
     private static final String OFFICE_CEO = "Jan Rodo";
     private static final String OFFICE_WEBSITE_URL = "https://www.fura.pl/";
-    private static final OfficeAddress officeAddress = new OfficeAddress(
+    private static final OfficeAddress OFFICE_ADDRESS = new OfficeAddress(
             OFFICE_STREET_ADDRESS, OFFICE_POSTAL_CODE, OFFICE_CITY_NAME);
     private final OfficeRepositoryMock repo = new OfficeRepositoryMock();
     private final OfficeService officeService = new OfficeService(repo);
@@ -27,13 +27,13 @@ public class OfficeServiceTest {
     }
 
     @Test
-    void shouldSetPassedPersonalData() {
+    void shouldSetPassedOfficeData() {
         //when
-        Office createdOffice = officeService.createOffice(officeAddress, OFFICE_WEBSITE_URL, OFFICE_CEO);
+        Office createdOffice = officeService.createOffice(OFFICE_ADDRESS, OFFICE_WEBSITE_URL, OFFICE_CEO);
 
         //then
-        assertTrue(Objects.nonNull(createdOffice.getId()));
-        assertFalse(createdOffice.getId().isBlank());
+        assertTrue(Objects.nonNull(createdOffice.getDomainId()));
+        assertFalse(createdOffice.getDomainId().isBlank());
         assertEquals(createdOffice.getOfficeAddress().getOfficeStreetAddress(), OFFICE_STREET_ADDRESS);
         assertEquals(createdOffice.getOfficeAddress().getOfficePostalCode(), OFFICE_POSTAL_CODE);
         assertEquals(createdOffice.getOfficeAddress().getOfficeCityName(), OFFICE_CITY_NAME);

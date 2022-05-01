@@ -1,6 +1,6 @@
-package com.kuba.carrentalcompany3.api.dto.request;
+package com.kuba.carrentalcompany3.api.dto.office;
 
-import com.kuba.carrentalcompany3.api.dto.OfficeAddressDTO;
+import com.kuba.carrentalcompany3.api.dto.office.OfficeAddressDTO;
 
 public class CreateOfficeRequest {
     private final OfficeAddressDTO officeAddressDTO;

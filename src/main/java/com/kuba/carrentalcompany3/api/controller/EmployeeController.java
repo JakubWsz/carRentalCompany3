@@ -1,12 +1,12 @@
 package com.kuba.carrentalcompany3.api.controller;
 
-import com.kuba.carrentalcompany3.api.dto.request.ChangeEmployeePositionRequest;
-import com.kuba.carrentalcompany3.api.dto.request.HireEmployeeRequest;
-import com.kuba.carrentalcompany3.api.dto.request.UpdateEmployeeRequest;
-import com.kuba.carrentalcompany3.api.dto.response.EmployeeDetailsView;
-import com.kuba.carrentalcompany3.api.dto.response.EmployeeView;
+import com.kuba.carrentalcompany3.api.dto.employee.request.ChangeEmployeePositionRequest;
+import com.kuba.carrentalcompany3.api.dto.employee.request.CreateEmployeeRequest;
+import com.kuba.carrentalcompany3.api.dto.employee.request.UpdateEmployeeRequest;
+import com.kuba.carrentalcompany3.api.dto.employee.EmployeeDetailsView;
 import com.kuba.carrentalcompany3.domain.employee.EmployeeService;
 import com.kuba.carrentalcompany3.domain.employee.model.Employee;
+import com.kuba.carrentalcompany3.domain.employee.model.EmployeeAddress;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,18 +24,18 @@ public class EmployeeController {
     }
 
     @PostMapping("/hire")
-    public ResponseEntity<EmployeeView> hireEmployee(@RequestBody HireEmployeeRequest employeeRequest) {
-        Employee employee = employeeService.hireEmployee(
-                employeeRequest.getFirstname(),
-                employeeRequest.getLastname(),
-                employeeRequest.getAddress(),
-                employeeRequest.getPesel(),
-                employeeRequest.getAccountNumber(),
-                employeeRequest.getSalaryAmount(),
-                employeeRequest.getTypeOfContract(),
-                employeeRequest.getPosition(),
-                employeeRequest.getOfficeId());
-        return new ResponseEntity<>(conversionService.convert(employee, EmployeeView.class), HttpStatus.CREATED);
+    public ResponseEntity<EmployeeDetailsView> createEmployee(@RequestBody CreateEmployeeRequest createEmployeeRequest) {
+        Employee employee = employeeService.createEmployee(
+                createEmployeeRequest.getFirstname(),
+                createEmployeeRequest.getLastname(),
+                conversionService.convert(createEmployeeRequest.getEmployeeAddressDTO(), EmployeeAddress.class),
+                createEmployeeRequest.getPesel(),
+                createEmployeeRequest.getAccountNumber(),
+                createEmployeeRequest.getSalaryAmount(),
+                createEmployeeRequest.getTypeOfContract(),
+                createEmployeeRequest.getPosition(),
+                createEmployeeRequest.getOfficeId());
+        return new ResponseEntity<>(conversionService.convert(employee, EmployeeDetailsView.class), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/remove")
@@ -44,14 +44,22 @@ public class EmployeeController {
     }
 
     @PatchMapping("/update-data/{pesel}")
-    public EmployeeDetailsView updateEmployee(@RequestBody UpdateEmployeeRequest request, @PathVariable String pesel) {
-        return employeeService.updateEmployee(request, pesel);
+    public void updateEmployee(@RequestBody UpdateEmployeeRequest updateEmployeeRequest, @PathVariable String pesel) {
+        employeeService.updateEmployee(new Employee.EmployeeBuilder()
+                .setFirstname(updateEmployeeRequest.getFirstname())
+                .setLastname(updateEmployeeRequest.getLastname())
+                .setAddress(conversionService.convert(updateEmployeeRequest.getAddress(), EmployeeAddress.class))
+                .setAccountNumber(updateEmployeeRequest.getAccountNumber())
+                .setSalaryAmount(updateEmployeeRequest.getSalaryAmount())
+                .setTypeOfContract(updateEmployeeRequest.getTypeOfContract())
+                .build(),
+                pesel);
     }
 
     @PatchMapping("/change-position/{pesel}")
-    public EmployeeDetailsView changePosition(@RequestBody ChangeEmployeePositionRequest request,
-                                              @PathVariable String pesel) {
-        return employeeService.changeEmployeePosition(request,pesel);
+    public void changePosition(@RequestBody ChangeEmployeePositionRequest request,
+                               @PathVariable String pesel) {
+        employeeService.changeEmployeePosition(request, pesel);
     }
 
 }

@@ -28,7 +28,7 @@ public class ClientRepositoryMock implements ClientRepository {
 
     public Optional<Client> getClientById(String id) {
         return clients.stream()
-                .filter(client -> client.getId().equals(id))
+                .filter(client -> client.getDomainId().equals(id))
                 .findAny();
     }
 

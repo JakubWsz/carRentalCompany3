@@ -1,7 +1,7 @@
 package com.kuba.carrentalcompany3.api.controller;
 
-import com.kuba.carrentalcompany3.api.dto.request.CreateAccountRequest;
-import com.kuba.carrentalcompany3.api.dto.response.ClientView;
+import com.kuba.carrentalcompany3.api.dto.client.CreateClientRequest;
+import com.kuba.carrentalcompany3.api.dto.client.ClientView;
 import com.kuba.carrentalcompany3.domain.client.ClientService;
 import com.kuba.carrentalcompany3.domain.client.model.Client;
 import org.springframework.core.convert.ConversionService;
@@ -24,13 +24,13 @@ public class ClientController {
     }
 
     @PostMapping("/create-account")
-    public ResponseEntity<ClientView> createAccount(@RequestBody CreateAccountRequest createAccountRequest) {
-        Client client = clientService.createAccount(
-                createAccountRequest.getFirstname(),
-                createAccountRequest.getLastname(),
-                createAccountRequest.getEmail(),
-                createAccountRequest.getPassword(),
-                createAccountRequest.getBirthdate());
+    public ResponseEntity<ClientView> createAccount(@RequestBody CreateClientRequest createClientRequest) {
+        Client client = clientService.createClient(
+                createClientRequest.getFirstname(),
+                createClientRequest.getLastname(),
+                createClientRequest.getEmail(),
+                createClientRequest.getPassword(),
+                createClientRequest.getBirthdate());
         return new ResponseEntity<>(conversionService.convert(client, ClientView.class), HttpStatus.CREATED);
     }
 }

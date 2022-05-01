@@ -1,14 +1,12 @@
 package com.kuba.carrentalcompany3.infrastructure.config;
 
 import com.kuba.carrentalcompany3.infrastructure.converter.client.api.ClientToClientViewConverter;
-import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientDaoToClientConverter;
-import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientToDaoClientConverter;
+import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientDAOToClientConverter;
+import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientToDAOClientConverter;
+import com.kuba.carrentalcompany3.infrastructure.converter.employee.api.EmployeeAddressDTOToEmployeeAddress;
 import com.kuba.carrentalcompany3.infrastructure.converter.employee.api.EmployeeToEmployeeDetailsView;
-import com.kuba.carrentalcompany3.infrastructure.converter.employee.jpa.EmployeeDaoToEmploy;
-import com.kuba.carrentalcompany3.infrastructure.converter.office.api.OfficeAddressToOfficeAddressDao;
-import com.kuba.carrentalcompany3.infrastructure.converter.office.jpa.OfficeAddressDTOToOfficeAddress;
-import com.kuba.carrentalcompany3.infrastructure.converter.office.api.OfficeAddressDaoToOfficeAddress;
-import com.kuba.carrentalcompany3.infrastructure.converter.office.api.OfficeToOfficeView;
+import com.kuba.carrentalcompany3.infrastructure.converter.employee.jpa.EmployeeDAOToEmploy;
+import com.kuba.carrentalcompany3.infrastructure.converter.office.api.*;
 import com.kuba.carrentalcompany3.infrastructure.converter.office.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -26,16 +24,17 @@ public class SpringConvertersConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new ClientToClientViewConverter());
-        registry.addConverter(new ClientDaoToClientConverter());
-        registry.addConverter(new ClientToDaoClientConverter());
-        registry.addConverter(new EmployeeDaoToEmploy());
+        registry.addConverter(new ClientDAOToClientConverter());
+        registry.addConverter(new ClientToDAOClientConverter());
         registry.addConverter(new OfficeAddressDTOToOfficeAddress());
-        registry.addConverter(new OfficeAddressToOfficeAddressDao());
-        registry.addConverter(new OfficeAddressDaoToOfficeAddress());
+        registry.addConverter(new OfficeAddressToOfficeAddressDAO());
+        registry.addConverter(new OfficeAddressDAOToOfficeAddress());
         registry.addConverter(new OfficeAddressToOfficeAddressDTO());
         registry.addConverter(new OfficeToOfficeView(conversionService));
-        registry.addConverter(new OfficeDaoOptionalToOffice(conversionService));
-        registry.addConverter(new OfficeToOfficeDao(conversionService));
-        registry.addConverter(new EmployeeToEmployeeDetailsView());
+        registry.addConverter(new OfficeDAOOptionalToOffice(conversionService));
+        registry.addConverter(new OfficeToOfficeDAO(conversionService));
+        registry.addConverter(new EmployeeDAOToEmploy());
+        registry.addConverter(new EmployeeToEmployeeDetailsView(conversionService));
+        registry.addConverter(new EmployeeAddressDTOToEmployeeAddress());
     }
 }

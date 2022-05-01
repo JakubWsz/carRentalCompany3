@@ -3,15 +3,15 @@ package com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class OfficeAddressDao {
+public class OfficeAddressDAO {
     private String officeStreetAddress;
     private String officePostalCode;
     private String officeCityName;
 
-    public OfficeAddressDao() {
+    public OfficeAddressDAO() {
     }
 
-    public OfficeAddressDao(String officeStreetAddress, String officePostalCode, String officeCityName) {
+    public OfficeAddressDAO(String officeStreetAddress, String officePostalCode, String officeCityName) {
         this.officeStreetAddress = officeStreetAddress;
         this.officePostalCode = officePostalCode;
         this.officeCityName = officeCityName;

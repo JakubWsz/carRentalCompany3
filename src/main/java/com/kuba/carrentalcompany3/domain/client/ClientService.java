@@ -16,7 +16,7 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    public Client createAccount(String firstname, String lastname, String email, String password, LocalDate birthdate) {
+    public Client createClient(String firstname, String lastname, String email, String password, LocalDate birthdate) {
         validateEmailDuplication(email);
         Client client = new Client.ClientBuilder()
                 .setId( UUID.randomUUID().toString())

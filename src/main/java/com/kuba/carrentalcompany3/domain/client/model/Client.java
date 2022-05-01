@@ -1,10 +1,9 @@
 package com.kuba.carrentalcompany3.domain.client.model;
 
 import java.time.LocalDate;
-import java.util.Observable;
 
 public class Client {
-     String id;
+     String domainId;
      String firstname;
      String lastname;
      String email;
@@ -12,7 +11,7 @@ public class Client {
      LocalDate birthdate;
 
    private Client(String id, String firstname, String lastname, String email, String password, LocalDate birthdate) {
-        this.id = id;
+        this.domainId = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -62,8 +61,8 @@ public class Client {
             return new Client(id, firstname, lastname, email, password, birthdate);
         }
     }
-    public String getId() {
-        return id;
+    public String getDomainId() {
+        return domainId;
     }
 
     public String getFirstname() {
@@ -89,7 +88,7 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "id='" + id + '\'' +
+                "id='" + domainId + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +

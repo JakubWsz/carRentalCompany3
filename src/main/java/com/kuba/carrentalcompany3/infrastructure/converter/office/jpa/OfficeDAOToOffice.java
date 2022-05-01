@@ -1,18 +1,18 @@
-package com.kuba.carrentalcompany3.infrastructure.converter.office.dao;
+package com.kuba.carrentalcompany3.infrastructure.converter.office.jpa;
 
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
-import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeAddressDao;
-import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeDao;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeAddressDAO;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeDAO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OfficeDaoToOffice implements Converter<OfficeDao, Office> {
+public class OfficeDAOToOffice implements Converter<OfficeDAO, Office> {
 
     @Override
-    public Office convert(OfficeDao officeDao) {
-        OfficeAddressDao officeAddressDao = officeDao.getOfficeAddress();
+    public Office convert(OfficeDAO officeDao) {
+        OfficeAddressDAO officeAddressDao = officeDao.getOfficeAddress();
         return new Office.OfficeBuilder()
                 .setId(officeDao.getDomainId())
                 .setOfficeAddress(new OfficeAddress(officeAddressDao.getOfficeStreetAddress(),
