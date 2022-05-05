@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class OfficeControllerTest {
     private static final String CREATE_OFFICE_ENDPOINT = "/office/create";
-    private static final String DELETE_OFFICE_ENDPOINT = "/office/{id}/delete";
+    private static final String DELETE_OFFICE_ENDPOINT = "/office/%s/delete";
     private static final String OFFICE_STREET_ADDRESS = "Szkolna 17";
     private static final String OFFICE_CITY_CODE = "23-407";
     private static final String OFFICE_CITY_NAME = "Lublin";
@@ -113,7 +113,7 @@ public class OfficeControllerTest {
 
     private void deleteOfficeRequest(String id) throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                .delete(DELETE_OFFICE_ENDPOINT).param("id", id))
+                .delete(String.format(DELETE_OFFICE_ENDPOINT, id)))
                 .andReturn();
     }
 }
