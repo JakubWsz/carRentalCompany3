@@ -1,6 +1,8 @@
 package com.kuba.carrentalcompany3.domain.employee.model;
 
-import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.EmployeeAddressDAO;
+import com.kuba.carrentalcompany3.domain.Address;
+import com.kuba.carrentalcompany3.domain.UpdateProcess;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.ContractType;
 
 import java.math.BigDecimal;
 
@@ -8,19 +10,21 @@ public class Employee {
     private String domainId;
     private String firstname;
     private String lastname;
-    private EmployeeAddress address;
-    private int pesel;
+    private Address address;
+    private String pesel;
     private String accountNumber;
     private BigDecimal salaryAmount;
-    private String typeOfContract;
+    private ContractType contractType;
     private String position;
-    private final String officeId;
+    private String officeId;
     private boolean deleted;
 
-    private Employee(String id, String firstname, String lastname, EmployeeAddress address, int pesel,
-                     String accountNumber, BigDecimal salaryAmount, String typeOfContract, String position,
-                     String officeId, boolean deleted)
-    {
+    public Employee() {
+    }
+
+    private Employee(String id, String firstname, String lastname, Address address, String pesel,
+                     String accountNumber, BigDecimal salaryAmount, ContractType contractType, String position,
+                     String officeId, boolean deleted) {
         this.domainId = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -28,7 +32,7 @@ public class Employee {
         this.pesel = pesel;
         this.accountNumber = accountNumber;
         this.salaryAmount = salaryAmount;
-        this.typeOfContract = typeOfContract;
+        this.contractType = contractType;
         this.position = position;
         this.officeId = officeId;
         this.deleted = deleted;
@@ -38,11 +42,11 @@ public class Employee {
         private String id;
         private String firstname;
         private String lastname;
-        private EmployeeAddress address;
-        private int pesel;
+        private Address address;
+        private String pesel;
         private String accountNumber;
         private BigDecimal salaryAmount;
-        private String typeOfContract;
+        private ContractType contractType;
         private String position;
         private String officeId;
         private boolean deleted;
@@ -62,12 +66,12 @@ public class Employee {
             return this;
         }
 
-        public EmployeeBuilder setAddress(EmployeeAddress address) {
+        public EmployeeBuilder setAddress(Address address) {
             this.address = address;
             return this;
         }
 
-        public EmployeeBuilder setPesel(int pesel) {
+        public EmployeeBuilder setPesel(String pesel) {
             this.pesel = pesel;
             return this;
         }
@@ -82,8 +86,8 @@ public class Employee {
             return this;
         }
 
-        public EmployeeBuilder setTypeOfContract(String typeOfContract) {
-            this.typeOfContract = typeOfContract;
+        public EmployeeBuilder setTypeOfContract(ContractType contractType) {
+            this.contractType = contractType;
             return this;
         }
 
@@ -103,7 +107,7 @@ public class Employee {
         }
 
         public Employee build() {
-            return new Employee(id, firstname, lastname, address, pesel, accountNumber, salaryAmount, typeOfContract,
+            return new Employee(id, firstname, lastname, address, pesel, accountNumber, salaryAmount, contractType,
                     position, officeId, deleted);
         }
     }
@@ -120,11 +124,11 @@ public class Employee {
         return lastname;
     }
 
-    public EmployeeAddress getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public int getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
@@ -136,8 +140,8 @@ public class Employee {
         return salaryAmount;
     }
 
-    public String getTypeOfContract() {
-        return typeOfContract;
+    public ContractType getContractType() {
+        return contractType;
     }
 
     public String getPosition() {
@@ -156,40 +160,27 @@ public class Employee {
         deleted = true;
     }
 
-    public void setDomainId(String domainId) {
-        this.domainId = domainId;
-    }
+    public Employee update(Employee other) {
+        Employee employee = new Employee(domainId, firstname, lastname, address, pesel, accountNumber, salaryAmount,
+                contractType, position, officeId, deleted);
+        UpdateProcess<Employee> updateProcess = (check, action) -> {
+            if (check.test(employee)) {
+                action.run();
+            }
+        };
+        updateProcess.update(e -> e.firstname.equals(other.firstname), () -> employee.firstname = other.firstname);
+        updateProcess.update(e -> e.lastname.equals(other.lastname), () -> employee.lastname = other.lastname);
+        updateProcess.update(e -> e.address.equals(other.address), () -> employee.address = other.address);
+        updateProcess.update(e -> e.accountNumber.equals(other.accountNumber),
+                () -> employee.salaryAmount = other.salaryAmount);
+        updateProcess.update(e -> e.accountNumber.equals(other.accountNumber),
+                () -> employee.salaryAmount = other.salaryAmount);
+        updateProcess.update(e -> e.contractType.equals(other.contractType),
+                () -> employee.contractType = other.contractType);
+        updateProcess.update(e -> e.position.equals(other.position),
+                () -> employee.position = other.position);
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public void setAddress(EmployeeAddress address) {
-        this.address = address;
-    }
-
-    public void setPesel(int pesel) {
-        this.pesel = pesel;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public void setSalaryAmount(BigDecimal salaryAmount) {
-        this.salaryAmount = salaryAmount;
-    }
-
-    public void setTypeOfContract(String typeOfContract) {
-        this.typeOfContract = typeOfContract;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
+        return employee;
     }
 
     @Override
@@ -202,7 +193,7 @@ public class Employee {
                 ", pesel=" + pesel +
                 ", accountNumber=" + accountNumber +
                 ", salaryAmount=" + salaryAmount +
-                ", typeOfContract='" + typeOfContract + '\'' +
+                ", typeOfContract='" + contractType + '\'' +
                 ", position='" + position + '\'' +
                 ", officeId='" + officeId + '\'' +
                 ", deleted=" + deleted +

@@ -1,10 +1,12 @@
 package com.kuba.carrentalcompany3.domain.employee;
 
 import com.kuba.carrentalcompany3.api.dto.employee.request.ChangeEmployeePositionRequest;
+import com.kuba.carrentalcompany3.domain.Address;
 import com.kuba.carrentalcompany3.domain.employee.model.Employee;
-import com.kuba.carrentalcompany3.domain.employee.model.EmployeeAddress;
+import com.kuba.carrentalcompany3.domain.employee.validator.EmployeeValidator;
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.domain.exception.EmployeeExceptionCode;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.ContractType;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -16,9 +18,9 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee createEmployee(String firstname, String lastname, EmployeeAddress address, int pesel,
-                                   String accountNumber, BigDecimal salaryAmount, String typeOfContract, String position,
-                                   String officeId) {
+    public Employee createEmployee(String firstname, String lastname, Address address, String pesel,
+                                   String accountNumber, BigDecimal salaryAmount, ContractType contractType,
+                                   String position, String officeId) {
         Employee employee = new Employee.EmployeeBuilder()
                 .setId(UUID.randomUUID().toString())
                 .setFirstname(firstname)
@@ -27,11 +29,12 @@ public class EmployeeService {
                 .setPesel(pesel)
                 .setAccountNumber(accountNumber)
                 .setSalaryAmount(salaryAmount)
-                .setTypeOfContract(typeOfContract)
+                .setTypeOfContract(contractType)
                 .setPosition(position)
                 .setOfficeId(officeId)
                 .setDeleted(false)
                 .build();
+        EmployeeValidator.validateEmployee(employee);
         return employeeRepository.save(employee);
     }
 
@@ -41,20 +44,14 @@ public class EmployeeService {
         employeeRepository.update(employee);
     }
 
-    public void updateEmployee(Employee updateRequest, String pesel) {
-        Employee employee = getEmployee(pesel);
-        updatePartiallyEmployee(employee,updateRequest);
+    public void updateEmployee(Employee updateRequest, String domainId) {
+        Employee employee = getEmployee(domainId);
+        employee = updatePartiallyEmployee(employee, updateRequest);
         employeeRepository.save(employee);
     }
 
-    public void changeEmployeePosition(ChangeEmployeePositionRequest request, String pesel) {
-        Employee employee = getEmployee(pesel);
-        updatePositionAndSalary(employee,request);
-        employeeRepository.save(employee);
-    }
-
-    private Employee getEmployee(String pesel) {
-        Employee employee = employeeRepository.getEmployee(pesel).orElseThrow(()
+    private Employee getEmployee(String domainId) {
+        Employee employee = employeeRepository.getEmployee(domainId).orElseThrow(()
                 -> new DomainException(EmployeeExceptionCode.EMPLOYEE_DOESNT_EXISTS));
         isEmployeeRemovedValidator(employee.isDeleted());
         return employee;
@@ -66,39 +63,7 @@ public class EmployeeService {
         }
     }
 
-    private void updatePositionAndSalary(Employee primaryEmployee,ChangeEmployeePositionRequest request) {
-        if (request.getPosition() != null){
-            primaryEmployee.setPosition(request.getPosition());
-        }
-
-        if (request.getPosition() != null) {
-            primaryEmployee.setSalaryAmount(request.getSalaryAmount());
-        }
-    }
-
-    private void updatePartiallyEmployee(Employee primaryEmployee, Employee updateRequest) {
-        if (updateRequest.getFirstname() != null){
-            primaryEmployee.setFirstname(updateRequest.getFirstname());
-        }
-
-        if (updateRequest.getLastname() != null) {
-            primaryEmployee.setLastname(updateRequest.getLastname());
-        }
-
-        if (updateRequest.getAddress() != null) {
-            primaryEmployee.setAddress(updateRequest.getAddress());
-        }
-
-        if (updateRequest.getAccountNumber() != null) {
-            primaryEmployee.setAccountNumber(updateRequest.getAccountNumber());
-        }
-
-        if (updateRequest.getSalaryAmount() != null) {
-            primaryEmployee.setSalaryAmount(updateRequest.getSalaryAmount());
-        }
-
-        if (updateRequest.getTypeOfContract() != null) {
-            primaryEmployee.setTypeOfContract(updateRequest.getTypeOfContract());
-        }
+    private Employee updatePartiallyEmployee(Employee primaryEmployee, Employee updateRequest) {
+        return primaryEmployee.update(updateRequest);
     }
 }

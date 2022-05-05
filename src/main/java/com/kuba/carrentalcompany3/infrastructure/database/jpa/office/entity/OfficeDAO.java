@@ -1,5 +1,6 @@
 package com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity;
 
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.AddressDAO;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.BaseEntity;
 
 import javax.persistence.Embedded;
@@ -9,19 +10,19 @@ import javax.persistence.Entity;
 public class OfficeDAO extends BaseEntity {
     private String domainId;
     @Embedded
-    private OfficeAddressDAO officeAddress;
+    private AddressDAO officeAddress;
     private String websiteURL;
     private String officeCEO;
 
 
-    public OfficeDAO(String domainId, OfficeAddressDAO officeAddress, String websiteURL, String officeCEO) {
+    public OfficeDAO(String domainId, AddressDAO officeAddress, String websiteURL, String officeCEO) {
         this.domainId = domainId;
         this.officeAddress = officeAddress;
         this.websiteURL = websiteURL;
         this.officeCEO = officeCEO;
     }
 
-    public OfficeDAO(String domainId, OfficeAddressDAO officeAddress, String websiteURL, String officeCEO,
+    public OfficeDAO(String domainId, AddressDAO officeAddress, String websiteURL, String officeCEO,
                      boolean deleted) {
         this.domainId = domainId;
         this.officeAddress = officeAddress;
@@ -37,7 +38,7 @@ public class OfficeDAO extends BaseEntity {
         return domainId;
     }
 
-    public OfficeAddressDAO getOfficeAddress() {
+    public AddressDAO getOfficeAddress() {
         return officeAddress;
     }
 

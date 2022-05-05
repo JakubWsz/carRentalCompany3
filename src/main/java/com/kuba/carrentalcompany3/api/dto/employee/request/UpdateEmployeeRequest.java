@@ -1,25 +1,26 @@
 package com.kuba.carrentalcompany3.api.dto.employee.request;
 
-import com.kuba.carrentalcompany3.api.dto.employee.EmployeeAddressDTO;
+import com.kuba.carrentalcompany3.api.dto.AddressDTO;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.ContractType;
 
 import java.math.BigDecimal;
 
 public class UpdateEmployeeRequest {
     private final String firstname;
     private final String lastname;
-    private final EmployeeAddressDTO address;
+    private final AddressDTO addressDTO;
     private final String accountNumber;
     private final BigDecimal salaryAmount;
-    private final String typeOfContract;
+    private final ContractType contractType;
 
-    public UpdateEmployeeRequest(String firstname, String lastname, EmployeeAddressDTO address, String accountNumber,
-                                 BigDecimal salaryAmount, String typeOfContract) {
+    public UpdateEmployeeRequest(String firstname, String lastname, AddressDTO addressDTO, String accountNumber,
+                                 BigDecimal salaryAmount, ContractType contractType) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.address = address;
+        this.addressDTO = addressDTO;
         this.accountNumber = accountNumber;
         this.salaryAmount = salaryAmount;
-        this.typeOfContract = typeOfContract;
+        this.contractType = contractType;
     }
 
     public String getFirstname() {
@@ -30,8 +31,8 @@ public class UpdateEmployeeRequest {
         return lastname;
     }
 
-    public EmployeeAddressDTO getAddress() {
-        return address;
+    public AddressDTO getAddressDTO() {
+        return addressDTO;
     }
 
     public String getAccountNumber() {
@@ -42,7 +43,7 @@ public class UpdateEmployeeRequest {
         return salaryAmount;
     }
 
-    public String getTypeOfContract() {
-        return typeOfContract;
+    public ContractType getContractType() {
+        return contractType;
     }
 }

@@ -1,9 +1,12 @@
 package com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity;
 
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.AddressDAO;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.BaseEntity;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.math.BigDecimal;
 
 @Entity
@@ -12,19 +15,20 @@ public class EmployeeDAO extends BaseEntity {
     private String firstname;
     private String lastname;
     @Embedded
-    private EmployeeAddressDAO address;
-    private int pesel;
+    private AddressDAO address;
+    private String pesel;
     private String accountNumber;
     private BigDecimal salaryAmount;
-    private String typeOfContract;
+    @Enumerated(EnumType.STRING)
+    private ContractType contractType;
     private String position;
     private String officeId;
 
     public EmployeeDAO() {
     }
 
-    public EmployeeDAO(String domainId, String firstname, String lastname, EmployeeAddressDAO address, int pesel,
-                       String accountNumber, BigDecimal salaryAmount, String typeOfContract, String position,
+    public EmployeeDAO(String domainId, String firstname, String lastname, AddressDAO address, String pesel,
+                       String accountNumber, BigDecimal salaryAmount, ContractType contractType, String position,
                        String officeId) {
         this.domainId = domainId;
         this.firstname = firstname;
@@ -33,7 +37,7 @@ public class EmployeeDAO extends BaseEntity {
         this.pesel = pesel;
         this.accountNumber = accountNumber;
         this.salaryAmount = salaryAmount;
-        this.typeOfContract = typeOfContract;
+        this.contractType = contractType;
         this.position = position;
         this.officeId = officeId;
     }
@@ -62,19 +66,19 @@ public class EmployeeDAO extends BaseEntity {
         this.lastname = lastname;
     }
 
-    public EmployeeAddressDAO getAddress() {
+    public AddressDAO getAddress() {
         return address;
     }
 
-    public void setAddress(EmployeeAddressDAO address) {
+    public void setAddress(AddressDAO address) {
         this.address = address;
     }
 
-    public int getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
-    public void setPesel(int pesel) {
+    public void setPesel(String pesel) {
         this.pesel = pesel;
     }
 
@@ -94,12 +98,12 @@ public class EmployeeDAO extends BaseEntity {
         this.salaryAmount = salaryAmount;
     }
 
-    public String getTypeOfContract() {
-        return typeOfContract;
+    public ContractType getContractType() {
+        return contractType;
     }
 
-    public void setTypeOfContract(String typeOfContract) {
-        this.typeOfContract = typeOfContract;
+    public void setContractType(ContractType typeOfContract) {
+        this.contractType = typeOfContract;
     }
 
     public String getPosition() {

@@ -1,6 +1,6 @@
 package com.kuba.carrentalcompany3.infrastructure.converter.employee.api;
 
-import com.kuba.carrentalcompany3.api.dto.employee.EmployeeAddressDTO;
+import com.kuba.carrentalcompany3.api.dto.AddressDTO;
 import com.kuba.carrentalcompany3.api.dto.employee.EmployeeDetailsView;
 import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import org.springframework.core.convert.ConversionService;
@@ -18,11 +18,11 @@ public class EmployeeToEmployeeDetailsView implements Converter<Employee, Employ
         return new EmployeeDetailsView(
                 employee.getFirstname(),
                 employee.getLastname(),
-                conversionService.convert(employee.getAddress(), EmployeeAddressDTO.class),
+                conversionService.convert(employee.getAddress(), AddressDTO.class),
                 employee.getPesel(),
-                Integer.parseInt(employee.getAccountNumber()),
+                employee.getAccountNumber(),
                 employee.getSalaryAmount(),
-                employee.getTypeOfContract(),
+                employee.getContractType(),
                 employee.getPosition(),
                 employee.getOfficeId()
         );

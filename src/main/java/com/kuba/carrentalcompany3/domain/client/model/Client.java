@@ -3,14 +3,14 @@ package com.kuba.carrentalcompany3.domain.client.model;
 import java.time.LocalDate;
 
 public class Client {
-     String domainId;
-     String firstname;
-     String lastname;
-     String email;
-     String password;
-     LocalDate birthdate;
+    private final String domainId;
+    private final String firstname;
+    private final String lastname;
+    private final String email;
+    private final String password;
+    private final LocalDate birthdate;
 
-   private Client(String id, String firstname, String lastname, String email, String password, LocalDate birthdate) {
+    private Client(String id, String firstname, String lastname, String email, String password, LocalDate birthdate) {
         this.domainId = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -61,6 +61,7 @@ public class Client {
             return new Client(id, firstname, lastname, email, password, birthdate);
         }
     }
+
     public String getDomainId() {
         return domainId;
     }

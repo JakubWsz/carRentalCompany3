@@ -1,11 +1,13 @@
 package com.kuba.carrentalcompany3.infrastructure.config;
 
+import com.kuba.carrentalcompany3.infrastructure.converter.AddressToAddressDTO;
 import com.kuba.carrentalcompany3.infrastructure.converter.client.api.ClientToClientViewConverter;
 import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientDAOToClientConverter;
 import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientToDAOClientConverter;
-import com.kuba.carrentalcompany3.infrastructure.converter.employee.api.EmployeeAddressDTOToEmployeeAddress;
+import com.kuba.carrentalcompany3.infrastructure.converter.AddressDTOToAddress;
 import com.kuba.carrentalcompany3.infrastructure.converter.employee.api.EmployeeToEmployeeDetailsView;
 import com.kuba.carrentalcompany3.infrastructure.converter.employee.jpa.EmployeeDAOToEmploy;
+import com.kuba.carrentalcompany3.infrastructure.converter.employee.jpa.EmployeeToEmployeeDAO;
 import com.kuba.carrentalcompany3.infrastructure.converter.office.api.*;
 import com.kuba.carrentalcompany3.infrastructure.converter.office.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +28,15 @@ public class SpringConvertersConfig implements WebMvcConfigurer {
         registry.addConverter(new ClientToClientViewConverter());
         registry.addConverter(new ClientDAOToClientConverter());
         registry.addConverter(new ClientToDAOClientConverter());
-        registry.addConverter(new OfficeAddressDTOToOfficeAddress());
-        registry.addConverter(new OfficeAddressToOfficeAddressDAO());
-        registry.addConverter(new OfficeAddressDAOToOfficeAddress());
-        registry.addConverter(new OfficeAddressToOfficeAddressDTO());
+        registry.addConverter(new AddressToAddressDAO());
+        registry.addConverter(new AddressDAOToAddress());
+        registry.addConverter(new AddressToAddressDTO());
         registry.addConverter(new OfficeToOfficeView(conversionService));
         registry.addConverter(new OfficeDAOOptionalToOffice(conversionService));
         registry.addConverter(new OfficeToOfficeDAO(conversionService));
         registry.addConverter(new EmployeeDAOToEmploy());
         registry.addConverter(new EmployeeToEmployeeDetailsView(conversionService));
-        registry.addConverter(new EmployeeAddressDTOToEmployeeAddress());
+        registry.addConverter(new AddressDTOToAddress());
+        registry.addConverter(new EmployeeToEmployeeDAO(conversionService));
     }
 }

@@ -1,14 +1,16 @@
 package com.kuba.carrentalcompany3.api.dto.office;
 
+import com.kuba.carrentalcompany3.api.dto.AddressDTO;
+
 public class OfficeView {
     private final String id;
-    private final OfficeAddressDTO officeAddress;
+    private final AddressDTO addressDTO;
     private final String websiteURL;
     private final String officeCEO;
 
-    public OfficeView(String id, OfficeAddressDTO officeAddress, String websiteURL, String officeCEO) {
+    public OfficeView(String id, AddressDTO addressDTO, String websiteURL, String officeCEO) {
         this.id = id;
-        this.officeAddress = officeAddress;
+        this.addressDTO = addressDTO;
         this.websiteURL = websiteURL;
         this.officeCEO = officeCEO;
     }
@@ -17,8 +19,8 @@ public class OfficeView {
         return id;
     }
 
-    public OfficeAddressDTO getOfficeAddress() {
-        return officeAddress;
+    public AddressDTO getAddressDTO() {
+        return addressDTO;
     }
 
     public String getWebsiteURL() {

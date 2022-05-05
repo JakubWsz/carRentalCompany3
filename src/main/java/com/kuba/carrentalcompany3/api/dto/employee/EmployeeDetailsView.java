@@ -1,22 +1,23 @@
 package com.kuba.carrentalcompany3.api.dto.employee;
 
-import com.kuba.carrentalcompany3.api.dto.employee.EmployeeAddressDTO;
+import com.kuba.carrentalcompany3.api.dto.AddressDTO;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.ContractType;
 
 import java.math.BigDecimal;
 
 public class EmployeeDetailsView {
     private final String firstname;
     private final String lastname;
-    private final EmployeeAddressDTO address;
-    private final int pesel;
-    private final int accountNumber;
+    private final AddressDTO address;
+    private final String pesel;
+    private final String accountNumber;
     private final BigDecimal salaryAmount;
-    private final String typeOfContract;
+    private final ContractType contractType;
     private final String position;
     private final String officeId;
 
-    public EmployeeDetailsView( String firstname, String lastname, EmployeeAddressDTO address, int pesel,
-                               int accountNumber, BigDecimal salaryAmount, String typeOfContract,
+    public EmployeeDetailsView(String firstname, String lastname, AddressDTO address, String pesel,
+                               String accountNumber, BigDecimal salaryAmount, ContractType contractType,
                                String position, String officeId) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -24,7 +25,7 @@ public class EmployeeDetailsView {
         this.pesel = pesel;
         this.accountNumber = accountNumber;
         this.salaryAmount = salaryAmount;
-        this.typeOfContract = typeOfContract;
+        this.contractType = contractType;
         this.position = position;
         this.officeId = officeId;
     }
@@ -37,15 +38,15 @@ public class EmployeeDetailsView {
         return lastname;
     }
 
-    public EmployeeAddressDTO getAddress() {
+    public AddressDTO getAddress() {
         return address;
     }
 
-    public int getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
-    public int getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
@@ -53,8 +54,8 @@ public class EmployeeDetailsView {
         return salaryAmount;
     }
 
-    public String getTypeOfContract() {
-        return typeOfContract;
+    public ContractType getContractType() {
+        return contractType;
     }
 
     public String getPosition() {

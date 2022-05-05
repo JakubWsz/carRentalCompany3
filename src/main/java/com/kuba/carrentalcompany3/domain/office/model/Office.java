@@ -1,15 +1,17 @@
 package com.kuba.carrentalcompany3.domain.office.model;
 
+import com.kuba.carrentalcompany3.domain.Address;
+
 public class Office {
     private final String domainId;
-    private final OfficeAddress officeAddress;
+    private final Address address;
     private final String websiteURL;
     private final String officeCEO;
     private boolean deleted;
 
-   private Office(String id, OfficeAddress officeAddress, String websiteURL, String officeCEO, boolean deleted) {
+   private Office(String id, Address address, String websiteURL, String officeCEO, boolean deleted) {
         this.domainId = id;
-        this.officeAddress = officeAddress;
+        this.address = address;
         this.websiteURL = websiteURL;
         this.officeCEO = officeCEO;
         this.deleted = deleted;
@@ -17,7 +19,7 @@ public class Office {
 
     public static class OfficeBuilder {
         private String id;
-        private OfficeAddress officeAddress;
+        private Address address;
         private String websiteURL;
         private String officeCEO;
         private boolean deleted;
@@ -27,8 +29,8 @@ public class Office {
             return this;
         }
 
-        public OfficeBuilder setOfficeAddress(OfficeAddress officeAddress) {
-            this.officeAddress = officeAddress;
+        public OfficeBuilder setAddress(Address address) {
+            this.address = address;
             return this;
         }
 
@@ -48,12 +50,12 @@ public class Office {
         }
 
         public Office build() {
-            return new Office(id, officeAddress, websiteURL, officeCEO, deleted);
+            return new Office(id, address, websiteURL, officeCEO, deleted);
         }
     }
 
-    public OfficeAddress getOfficeAddress() {
-        return officeAddress;
+    public Address getAddress() {
+        return address;
     }
 
     public String getWebsiteURL() {
@@ -77,7 +79,7 @@ public class Office {
     public String toString() {
         return "Office{" +
                 "id='" + domainId + '\'' +
-                ", officeAddress=" + officeAddress +
+                ", officeAddress=" + address +
                 ", websiteURL='" + websiteURL + '\'' +
                 ", officeCEO='" + officeCEO + '\'' +
                 ", deleted=" + deleted +

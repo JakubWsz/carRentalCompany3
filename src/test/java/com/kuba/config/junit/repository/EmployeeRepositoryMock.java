@@ -18,9 +18,8 @@ public class EmployeeRepositoryMock implements EmployeeRepository {
 
     @Override
     public Optional<Employee> getEmployee(String pesel) {
-        int peselInteger = Integer.parseInt(pesel);
         return employees.stream()
-                .filter(employee -> peselInteger == employee.getPesel())
+                .filter(employee -> pesel.equals(employee.getPesel()))
                 .findFirst();
     }
 

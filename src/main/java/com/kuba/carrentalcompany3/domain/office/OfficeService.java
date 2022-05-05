@@ -1,9 +1,9 @@
 package com.kuba.carrentalcompany3.domain.office;
 
+import com.kuba.carrentalcompany3.domain.Address;
 import com.kuba.carrentalcompany3.domain.exception.ClientExceptionCode;
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
-import com.kuba.carrentalcompany3.domain.office.model.OfficeAddress;
 import com.kuba.carrentalcompany3.domain.office.valiator.OfficeValidator;
 
 import java.util.UUID;
@@ -15,10 +15,10 @@ public class OfficeService {
         this.officeRepository = officeRepository;
     }
 
-    public Office createOffice(OfficeAddress officeAddress, String websiteUrl, String officeCeo) {
+    public Office createOffice(Address address, String websiteUrl, String officeCeo) {
         Office office = new Office.OfficeBuilder()
                 .setId(UUID.randomUUID().toString())
-                .setOfficeAddress(officeAddress)
+                .setAddress(address)
                 .setWebsiteURL(websiteUrl)
                 .setOfficeCEO(officeCeo)
                 .setDeleted(false)
@@ -27,20 +27,21 @@ public class OfficeService {
         return officeRepository.save(office);
     }
 
-    public void deleteOffice(String id) {
+    public Office deleteOffice(String id) {
         Office office = getOffice(id);
         isOfficeDeletedValidator(office.isDeleted());
         office.markAsDelete();
         officeRepository.update(office);
+        return office;
     }
 
-    public void relocateOffice(OfficeAddress officeAddress, String id) {
+    public void relocateOffice(Address address, String id) {
         Office exOffice = getOffice(id);
         Office newOffice;
         isOfficeDeletedValidator(exOffice.isDeleted());
         newOffice = new Office.OfficeBuilder()
                 .setId(exOffice.getDomainId())
-                .setOfficeAddress(officeAddress)
+                .setAddress(address)
                 .setWebsiteURL(exOffice.getWebsiteURL())
                 .setOfficeCEO(exOffice.getOfficeCEO())
                 .setDeleted(exOffice.isDeleted())
@@ -54,7 +55,7 @@ public class OfficeService {
         isOfficeDeletedValidator(office.isDeleted());
         officeWithNewCEO = new Office.OfficeBuilder()
                 .setId(office.getDomainId())
-                .setOfficeAddress(office.getOfficeAddress())
+                .setAddress(office.getAddress())
                 .setWebsiteURL(office.getWebsiteURL())
                 .setOfficeCEO(newCEO)
                 .setDeleted(office.isDeleted())
@@ -68,7 +69,7 @@ public class OfficeService {
         isOfficeDeletedValidator(office.isDeleted());
         officeWithNewWebsite = new Office.OfficeBuilder()
                 .setId(office.getDomainId())
-                .setOfficeAddress(office.getOfficeAddress())
+                .setAddress(office.getAddress())
                 .setWebsiteURL(newWebsite)
                 .setOfficeCEO(office.getOfficeCEO())
                 .setDeleted(office.isDeleted())

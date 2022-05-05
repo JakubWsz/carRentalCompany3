@@ -1,6 +1,6 @@
 package com.kuba.carrentalcompany3.infrastructure.converter.office.api;
 
-import com.kuba.carrentalcompany3.api.dto.office.OfficeAddressDTO;
+import com.kuba.carrentalcompany3.api.dto.AddressDTO;
 import com.kuba.carrentalcompany3.api.dto.office.OfficeView;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 import org.springframework.core.convert.ConversionService;
@@ -17,7 +17,7 @@ public class OfficeToOfficeView implements Converter<Office, OfficeView> {
     public OfficeView convert(Office office) {
         return new OfficeView(
                 office.getDomainId(),
-                conversionService.convert(office.getOfficeAddress(), OfficeAddressDTO.class),
+                conversionService.convert(office.getAddress(), AddressDTO.class),
                 office.getWebsiteURL(),
                 office.getOfficeCEO()
         );

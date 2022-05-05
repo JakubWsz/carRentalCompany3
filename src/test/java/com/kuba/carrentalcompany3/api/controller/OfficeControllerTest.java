@@ -1,10 +1,9 @@
 package com.kuba.carrentalcompany3.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kuba.carrentalcompany3.api.dto.office.OfficeAddressDTO;
+import com.kuba.carrentalcompany3.api.dto.AddressDTO;
 import com.kuba.carrentalcompany3.api.dto.office.CreateOfficeRequest;
 import com.kuba.carrentalcompany3.api.dto.office.OfficeView;
-import com.kuba.carrentalcompany3.domain.office.OfficeService;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryAdapterJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryJPA;
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class OfficeControllerTest {
     private static final String CREATE_OFFICE_ENDPOINT = "/office/create";
-    private static final String DELETE_OFFICE_ENDPOINT = "/office/delete";
+    private static final String DELETE_OFFICE_ENDPOINT = "/office/{id}/delete";
     private static final String OFFICE_STREET_ADDRESS = "Szkolna 17";
     private static final String OFFICE_CITY_CODE = "23-407";
     private static final String OFFICE_CITY_NAME = "Lublin";
@@ -45,8 +44,6 @@ public class OfficeControllerTest {
     private OfficeRepositoryAdapterJPA officeRepository;
     @Autowired
     private ConversionService conversionService;
-    @Autowired
-    private OfficeService officeService;
     @Autowired
     private OfficeRepositoryJPA officeRepositoryJPA;
 
@@ -89,15 +86,15 @@ public class OfficeControllerTest {
         assertTrue(Objects.nonNull(office));
         assertTrue(Objects.nonNull(office.getDomainId()));
         assertFalse(office.getDomainId().isBlank());
-        assertEquals(OFFICE_STREET_ADDRESS, office.getOfficeAddress().getOfficeStreetAddress());
-        assertEquals(OFFICE_CITY_NAME, office.getOfficeAddress().getOfficeCityName());
-        assertEquals(OFFICE_CITY_CODE, office.getOfficeAddress().getOfficePostalCode());
+        assertEquals(OFFICE_STREET_ADDRESS, office.getAddress().getStreetAddress());
+        assertEquals(OFFICE_CITY_NAME, office.getAddress().getCityName());
+        assertEquals(OFFICE_CITY_CODE, office.getAddress().getPostalCode());
         assertEquals(WEBSITE_URL, office.getWebsiteURL());
         assertEquals(OFFICE_CEO, office.getOfficeCEO());
     }
 
     private OfficeView createExpectedOfficeViewResponse(ResultMatcher... matchers) throws Exception {
-        CreateOfficeRequest request = new CreateOfficeRequest(new OfficeAddressDTO(OFFICE_STREET_ADDRESS,
+        CreateOfficeRequest request = new CreateOfficeRequest(new AddressDTO(OFFICE_STREET_ADDRESS,
                 OFFICE_CITY_CODE, OFFICE_CITY_NAME), WEBSITE_URL, OFFICE_CEO);
 
         ResultActions createOfficeRequest = createOfficeRequest(request)
