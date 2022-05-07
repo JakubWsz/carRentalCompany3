@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kuba.carrentalcompany3.api.dto.AddressDTO;
 import com.kuba.carrentalcompany3.api.dto.employee.EmployeeView;
 import com.kuba.carrentalcompany3.api.dto.employee.request.CreateEmployeeRequest;
+import com.kuba.carrentalcompany3.api.dto.office.OfficeView;
 import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.EmployeeRepositoryAdapterJPA;
@@ -35,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class EmployeeControllerTest {
     private static final String CREATE_EMPLOYEE_ENDPOINT = "/employee/create";
-    private static final String DELETE_EMPLOYEE_ENDPOINT = "/office/%s/delete";
+    private static final String DELETE_EMPLOYEE_ENDPOINT = "/employee/%s/remove";
     private static final String RELOCATE_EMPLOYEE_ENDPOINT = "/office/%s/relocate";
     private static final String CHANGE_EMPLOYEE_ENDPOINT = "/office/%s/changeCEO";
     private static final String FIRSTNAME = "Jan";
@@ -87,6 +88,18 @@ class EmployeeControllerTest {
         validateEmployee(employee);
     }
 
+    @Test
+    public void deleteEmployee_ShouldSetIsDeletedTrue() throws Exception {
+        //when
+        EmployeeView employeeView = createExpectedEmployeeDetailsViewResponse(status().isCreated());
+        deleteOfficeRequest(employeeView.getId());
+        //then
+        Employee employeeFromDB = conversionService.convert(employeeRepository.getEmployee(employeeView.getId()).get(),
+                Employee.class);
+        assertNotNull(employeeFromDB);
+        assertTrue(employeeFromDB.isDeleted());
+    }
+
     private EmployeeView createExpectedEmployeeDetailsViewResponse(ResultMatcher... matchers) throws Exception {
         CreateEmployeeRequest request = new CreateEmployeeRequest(FIRSTNAME,LASTNAME,ADDRESS,PESEL,ACCOUNT_NUMBER,
                 SALARY,CONTRACT_TYPE,POSITION,OFFICE_ID);
@@ -118,6 +131,12 @@ class EmployeeControllerTest {
         assertEquals(CONTRACT_TYPE, employee.getContractType());
         assertEquals(POSITION, employee.getPosition());
         assertEquals(OFFICE_ID, employee.getOfficeId());
+    }
+
+    private void deleteOfficeRequest(String id) throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                        .delete(String.format(DELETE_EMPLOYEE_ENDPOINT, id)))
+                .andReturn();
     }
 
 }
