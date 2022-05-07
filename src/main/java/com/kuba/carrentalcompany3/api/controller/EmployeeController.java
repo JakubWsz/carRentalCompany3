@@ -1,6 +1,6 @@
 package com.kuba.carrentalcompany3.api.controller;
 
-import com.kuba.carrentalcompany3.api.dto.employee.EmployeeDetailsView;
+import com.kuba.carrentalcompany3.api.dto.employee.EmployeeView;
 import com.kuba.carrentalcompany3.api.dto.employee.request.CreateEmployeeRequest;
 import com.kuba.carrentalcompany3.api.dto.employee.request.UpdateEmployeeRequest;
 import com.kuba.carrentalcompany3.domain.Address;
@@ -22,8 +22,8 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("/hire")
-    public ResponseEntity<EmployeeDetailsView> createEmployee(@RequestBody CreateEmployeeRequest createEmployeeRequest) {
+    @PostMapping("/create")
+    public ResponseEntity<EmployeeView> createEmployee(@RequestBody CreateEmployeeRequest createEmployeeRequest) {
         Employee employee = employeeService.createEmployee(
                 createEmployeeRequest.getFirstname(),
                 createEmployeeRequest.getLastname(),
@@ -34,7 +34,7 @@ public class EmployeeController {
                 createEmployeeRequest.getContractType(),
                 createEmployeeRequest.getPosition(),
                 createEmployeeRequest.getOfficeId());
-        return new ResponseEntity<>(conversionService.convert(employee, EmployeeDetailsView.class), HttpStatus.CREATED);
+        return new ResponseEntity<>(conversionService.convert(employee, EmployeeView.class), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}/remove")

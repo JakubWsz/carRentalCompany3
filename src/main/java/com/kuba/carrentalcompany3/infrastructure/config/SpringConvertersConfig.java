@@ -5,7 +5,8 @@ import com.kuba.carrentalcompany3.infrastructure.converter.client.api.ClientToCl
 import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientDAOToClientConverter;
 import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientToDAOClientConverter;
 import com.kuba.carrentalcompany3.infrastructure.converter.AddressDTOToAddress;
-import com.kuba.carrentalcompany3.infrastructure.converter.employee.api.EmployeeToEmployeeDetailsView;
+import com.kuba.carrentalcompany3.infrastructure.converter.employee.api.EmployeeToEmployeeView;
+import com.kuba.carrentalcompany3.infrastructure.converter.employee.api.EmployeeViewToEmployee;
 import com.kuba.carrentalcompany3.infrastructure.converter.employee.jpa.EmployeeDAOToEmploy;
 import com.kuba.carrentalcompany3.infrastructure.converter.employee.jpa.EmployeeToEmployeeDAO;
 import com.kuba.carrentalcompany3.infrastructure.converter.office.api.*;
@@ -35,8 +36,9 @@ public class SpringConvertersConfig implements WebMvcConfigurer {
         registry.addConverter(new OfficeDAOOptionalToOffice(conversionService));
         registry.addConverter(new OfficeToOfficeDAO(conversionService));
         registry.addConverter(new EmployeeDAOToEmploy());
-        registry.addConverter(new EmployeeToEmployeeDetailsView(conversionService));
+        registry.addConverter(new EmployeeToEmployeeView(conversionService));
         registry.addConverter(new AddressDTOToAddress());
         registry.addConverter(new EmployeeToEmployeeDAO(conversionService));
+        registry.addConverter(new EmployeeViewToEmployee(conversionService));
     }
 }

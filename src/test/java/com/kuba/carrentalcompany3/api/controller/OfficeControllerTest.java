@@ -31,6 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class OfficeControllerTest {
     private static final String CREATE_OFFICE_ENDPOINT = "/office/create";
     private static final String DELETE_OFFICE_ENDPOINT = "/office/%s/delete";
+    private static final String RELOCATE_OFFICE_ENDPOINT = "/office/%s/relocate";
+    private static final String CHANGE_OFFICE_CEO_ENDPOINT = "/office/%s/changeCEO";
+    private static final String CHANGE_OFFICE_WEBSITE_ENDPOINT = "/office/%s/updateWebsite";
     private static final String OFFICE_STREET_ADDRESS = "Szkolna 17";
     private static final String OFFICE_CITY_CODE = "23-407";
     private static final String OFFICE_CITY_NAME = "Lublin";
@@ -82,6 +85,41 @@ public class OfficeControllerTest {
         assertTrue(officeFromDB.isDeleted());
     }
 
+    @Test
+    public void relocateOffice_ShouldUpdateAddress() throws Exception {
+        //when
+        OfficeView office = createExpectedOfficeViewResponse(status().isCreated());
+        relocateOfficeRequest(office.getId());
+        //then
+        Office officeFromDB = conversionService.convert(officeRepository.getByDomainId(office.getId()), Office.class);
+        assertNotNull(officeFromDB);
+        assertEquals(officeFromDB.getAddress().getCityName(), office.getAddressDTO().getCityName());
+        assertEquals(officeFromDB.getAddress().getStreetAddress(), office.getAddressDTO().getStreetAddress());
+        assertEquals(officeFromDB.getAddress().getPostalCode(), office.getAddressDTO().getPostalCode());
+    }
+
+    @Test
+    public void changeOfficeCEO_ShouldChangeOfficeCEO() throws Exception {
+        //when
+        OfficeView office = createExpectedOfficeViewResponse(status().isCreated());
+        changeOfficeCEORequest(office.getId());
+        //then
+        Office officeFromDB = conversionService.convert(officeRepository.getByDomainId(office.getId()), Office.class);
+        assertNotNull(officeFromDB);
+        assertEquals(officeFromDB.getOfficeCEO(), office.getOfficeCEO());
+    }
+
+    @Test
+    public void changeOfficeWebsite_ShouldChangeOfficeWebsite() throws Exception {
+        //when
+        OfficeView office = createExpectedOfficeViewResponse(status().isCreated());
+        changeOfficeWebsiteRequest(office.getId());
+        //then
+        Office officeFromDB = conversionService.convert(officeRepository.getByDomainId(office.getId()), Office.class);
+        assertNotNull(officeFromDB);
+        assertEquals(officeFromDB.getWebsiteURL(), office.getWebsiteURL());
+    }
+
     private void validateOffice(Office office) {
         assertTrue(Objects.nonNull(office));
         assertTrue(Objects.nonNull(office.getDomainId()));
@@ -114,6 +152,24 @@ public class OfficeControllerTest {
     private void deleteOfficeRequest(String id) throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .delete(String.format(DELETE_OFFICE_ENDPOINT, id)))
+                .andReturn();
+    }
+
+    private void relocateOfficeRequest(String id) throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                        .put(String.format(RELOCATE_OFFICE_ENDPOINT, id)))
+                .andReturn();
+    }
+
+    private void changeOfficeCEORequest(String id) throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                        .put(String.format(CHANGE_OFFICE_CEO_ENDPOINT, id)))
+                .andReturn();
+    }
+
+    private void changeOfficeWebsiteRequest(String id) throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                        .put(String.format(CHANGE_OFFICE_WEBSITE_ENDPOINT, id)))
                 .andReturn();
     }
 }

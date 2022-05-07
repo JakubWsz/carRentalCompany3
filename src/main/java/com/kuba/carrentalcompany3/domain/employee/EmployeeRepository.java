@@ -7,7 +7,9 @@ import java.util.Optional;
 public interface EmployeeRepository {
     Employee save(Employee employee);
 
-    Optional<Employee> getEmployee(String domainId);
+    Optional<Employee> getEmployee(String id);
 
     void update(Employee employee);
+
+
 }

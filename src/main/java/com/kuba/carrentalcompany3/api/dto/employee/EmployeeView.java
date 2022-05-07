@@ -5,7 +5,8 @@ import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.Co
 
 import java.math.BigDecimal;
 
-public class EmployeeDetailsView {
+public class EmployeeView {
+    private final String id;
     private final String firstname;
     private final String lastname;
     private final AddressDTO address;
@@ -16,9 +17,10 @@ public class EmployeeDetailsView {
     private final String position;
     private final String officeId;
 
-    public EmployeeDetailsView(String firstname, String lastname, AddressDTO address, String pesel,
-                               String accountNumber, BigDecimal salaryAmount, ContractType contractType,
-                               String position, String officeId) {
+    public EmployeeView(String id, String firstname, String lastname, AddressDTO address, String pesel,
+                        String accountNumber, BigDecimal salaryAmount, ContractType contractType, String position,
+                        String officeId) {
+        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
@@ -64,5 +66,9 @@ public class EmployeeDetailsView {
 
     public String getOfficeId() {
         return officeId;
+    }
+
+    public String getId() {
+        return id;
     }
 }

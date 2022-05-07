@@ -25,8 +25,7 @@ public class EmployeeRepositoryAdapterJPA implements EmployeeRepository {
 
     @Override
     public Optional<Employee> getEmployee(String domainId) {
-        int intDomainId = Integer.parseInt(domainId);
-        Optional<EmployeeDAO> employeeDaoOptional = employeeRepositoryJPA.findByDomainId(intDomainId);
+        Optional<EmployeeDAO> employeeDaoOptional = employeeRepositoryJPA.findByDomainId(domainId);
         return Optional.ofNullable(conversionService.convert(employeeDaoOptional.get(), Employee.class));
     }
 

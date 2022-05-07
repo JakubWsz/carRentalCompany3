@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface EmployeeRepositoryJPA extends JpaRepository<EmployeeDAO,Long> {
-    Optional<EmployeeDAO> findByDomainId(int domainId);
+    Optional<EmployeeDAO> findByDomainId(String domainId);
 }
