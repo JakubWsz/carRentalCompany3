@@ -19,7 +19,7 @@ public class OfficeValidator {
     private static final int NAME_MAX_SIZE = 30;
 
     public static void validateOffice(Office office) {
-        AddressValidator.validateIsOfficeAddressNotNull(office.getAddress());
+        AddressValidator.validateAddressNotNull(office.getAddress());
         AddressValidator.validateAddressData(office.getAddress());
         validateIsOfficeWebsiteURLNotNull(office.getWebsiteURL());
         validateOfficeWebsiteURL(office.getWebsiteURL());

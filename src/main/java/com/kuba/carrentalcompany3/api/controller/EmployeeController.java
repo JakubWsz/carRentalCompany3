@@ -22,7 +22,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("/hire")
+    @PostMapping("/create")
     public ResponseEntity<EmployeeDetailsView> createEmployee(@RequestBody CreateEmployeeRequest createEmployeeRequest) {
         Employee employee = employeeService.createEmployee(
                 createEmployeeRequest.getFirstname(),

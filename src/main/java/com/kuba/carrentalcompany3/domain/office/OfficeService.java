@@ -27,12 +27,11 @@ public class OfficeService {
         return officeRepository.save(office);
     }
 
-    public Office deleteOffice(String id) {
+    public void deleteOffice(String id) {
         Office office = getOffice(id);
         isOfficeDeletedValidator(office.isDeleted());
         office.markAsDelete();
         officeRepository.update(office);
-        return office;
     }
 
     public void relocateOffice(Address address, String id) {

@@ -42,18 +42,6 @@ public class OfficeServiceTest {
     }
 
     @Test
-    void deleteOffice_ShouldSetIsDeletedTrue() {
-        //when
-        Office createdOffice = officeService.createOffice(OFFICE_ADDRESS, OFFICE_WEBSITE_URL, OFFICE_CEO);
-        Office deletedOffice = officeService.deleteOffice(createdOffice.getDomainId());
-        //then
-        assertTrue(Objects.nonNull(deletedOffice.getDomainId()));
-        assertFalse(deletedOffice.getDomainId().isBlank());
-        assertTrue(createdOffice.isDeleted());
-
-    }
-
-    @Test
     void shouldThrowExceptionWhenOfficeStreetAddressIsNull() {
         //when
         //then
