@@ -1,15 +1,20 @@
 package com.kuba.carrentalcompany3.api.controller;
 
+import com.kuba.carrentalcompany3.api.dto.FieldUpdateDTO;
 import com.kuba.carrentalcompany3.api.dto.employee.EmployeeView;
 import com.kuba.carrentalcompany3.api.dto.employee.request.CreateEmployeeRequest;
 import com.kuba.carrentalcompany3.api.dto.employee.request.UpdateEmployeeRequest;
 import com.kuba.carrentalcompany3.domain.Address;
+import com.kuba.carrentalcompany3.domain.employee.model.EmployeeFieldType;
 import com.kuba.carrentalcompany3.domain.employee.EmployeeService;
 import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employee")
@@ -44,14 +49,8 @@ public class EmployeeController {
 
     @PatchMapping("/{id}/update-data")
     public void updateEmployee(@RequestBody UpdateEmployeeRequest updateEmployeeRequest, @PathVariable String id) {
-        employeeService.updateEmployee(new Employee.EmployeeBuilder()
-                        .setFirstname(updateEmployeeRequest.getFirstname())
-                        .setLastname(updateEmployeeRequest.getLastname())
-                        .setAddress(conversionService.convert(updateEmployeeRequest.getAddressDTO(), Address.class))
-                        .setAccountNumber(updateEmployeeRequest.getAccountNumber())
-                        .setSalaryAmount(updateEmployeeRequest.getSalaryAmount())
-                        .setTypeOfContract(updateEmployeeRequest.getContractType())
-                        .build(),
-                id);
+        Map<EmployeeFieldType, String> fieldUpdates = updateEmployeeRequest.getUpdateEmployee().stream()
+                .collect(Collectors.toMap(FieldUpdateDTO::getFieldType, FieldUpdateDTO::getNewValue));
+        employeeService.updateEmployee(fieldUpdates, id);
     }
 }

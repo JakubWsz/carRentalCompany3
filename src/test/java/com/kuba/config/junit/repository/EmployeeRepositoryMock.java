@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class EmployeeRepositoryMock implements EmployeeRepository {
-    List<Employee> employees = new ArrayList<>();
+    private final List<Employee> employees = new ArrayList<>();
 
     @Override
     public Employee save(Employee employee) {
@@ -29,9 +29,6 @@ public class EmployeeRepositoryMock implements EmployeeRepository {
     }
 
     public void clean() {
-        Object[] clientsArray = employees.toArray();
-        for (int i = 0; clientsArray.length - 1 >= i; i++) {
-            employees.remove(clientsArray[i]);
-        }
+        employees.clear();
     }
 }

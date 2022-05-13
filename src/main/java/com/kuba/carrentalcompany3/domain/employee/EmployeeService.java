@@ -1,14 +1,15 @@
 package com.kuba.carrentalcompany3.domain.employee;
 
-import com.kuba.carrentalcompany3.api.dto.employee.request.ChangeEmployeePositionRequest;
 import com.kuba.carrentalcompany3.domain.Address;
 import com.kuba.carrentalcompany3.domain.employee.model.Employee;
+import com.kuba.carrentalcompany3.domain.employee.model.EmployeeFieldType;
 import com.kuba.carrentalcompany3.domain.employee.validator.EmployeeValidator;
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.domain.exception.EmployeeExceptionCode;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.ContractType;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.UUID;
 
 public class EmployeeService {
@@ -19,8 +20,8 @@ public class EmployeeService {
     }
 
     public Employee createEmployee(String firstname, String lastname, Address address, String pesel,
-                                   String accountNumber, BigDecimal salaryAmount, ContractType contractType,
-                                   String position, String officeId) {
+            String accountNumber, BigDecimal salaryAmount, ContractType contractType,
+            String position, String officeId) {
         Employee employee = new Employee.EmployeeBuilder()
                 .setId(UUID.randomUUID().toString())
                 .setFirstname(firstname)
@@ -44,15 +45,15 @@ public class EmployeeService {
         employeeRepository.update(employee);
     }
 
-    public void updateEmployee(Employee updateRequest, String domainId) {
-        Employee employee = getEmployee(domainId);
-        employee = updatePartiallyEmployee(employee, updateRequest);
+    public void updateEmployee(Map<EmployeeFieldType, String> fieldUpdates, String id) {
+        Employee employee = getEmployee(id);
+        EmployeeFieldsUpdater.updateAll(employee, fieldUpdates);
         employeeRepository.save(employee);
     }
 
     private Employee getEmployee(String domainId) {
-        Employee employee = employeeRepository.getEmployee(domainId).orElseThrow(()
-                -> new DomainException(EmployeeExceptionCode.EMPLOYEE_DOESNT_EXISTS));
+        Employee employee = employeeRepository.getEmployee(domainId)
+                .orElseThrow(() -> new DomainException(EmployeeExceptionCode.EMPLOYEE_DOESNT_EXISTS));
         isEmployeeRemovedValidator(employee.isDeleted());
         return employee;
     }
@@ -61,9 +62,5 @@ public class EmployeeService {
         if (deleted) {
             throw new DomainException(EmployeeExceptionCode.EMPLOYEE_ALREADY_DELETED);
         }
-    }
-
-    private Employee updatePartiallyEmployee(Employee primaryEmployee, Employee updateRequest) {
-        return primaryEmployee.update(updateRequest);
     }
 }

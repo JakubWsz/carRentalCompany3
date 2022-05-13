@@ -1,49 +1,21 @@
 package com.kuba.carrentalcompany3.api.dto.employee.request;
 
-import com.kuba.carrentalcompany3.api.dto.AddressDTO;
-import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.ContractType;
+import com.kuba.carrentalcompany3.api.dto.FieldUpdateDTO;
+import com.kuba.carrentalcompany3.domain.employee.model.EmployeeFieldType;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 public class UpdateEmployeeRequest {
-    private final String firstname;
-    private final String lastname;
-    private final AddressDTO addressDTO;
-    private final String accountNumber;
-    private final BigDecimal salaryAmount;
-    private final ContractType contractType;
+    private List<FieldUpdateDTO<EmployeeFieldType>> updateEmployee;
 
-    public UpdateEmployeeRequest(String firstname, String lastname, AddressDTO addressDTO, String accountNumber,
-                                 BigDecimal salaryAmount, ContractType contractType) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.addressDTO = addressDTO;
-        this.accountNumber = accountNumber;
-        this.salaryAmount = salaryAmount;
-        this.contractType = contractType;
+    public UpdateEmployeeRequest() {
     }
 
-    public String getFirstname() {
-        return firstname;
+    public UpdateEmployeeRequest(List<FieldUpdateDTO<EmployeeFieldType>> updateEmployee) {
+        this.updateEmployee = updateEmployee;
     }
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public AddressDTO getAddressDTO() {
-        return addressDTO;
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public BigDecimal getSalaryAmount() {
-        return salaryAmount;
-    }
-
-    public ContractType getContractType() {
-        return contractType;
+    public List<FieldUpdateDTO<EmployeeFieldType>> getUpdateEmployee() {
+        return updateEmployee;
     }
 }

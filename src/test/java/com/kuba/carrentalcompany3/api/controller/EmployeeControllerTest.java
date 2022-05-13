@@ -2,21 +2,23 @@ package com.kuba.carrentalcompany3.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kuba.carrentalcompany3.api.dto.AddressDTO;
+import com.kuba.carrentalcompany3.api.dto.FieldUpdateDTO;
 import com.kuba.carrentalcompany3.api.dto.employee.EmployeeView;
 import com.kuba.carrentalcompany3.api.dto.employee.request.CreateEmployeeRequest;
+import com.kuba.carrentalcompany3.api.dto.employee.request.UpdateEmployeeRequest;
 import com.kuba.carrentalcompany3.api.dto.office.OfficeView;
 import com.kuba.carrentalcompany3.domain.employee.model.Employee;
-import com.kuba.carrentalcompany3.domain.office.model.Office;
+import com.kuba.carrentalcompany3.domain.employee.model.EmployeeFieldType;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.EmployeeRepositoryAdapterJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.EmployeeRepositoryJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.ContractType;
-import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.EmployeeDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -24,11 +26,11 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,6 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class EmployeeControllerTest {
     private static final String CREATE_EMPLOYEE_ENDPOINT = "/employee/create";
     private static final String DELETE_EMPLOYEE_ENDPOINT = "/employee/%s/remove";
+    private static final String UPDATE_EMPLOYEE_ENDPOINT = "/employee/%s/update-data";
     private static final String RELOCATE_EMPLOYEE_ENDPOINT = "/office/%s/relocate";
     private static final String CHANGE_EMPLOYEE_ENDPOINT = "/office/%s/changeCEO";
     private static final String FIRSTNAME = "Jan";
@@ -100,9 +103,29 @@ class EmployeeControllerTest {
         assertTrue(employeeFromDB.isDeleted());
     }
 
+    @Test
+    public void updateEmployee_shouldOverrideHisFields() throws Exception {
+        //given
+        EmployeeView employeeView = createExpectedEmployeeDetailsViewResponse(status().isCreated());
+        String updateFirstname = "mariusz";
+        String updateAddressCity = "Piaseczno";
+        UpdateEmployeeRequest updateRequest = new UpdateEmployeeRequest(List.of(
+                new FieldUpdateDTO<>(EmployeeFieldType.FIRST_NAME, updateFirstname),
+                new FieldUpdateDTO<>(EmployeeFieldType.ADDRESS_CITY_NAME, updateAddressCity)));
+        //when
+        HttpStatus updateStatusResponse = updateEmployeeRequest(employeeView.getId(), updateRequest);
+        //then
+        Employee employee = conversionService.convert(employeeRepository.getEmployee(employeeView.getId()).get(),
+                Employee.class);
+        assertEquals(HttpStatus.OK, updateStatusResponse);
+        assertNotNull(employee);
+        assertEquals(updateFirstname, employee.getFirstname());
+        assertEquals(updateAddressCity, employee.getAddress().getCityName());
+    }
+
     private EmployeeView createExpectedEmployeeDetailsViewResponse(ResultMatcher... matchers) throws Exception {
-        CreateEmployeeRequest request = new CreateEmployeeRequest(FIRSTNAME,LASTNAME,ADDRESS,PESEL,ACCOUNT_NUMBER,
-                SALARY,CONTRACT_TYPE,POSITION,OFFICE_ID);
+        CreateEmployeeRequest request = new CreateEmployeeRequest(FIRSTNAME, LASTNAME, ADDRESS, PESEL, ACCOUNT_NUMBER,
+                SALARY, CONTRACT_TYPE, POSITION, OFFICE_ID);
 
         ResultActions createEmployeeRequest = createEmployeeRequest(request)
                 .andExpectAll(matchers)
@@ -118,6 +141,13 @@ class EmployeeControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
     }
 
+    private HttpStatus updateEmployeeRequest(String id, UpdateEmployeeRequest updateRequest) throws Exception {
+        return HttpStatus.resolve(mvc.perform(MockMvcRequestBuilders.patch(String.format(UPDATE_EMPLOYEE_ENDPOINT, id))
+                .content(mapper.writeValueAsString(updateRequest))
+                .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse().getStatus());
+    }
+
     private void validateEmployee(Employee employee) {
         assertTrue(Objects.nonNull(employee));
         assertTrue(Objects.nonNull(employee.getDomainId()));
@@ -127,7 +157,7 @@ class EmployeeControllerTest {
         assertEquals(POSTAL_CODE, employee.getAddress().getPostalCode());
         assertEquals(PESEL, employee.getPesel());
         assertEquals(ACCOUNT_NUMBER, employee.getAccountNumber());
-        assertEquals(0,employee.getSalaryAmount().compareTo(SALARY));
+        assertEquals(0, employee.getSalaryAmount().compareTo(SALARY));
         assertEquals(CONTRACT_TYPE, employee.getContractType());
         assertEquals(POSITION, employee.getPosition());
         assertEquals(OFFICE_ID, employee.getOfficeId());

@@ -1,7 +1,6 @@
 package com.kuba.carrentalcompany3.domain.employee.model;
 
 import com.kuba.carrentalcompany3.domain.Address;
-import com.kuba.carrentalcompany3.domain.UpdateProcess;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.ContractType;
 
 import java.math.BigDecimal;
@@ -23,8 +22,8 @@ public class Employee {
     }
 
     private Employee(String id, String firstname, String lastname, Address address, String pesel,
-                     String accountNumber, BigDecimal salaryAmount, ContractType contractType, String position,
-                     String officeId, boolean deleted) {
+            String accountNumber, BigDecimal salaryAmount, ContractType contractType, String position,
+            String officeId, boolean deleted) {
         this.domainId = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -160,27 +159,60 @@ public class Employee {
         deleted = true;
     }
 
-    public Employee update(Employee other) {
-        Employee employee = new Employee(domainId, firstname, lastname, address, pesel, accountNumber, salaryAmount,
-                contractType, position, officeId, deleted);
-        UpdateProcess<Employee> updateProcess = (check, action) -> {
-            if (check.test(employee)) {
-                action.run();
-            }
-        };
-        updateProcess.update(e -> e.firstname.equals(other.firstname), () -> employee.firstname = other.firstname);
-        updateProcess.update(e -> e.lastname.equals(other.lastname), () -> employee.lastname = other.lastname);
-        updateProcess.update(e -> e.address.equals(other.address), () -> employee.address = other.address);
-        updateProcess.update(e -> e.accountNumber.equals(other.accountNumber),
-                () -> employee.salaryAmount = other.salaryAmount);
-        updateProcess.update(e -> e.accountNumber.equals(other.accountNumber),
-                () -> employee.salaryAmount = other.salaryAmount);
-        updateProcess.update(e -> e.contractType.equals(other.contractType),
-                () -> employee.contractType = other.contractType);
-        updateProcess.update(e -> e.position.equals(other.position),
-                () -> employee.position = other.position);
+    public void setDomainId(String domainId) {
+        this.domainId = domainId;
+    }
 
-        return employee;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public void setPesel(String pesel) {
+        this.pesel = pesel;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public void setSalaryAmount(BigDecimal salaryAmount) {
+        this.salaryAmount = salaryAmount;
+    }
+
+    public void setContractType(ContractType contractType) {
+        this.contractType = contractType;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setOfficeId(String officeId) {
+        this.officeId = officeId;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public void updateStreetAddress(String streetAddress) {
+        address = new Address(streetAddress, address.getPostalCode(), address.getCityName());
+    }
+
+    public void updatePostalCode(String postalCode) {
+        address = new Address(address.getStreetAddress(), postalCode, address.getCityName());
+    }
+
+    public void updateCityName(String cityName) {
+        address = new Address(address.getStreetAddress(), address.getPostalCode(), cityName);
     }
 
     @Override
