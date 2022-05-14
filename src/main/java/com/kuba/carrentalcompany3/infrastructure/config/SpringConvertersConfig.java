@@ -1,9 +1,12 @@
 package com.kuba.carrentalcompany3.infrastructure.config;
 
 import com.kuba.carrentalcompany3.infrastructure.converter.AddressToAddressDTO;
-import com.kuba.carrentalcompany3.infrastructure.converter.client.api.ClientToClientViewConverter;
-import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientDAOToClientConverter;
-import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientToDAOClientConverter;
+import com.kuba.carrentalcompany3.infrastructure.converter.car.api.CarToCarView;
+import com.kuba.carrentalcompany3.infrastructure.converter.car.jpa.CarDAOToCar;
+import com.kuba.carrentalcompany3.infrastructure.converter.car.jpa.CarToCarDAO;
+import com.kuba.carrentalcompany3.infrastructure.converter.client.api.ClientToClientView;
+import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientDAOToClient;
+import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientToDAOClient;
 import com.kuba.carrentalcompany3.infrastructure.converter.AddressDTOToAddress;
 import com.kuba.carrentalcompany3.infrastructure.converter.employee.api.EmployeeToEmployeeView;
 import com.kuba.carrentalcompany3.infrastructure.converter.employee.api.EmployeeViewToEmployee;
@@ -26,9 +29,9 @@ public class SpringConvertersConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new ClientToClientViewConverter());
-        registry.addConverter(new ClientDAOToClientConverter());
-        registry.addConverter(new ClientToDAOClientConverter());
+        registry.addConverter(new ClientToClientView());
+        registry.addConverter(new ClientDAOToClient());
+        registry.addConverter(new ClientToDAOClient());
         registry.addConverter(new AddressToAddressDAO());
         registry.addConverter(new AddressDAOToAddress());
         registry.addConverter(new AddressToAddressDTO());
@@ -40,5 +43,8 @@ public class SpringConvertersConfig implements WebMvcConfigurer {
         registry.addConverter(new AddressDTOToAddress());
         registry.addConverter(new EmployeeToEmployeeDAO(conversionService));
         registry.addConverter(new EmployeeViewToEmployee(conversionService));
+        registry.addConverter(new CarToCarDAO());
+        registry.addConverter(new CarDAOToCar());
+        registry.addConverter(new CarToCarView());
     }
 }

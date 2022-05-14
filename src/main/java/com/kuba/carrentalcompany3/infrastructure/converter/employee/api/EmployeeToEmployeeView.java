@@ -16,7 +16,7 @@ public class EmployeeToEmployeeView implements Converter<Employee, EmployeeView>
     @Override
     public EmployeeView convert(Employee employee) {
         return new EmployeeView(
-                employee.getDomainId(),
+                employee.getId(),
                 employee.getFirstname(),
                 employee.getLastname(),
                 conversionService.convert(employee.getAddress(), AddressDTO.class),

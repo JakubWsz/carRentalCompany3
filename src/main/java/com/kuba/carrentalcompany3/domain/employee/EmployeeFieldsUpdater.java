@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public enum EmployeeFieldsUpdater {
-    DOMAIN_ID(EmployeeFieldType.DOMAIN_ID, Employee::setDomainId),
+    DOMAIN_ID(EmployeeFieldType.DOMAIN_ID, Employee::setId),
     FIRST_NAME(EmployeeFieldType.FIRST_NAME, Employee::setFirstname),
     LAST_NAME(EmployeeFieldType.LAST_NAME, Employee::setLastname),
     ADDRESS_STREET(EmployeeFieldType.ADDRESS_STREET, Employee::updateStreetAddress),

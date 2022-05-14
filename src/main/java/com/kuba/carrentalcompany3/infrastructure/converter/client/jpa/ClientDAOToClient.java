@@ -4,7 +4,7 @@ import com.kuba.carrentalcompany3.domain.client.model.Client;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.entity.ClientDAO;
 import org.springframework.core.convert.converter.Converter;
 
-public class ClientDAOToClientConverter implements Converter<ClientDAO, Client> {
+public class ClientDAOToClient implements Converter<ClientDAO, Client> {
     @Override
     public Client convert(ClientDAO clientDao) {
         return new Client.ClientBuilder()

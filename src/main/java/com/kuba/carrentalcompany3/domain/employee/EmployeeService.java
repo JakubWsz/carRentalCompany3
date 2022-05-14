@@ -20,8 +20,8 @@ public class EmployeeService {
     }
 
     public Employee createEmployee(String firstname, String lastname, Address address, String pesel,
-            String accountNumber, BigDecimal salaryAmount, ContractType contractType,
-            String position, String officeId) {
+                                   String accountNumber, BigDecimal salaryAmount, ContractType contractType,
+                                   String position, String officeId) {
         Employee employee = new Employee.EmployeeBuilder()
                 .setId(UUID.randomUUID().toString())
                 .setFirstname(firstname)
@@ -39,8 +39,8 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public void removeEmployee(String pesel) {
-        Employee employee = getEmployee(pesel);
+    public void removeEmployee(String id) {
+        Employee employee = getEmployee(id);
         employee.markAsDeleted();
         employeeRepository.update(employee);
     }

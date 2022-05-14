@@ -45,8 +45,8 @@ class EmployeeServiceTest {
                 CONTRACT_TYPE, POSITION, OFFICE_ID);
 
         //then
-        assertTrue(Objects.nonNull(createdEmployee.getDomainId()));
-        assertFalse(createdEmployee.getDomainId().isBlank());
+        assertTrue(Objects.nonNull(createdEmployee.getId()));
+        assertFalse(createdEmployee.getId().isBlank());
         assertEquals(createdEmployee.getFirstname(), FIRSTNAME);
         assertEquals(createdEmployee.getLastname(), LASTNAME);
         assertEquals(createdEmployee.getAddress(), ADDRESS);

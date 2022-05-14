@@ -149,8 +149,8 @@ class EmployeeControllerTest {
 
     private void validateEmployee(Employee employee) {
         assertTrue(Objects.nonNull(employee));
-        assertTrue(Objects.nonNull(employee.getDomainId()));
-        assertFalse(employee.getDomainId().isBlank());
+        assertTrue(Objects.nonNull(employee.getId()));
+        assertFalse(employee.getId().isBlank());
         assertEquals(STREET_ADDRESS, employee.getAddress().getStreetAddress());
         assertEquals(CITY_NAME, employee.getAddress().getCityName());
         assertEquals(POSTAL_CODE, employee.getAddress().getPostalCode());
