@@ -36,12 +36,6 @@ public enum EmployeeFieldsUpdater {
         this.updateFieldProcess = updateFieldProcess;
     }
 
-    private void update(Employee employee, String value) {
-        if (Objects.nonNull(value)) {
-            updateFieldProcess.update(employee, value);
-        }
-    }
-
     public static void updateAll(Employee employee, Map<EmployeeFieldType, String> fieldUpdates) {
         fieldUpdates.forEach((obj, val) -> getByFieldType(obj).update(employee, val));
     }
@@ -51,5 +45,11 @@ public enum EmployeeFieldsUpdater {
                 .filter(employeeFieldsUpdater -> employeeFieldsUpdater.employeeFieldType.equals(employeeFieldType))
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);
+    }
+
+    private void update(Employee employee, String value) {
+        if (Objects.nonNull(value)) {
+            updateFieldProcess.update(employee, value);
+        }
     }
 }

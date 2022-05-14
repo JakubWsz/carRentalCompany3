@@ -3,10 +3,10 @@ package com.kuba.carrentalcompany3.domain.office.model;
 import com.kuba.carrentalcompany3.domain.Address;
 
 public class Office {
-    private final String domainId;
-    private final Address address;
-    private final String websiteURL;
-    private final String officeCEO;
+    private String domainId;
+    private Address address;
+    private String websiteURL;
+    private String officeCEO;
     private boolean deleted;
 
    private Office(String id, Address address, String websiteURL, String officeCEO, boolean deleted) {
@@ -72,6 +72,30 @@ public class Office {
 
     public void markAsDelete() {
         deleted = true;
+    }
+
+    public void setDomainId(String domainId) {
+        this.domainId = domainId;
+    }
+
+    public void setWebsiteURL(String websiteURL) {
+        this.websiteURL = websiteURL;
+    }
+
+    public void setOfficeCEO(String officeCEO) {
+        this.officeCEO = officeCEO;
+    }
+
+    public void updateStreetAddress(String streetAddress) {
+        address = new Address(streetAddress, address.getPostalCode(), address.getCityName());
+    }
+
+    public void updatePostalCode(String postalCode) {
+        address = new Address(address.getStreetAddress(), postalCode, address.getCityName());
+    }
+
+    public void updateCityName(String cityName) {
+        address = new Address(address.getStreetAddress(), address.getPostalCode(), cityName);
     }
 
     public String getDomainId() {return domainId;}

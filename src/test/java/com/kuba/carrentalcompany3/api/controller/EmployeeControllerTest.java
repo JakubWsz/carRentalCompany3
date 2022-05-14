@@ -6,7 +6,6 @@ import com.kuba.carrentalcompany3.api.dto.FieldUpdateDTO;
 import com.kuba.carrentalcompany3.api.dto.employee.EmployeeView;
 import com.kuba.carrentalcompany3.api.dto.employee.request.CreateEmployeeRequest;
 import com.kuba.carrentalcompany3.api.dto.employee.request.UpdateEmployeeRequest;
-import com.kuba.carrentalcompany3.api.dto.office.OfficeView;
 import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import com.kuba.carrentalcompany3.domain.employee.model.EmployeeFieldType;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.EmployeeRepositoryAdapterJPA;

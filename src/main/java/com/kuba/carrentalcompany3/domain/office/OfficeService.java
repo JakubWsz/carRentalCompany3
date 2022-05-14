@@ -1,11 +1,16 @@
 package com.kuba.carrentalcompany3.domain.office;
 
 import com.kuba.carrentalcompany3.domain.Address;
+import com.kuba.carrentalcompany3.domain.employee.EmployeeFieldsUpdater;
+import com.kuba.carrentalcompany3.domain.employee.model.Employee;
+import com.kuba.carrentalcompany3.domain.employee.model.EmployeeFieldType;
 import com.kuba.carrentalcompany3.domain.exception.ClientExceptionCode;
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
+import com.kuba.carrentalcompany3.domain.office.model.OfficeFieldType;
 import com.kuba.carrentalcompany3.domain.office.valiator.OfficeValidator;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class OfficeService {
@@ -34,46 +39,10 @@ public class OfficeService {
         officeRepository.update(office);
     }
 
-    public void relocateOffice(Address address, String id) {
-        Office exOffice = getOffice(id);
-        Office newOffice;
-        isOfficeDeletedValidator(exOffice.isDeleted());
-        newOffice = new Office.OfficeBuilder()
-                .setId(exOffice.getDomainId())
-                .setAddress(address)
-                .setWebsiteURL(exOffice.getWebsiteURL())
-                .setOfficeCEO(exOffice.getOfficeCEO())
-                .setDeleted(exOffice.isDeleted())
-                .build();
-        officeRepository.update(newOffice);
-    }
-
-    public void changeCEO(String newCEO, String id) {
+    public void updateOffice(Map<OfficeFieldType, String> fieldUpdates, String id) {
         Office office = getOffice(id);
-        Office officeWithNewCEO;
-        isOfficeDeletedValidator(office.isDeleted());
-        officeWithNewCEO = new Office.OfficeBuilder()
-                .setId(office.getDomainId())
-                .setAddress(office.getAddress())
-                .setWebsiteURL(office.getWebsiteURL())
-                .setOfficeCEO(newCEO)
-                .setDeleted(office.isDeleted())
-                .build();
-        officeRepository.update(officeWithNewCEO);
-    }
-
-    public void updateWebsite(String newWebsite, String id) {
-        Office office = getOffice(id);
-        Office officeWithNewWebsite;
-        isOfficeDeletedValidator(office.isDeleted());
-        officeWithNewWebsite = new Office.OfficeBuilder()
-                .setId(office.getDomainId())
-                .setAddress(office.getAddress())
-                .setWebsiteURL(newWebsite)
-                .setOfficeCEO(office.getOfficeCEO())
-                .setDeleted(office.isDeleted())
-                .build();
-        officeRepository.update(officeWithNewWebsite);
+        OfficeFieldsUpdater.updateAll(office, fieldUpdates);
+        officeRepository.save(office);
     }
 
     private Office getOffice(String id) {
