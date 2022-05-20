@@ -11,8 +11,8 @@ _[Official documentation](https://springdoc.org/index.html#Introduction)_
 
 ### Supported endpoints
 
-api | /employee | /client | /office | 
---- | --- | --- | --- |
-supported | yes | no | no |
+api | /employee | /client | /office | /car
+--- | --- | --- | --- | --- |
+supported | yes | yes | yes |
 
 _Default spring-doc view can be accessed by http://localhost:8080/swagger-ui.html_
