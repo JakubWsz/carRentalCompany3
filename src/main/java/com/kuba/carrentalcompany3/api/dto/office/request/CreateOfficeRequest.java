@@ -1,4 +1,4 @@
-package com.kuba.carrentalcompany3.api.dto.office;
+package com.kuba.carrentalcompany3.api.dto.office.request;
 
 import com.kuba.carrentalcompany3.api.dto.AddressDTO;
 

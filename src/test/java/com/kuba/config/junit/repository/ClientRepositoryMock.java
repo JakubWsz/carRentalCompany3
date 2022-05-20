@@ -22,20 +22,19 @@ public class ClientRepositoryMock implements ClientRepository {
                 .anyMatch(client -> client.getEmail().equals(email));
     }
 
-    public Client getClient() {
-        return clients.get(0);
-    }
-
-    public Optional<Client> getClientById(String id) {
+    @Override
+    public Optional<Client> getClient(String id) {
         return clients.stream()
                 .filter(client -> client.getDomainId().equals(id))
                 .findAny();
     }
 
+    @Override
+    public void update(Client client) {
+    save(client);
+    }
+
     public void clean() {
-        Object[] clientsArray = clients.toArray();
-        for (int i = 0; clientsArray.length - 1 >= i; i++) {
-            clients.remove(clientsArray[i]);
-        }
+        clients.clear();
     }
 }

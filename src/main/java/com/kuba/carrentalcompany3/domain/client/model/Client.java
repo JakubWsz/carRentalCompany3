@@ -6,8 +6,8 @@ public class Client {
     private final String domainId;
     private final String firstname;
     private final String lastname;
-    private final String email;
-    private final String password;
+    private String email;
+    private String password;
     private final LocalDate birthdate;
 
     private Client(String id, String firstname, String lastname, String email, String password, LocalDate birthdate) {
@@ -84,6 +84,14 @@ public class Client {
 
     public LocalDate getBirthdate() {
         return birthdate;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.kuba.carrentalcompany3.api.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kuba.carrentalcompany3.api.dto.AddressDTO;
 import com.kuba.carrentalcompany3.api.dto.FieldUpdateDTO;
-import com.kuba.carrentalcompany3.api.dto.office.CreateOfficeRequest;
+import com.kuba.carrentalcompany3.api.dto.office.request.CreateOfficeRequest;
 import com.kuba.carrentalcompany3.api.dto.office.OfficeView;
 import com.kuba.carrentalcompany3.api.dto.office.request.UpdateOfficeRequest;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
