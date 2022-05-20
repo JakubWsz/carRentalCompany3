@@ -1,7 +1,6 @@
 package com.kuba.carrentalcompany3.domain.employee.model;
 
 public enum EmployeeFieldType {
-    DOMAIN_ID,
     FIRST_NAME,
     LAST_NAME,
     ADDRESS_STREET,

@@ -2,8 +2,6 @@ package com.kuba.carrentalcompany3.api.controller;
 
 import com.kuba.carrentalcompany3.api.dto.car.CarView;
 import com.kuba.carrentalcompany3.api.dto.car.CreateCarRequest;
-import com.kuba.carrentalcompany3.api.dto.client.ClientView;
-import com.kuba.carrentalcompany3.api.dto.client.CreateClientRequest;
 import com.kuba.carrentalcompany3.domain.car.CarService;
 import com.kuba.carrentalcompany3.domain.car.model.Car;
 import org.springframework.core.convert.ConversionService;

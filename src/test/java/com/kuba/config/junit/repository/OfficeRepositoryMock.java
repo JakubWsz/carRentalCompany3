@@ -19,7 +19,9 @@ public class OfficeRepositoryMock implements OfficeRepository {
 
     @Override
     public Optional<Office> getOffice(String id) {
-        return Optional.of(offices.get(0));
+        return offices.stream()
+                .filter(office -> office.getDomainId().equals(id))
+                .findAny();
     }
 
     @Override
@@ -28,9 +30,6 @@ public class OfficeRepositoryMock implements OfficeRepository {
     }
 
     public void clean() {
-        Object[] clientsArray = offices.toArray();
-        for (int i = 0; clientsArray.length - 1 >= i; i++) {
-            offices.remove(clientsArray[i]);
+        offices.clear();
         }
     }
-}
