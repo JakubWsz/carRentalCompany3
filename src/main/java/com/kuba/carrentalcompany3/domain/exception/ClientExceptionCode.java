@@ -22,7 +22,8 @@ public enum ClientExceptionCode implements ExceptionCode {
     EMAIL_ALREADY_EXISTS("C_016", "Konto o podanym e-mailu '%s' już istnieje.", 409),
     OFFICE_DOESNT_EXISTS("C_17", "Biuro nie istnieje.", 404),
     OFFICE_ALREADY_DELETED("C_18", "Biuro zostało już usunięte.", 409),
-    NAME_OR_SURNAME_IS_INVALID("C_19", "Imię lub nazwisko jest niepoprawne", 409);
+    NAME_OR_SURNAME_IS_INVALID("C_19", "Imię lub nazwisko jest niepoprawne", 409),
+    CLIENT_DOESNT_EXISTS("C_0020", "Klient nie istnieje.", 404);
 
 
     private final String code;

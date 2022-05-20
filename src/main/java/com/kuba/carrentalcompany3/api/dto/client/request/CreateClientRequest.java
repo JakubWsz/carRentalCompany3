@@ -1,4 +1,4 @@
-package com.kuba.carrentalcompany3.api.dto.client;
+package com.kuba.carrentalcompany3.api.dto.client.request;
 
 import java.time.LocalDate;
 
