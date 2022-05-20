@@ -6,7 +6,7 @@ import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.Co
 import java.math.BigDecimal;
 
 public class Employee {
-    private String domainId;
+    private String id;
     private String firstname;
     private String lastname;
     private Address address;
@@ -24,7 +24,7 @@ public class Employee {
     private Employee(String id, String firstname, String lastname, Address address, String pesel,
             String accountNumber, BigDecimal salaryAmount, ContractType contractType, String position,
             String officeId, boolean deleted) {
-        this.domainId = id;
+        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
@@ -111,8 +111,8 @@ public class Employee {
         }
     }
 
-    public String getDomainId() {
-        return domainId;
+    public String getId() {
+        return id;
     }
 
     public String getFirstname() {
@@ -159,8 +159,8 @@ public class Employee {
         deleted = true;
     }
 
-    public void setDomainId(String domainId) {
-        this.domainId = domainId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setFirstname(String firstname) {
@@ -218,7 +218,7 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id='" + domainId + '\'' +
+                "id='" + id + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", address='" + address + '\'' +

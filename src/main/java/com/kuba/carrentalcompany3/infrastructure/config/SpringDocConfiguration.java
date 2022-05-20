@@ -12,7 +12,7 @@ public class SpringDocConfiguration {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("carrentalcompany-public")
-                .pathsToMatch("/employee/**")
+                .pathsToMatch("/employee/**","/office/**")
                 .build();
     }
 

@@ -27,9 +27,10 @@ public class EmployeeDAO extends BaseEntity {
     public EmployeeDAO() {
     }
 
-    public EmployeeDAO(String domainId, String firstname, String lastname, AddressDAO address, String pesel,
-                       String accountNumber, BigDecimal salaryAmount, ContractType contractType, String position,
-                       String officeId) {
+    public EmployeeDAO(boolean deleted, String domainId, String firstname, String lastname, AddressDAO address,
+                       String pesel, String accountNumber, BigDecimal salaryAmount, ContractType contractType,
+                       String position, String officeId) {
+        this.setDeleted(deleted);
         this.domainId = domainId;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -46,80 +47,41 @@ public class EmployeeDAO extends BaseEntity {
         return domainId;
     }
 
-    public void setDomainId(String domainId) {
-        this.domainId = domainId;
-    }
-
     public String getFirstname() {
         return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
     }
 
     public String getLastname() {
         return lastname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
     public AddressDAO getAddress() {
         return address;
-    }
-
-    public void setAddress(AddressDAO address) {
-        this.address = address;
     }
 
     public String getPesel() {
         return pesel;
     }
 
-    public void setPesel(String pesel) {
-        this.pesel = pesel;
-    }
-
     public String getAccountNumber() {
         return accountNumber;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
     }
 
     public BigDecimal getSalaryAmount() {
         return salaryAmount;
     }
 
-    public void setSalaryAmount(BigDecimal salaryAmount) {
-        this.salaryAmount = salaryAmount;
-    }
-
     public ContractType getContractType() {
         return contractType;
-    }
-
-    public void setContractType(ContractType typeOfContract) {
-        this.contractType = typeOfContract;
     }
 
     public String getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
     public String getOfficeId() {
         return officeId;
     }
 
-    public void setOfficeId(String officeId) {
-        this.officeId = officeId;
-    }
 }
 

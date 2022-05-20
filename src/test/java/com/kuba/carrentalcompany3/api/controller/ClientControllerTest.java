@@ -40,7 +40,6 @@ class ClientControllerTest {
     @BeforeEach
     void setUp() { clientRepository.deleteAll(); }
 
-
     @Test
     public void createAccount_ShouldReturn201Status() throws Exception {
         //given

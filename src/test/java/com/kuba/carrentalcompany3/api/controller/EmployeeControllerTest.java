@@ -122,6 +122,21 @@ class EmployeeControllerTest {
         assertEquals(updateAddressCity, employee.getAddress().getCityName());
     }
 
+    private void validateEmployee(Employee employee) {
+        assertTrue(Objects.nonNull(employee));
+        assertTrue(Objects.nonNull(employee.getId()));
+        assertFalse(employee.getId().isBlank());
+        assertEquals(STREET_ADDRESS, employee.getAddress().getStreetAddress());
+        assertEquals(CITY_NAME, employee.getAddress().getCityName());
+        assertEquals(POSTAL_CODE, employee.getAddress().getPostalCode());
+        assertEquals(PESEL, employee.getPesel());
+        assertEquals(ACCOUNT_NUMBER, employee.getAccountNumber());
+        assertEquals(0, employee.getSalaryAmount().compareTo(SALARY));
+        assertEquals(CONTRACT_TYPE, employee.getContractType());
+        assertEquals(POSITION, employee.getPosition());
+        assertEquals(OFFICE_ID, employee.getOfficeId());
+    }
+
     private EmployeeView createExpectedEmployeeDetailsViewResponse(ResultMatcher... matchers) throws Exception {
         CreateEmployeeRequest request = new CreateEmployeeRequest(FIRSTNAME, LASTNAME, ADDRESS, PESEL, ACCOUNT_NUMBER,
                 SALARY, CONTRACT_TYPE, POSITION, OFFICE_ID);
@@ -147,25 +162,9 @@ class EmployeeControllerTest {
                 .andReturn().getResponse().getStatus());
     }
 
-    private void validateEmployee(Employee employee) {
-        assertTrue(Objects.nonNull(employee));
-        assertTrue(Objects.nonNull(employee.getDomainId()));
-        assertFalse(employee.getDomainId().isBlank());
-        assertEquals(STREET_ADDRESS, employee.getAddress().getStreetAddress());
-        assertEquals(CITY_NAME, employee.getAddress().getCityName());
-        assertEquals(POSTAL_CODE, employee.getAddress().getPostalCode());
-        assertEquals(PESEL, employee.getPesel());
-        assertEquals(ACCOUNT_NUMBER, employee.getAccountNumber());
-        assertEquals(0, employee.getSalaryAmount().compareTo(SALARY));
-        assertEquals(CONTRACT_TYPE, employee.getContractType());
-        assertEquals(POSITION, employee.getPosition());
-        assertEquals(OFFICE_ID, employee.getOfficeId());
-    }
-
     private void deleteOfficeRequest(String id) throws Exception {
         mvc.perform(MockMvcRequestBuilders
                         .delete(String.format(DELETE_EMPLOYEE_ENDPOINT, id)))
                 .andReturn();
     }
-
 }

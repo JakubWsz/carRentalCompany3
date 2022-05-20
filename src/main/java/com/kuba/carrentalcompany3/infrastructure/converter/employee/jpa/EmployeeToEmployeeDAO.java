@@ -15,8 +15,9 @@ public class EmployeeToEmployeeDAO implements Converter<Employee, EmployeeDAO> {
 
     @Override
     public EmployeeDAO convert(Employee employee) {
-        return new  EmployeeDAO(
-                employee.getDomainId(),
+        return new EmployeeDAO(
+                employee.isDeleted(),
+                employee.getId(),
                 employee.getFirstname(),
                 employee.getLastname(),
                 conversionService.convert(employee.getAddress(), AddressDAO.class),

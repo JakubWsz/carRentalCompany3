@@ -3,11 +3,11 @@ package com.kuba.carrentalcompany3.api.dto.client;
 import java.time.LocalDate;
 
 public class CreateClientRequest {
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String password;
-    private LocalDate birthdate;
+    private final String firstname;
+    private final String lastname;
+    private final String email;
+    private final String password;
+    private final LocalDate birthdate;
 
     public CreateClientRequest(String firstname, String lastname, String email, String password, LocalDate birthdate) {
         this.firstname = firstname;
@@ -15,9 +15,6 @@ public class CreateClientRequest {
         this.email = email;
         this.password = password;
         this.birthdate = birthdate;
-    }
-
-    public CreateClientRequest() {
     }
 
     public String getFirstname() {

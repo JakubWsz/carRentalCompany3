@@ -2,9 +2,12 @@ package com.kuba.carrentalcompany3.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kuba.carrentalcompany3.api.dto.AddressDTO;
+import com.kuba.carrentalcompany3.api.dto.FieldUpdateDTO;
 import com.kuba.carrentalcompany3.api.dto.office.CreateOfficeRequest;
 import com.kuba.carrentalcompany3.api.dto.office.OfficeView;
+import com.kuba.carrentalcompany3.api.dto.office.request.UpdateOfficeRequest;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
+import com.kuba.carrentalcompany3.domain.office.model.OfficeFieldType;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryAdapterJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.OfficeRepositoryJPA;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeDAO;
@@ -14,12 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -85,14 +90,19 @@ public class OfficeControllerTest {
 
     @Test
     public void updateOffice_ShouldUpdateAddress() throws Exception {
-        //when
+        //given
         OfficeView office = createExpectedOfficeViewResponse(status().isCreated());
-        updateOfficeRequest(office.getId());
+        String newStreetAddress = "Nowa 18";
+        UpdateOfficeRequest updateOfficeRequest = new UpdateOfficeRequest(List.of(
+                new FieldUpdateDTO<>(OfficeFieldType.ADDRESS_STREET, newStreetAddress)
+        ));
+        //when
+        updateOfficeRequest(updateOfficeRequest, office.getId());
         //then
         Office officeFromDB = conversionService.convert(officeRepository.getByDomainId(office.getId()), Office.class);
         assertNotNull(officeFromDB);
         assertEquals(officeFromDB.getAddress().getCityName(), office.getAddressDTO().getCityName());
-        assertEquals(officeFromDB.getAddress().getStreetAddress(), office.getAddressDTO().getStreetAddress());
+        assertEquals(officeFromDB.getAddress().getStreetAddress(), newStreetAddress);
         assertEquals(officeFromDB.getAddress().getPostalCode(), office.getAddressDTO().getPostalCode());
         assertEquals(officeFromDB.getOfficeCEO(), office.getOfficeCEO());
         assertEquals(officeFromDB.getWebsiteURL(), office.getWebsiteURL());
@@ -129,13 +139,14 @@ public class OfficeControllerTest {
 
     private void deleteOfficeRequest(String id) throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                .delete(String.format(DELETE_OFFICE_ENDPOINT, id)))
+                        .delete(String.format(DELETE_OFFICE_ENDPOINT, id)))
                 .andReturn();
     }
 
-    private void updateOfficeRequest(String id) throws Exception {
-        mvc.perform(MockMvcRequestBuilders
-                        .patch(String.format(UPDATE_DATA_ENDPOINT, id)))
-                .andReturn();
+    private HttpStatus updateOfficeRequest(UpdateOfficeRequest updateOfficeRequest, String id) throws Exception {
+        return HttpStatus.resolve(mvc.perform(MockMvcRequestBuilders.patch(String.format(UPDATE_DATA_ENDPOINT, id))
+                        .content(mapper.writeValueAsString(updateOfficeRequest))
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse().getStatus());
     }
 }
