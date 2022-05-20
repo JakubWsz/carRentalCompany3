@@ -8,7 +8,8 @@ public enum AddressExceptionCode implements ExceptionCode{
     CITY_NAME_IS_TOO_LONG("A_004", "Nazwa miasta jesst za długa.", 409),
     CITY_NAME_IS_TOO_SHORT("A_005", "Nazwa miasta jest za krótka.", 409),
     INVALID_POSTAL_CODE("A_006", "Kod pocztowy jest nieprawidłowy.", 409),
-    INVALID_STREET_ADDRESS("A_007", "Adres jest nieprawidłowy.", 409);
+    INVALID_STREET_ADDRESS("A_007", "Adres jest nieprawidłowy.", 409),
+    OFFICE_CANT_BE_NULL("A_008", "Adres nie może być pusty.", 409);
 
     private final String code;
     private final String message;

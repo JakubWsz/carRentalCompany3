@@ -27,9 +27,10 @@ public class EmployeeDAO extends BaseEntity {
     public EmployeeDAO() {
     }
 
-    public EmployeeDAO(String domainId, String firstname, String lastname, AddressDAO address, String pesel,
-                       String accountNumber, BigDecimal salaryAmount, ContractType contractType, String position,
-                       String officeId) {
+    public EmployeeDAO(boolean deleted, String domainId, String firstname, String lastname, AddressDAO address,
+                       String pesel, String accountNumber, BigDecimal salaryAmount, ContractType contractType,
+                       String position, String officeId) {
+        this.setDeleted(deleted);
         this.domainId = domainId;
         this.firstname = firstname;
         this.lastname = lastname;

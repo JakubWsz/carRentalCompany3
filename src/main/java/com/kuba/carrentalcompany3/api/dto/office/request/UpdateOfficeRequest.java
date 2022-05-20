@@ -15,7 +15,7 @@ public class UpdateOfficeRequest {
         this.updateOffice = updateOffice;
     }
 
-    public List<FieldUpdateDTO<OfficeFieldType>> getUpdateEmployee() {
+    public List<FieldUpdateDTO<OfficeFieldType>> getUpdateOffice() {
         return updateOffice;
     }
 }

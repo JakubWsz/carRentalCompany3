@@ -18,6 +18,7 @@ public class AddressValidator {
     public static final int CITY_NAME_MIN_SIZE = 3;
 
     public static void validateAddressNotNull(Address address) {
+        Assertion.notNull(address, () -> new DomainException(AddressExceptionCode.OFFICE_CANT_BE_NULL));
         Assertion.notNull(address.getStreetAddress(), () -> new DomainException(
                 AddressExceptionCode.OFFICE_STREET_ADDRESS_CANT_BE_NULL));
         Assertion.notNull(address.getPostalCode(), () -> new DomainException(

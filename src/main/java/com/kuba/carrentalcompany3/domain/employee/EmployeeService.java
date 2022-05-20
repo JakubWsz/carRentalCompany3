@@ -48,7 +48,7 @@ public class EmployeeService {
     public void updateEmployee(Map<EmployeeFieldType, String> fieldUpdates, String id) {
         Employee employee = getEmployee(id);
         EmployeeFieldsUpdater.updateAll(employee, fieldUpdates);
-        employeeRepository.save(employee);
+        employeeRepository.update(employee);
     }
 
     private Employee getEmployee(String domainId) {

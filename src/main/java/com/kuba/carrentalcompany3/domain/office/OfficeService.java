@@ -42,7 +42,7 @@ public class OfficeService {
     public void updateOffice(Map<OfficeFieldType, String> fieldUpdates, String id) {
         Office office = getOffice(id);
         OfficeFieldsUpdater.updateAll(office, fieldUpdates);
-        officeRepository.save(office);
+        officeRepository.update(office);
     }
 
     private Office getOffice(String id) {

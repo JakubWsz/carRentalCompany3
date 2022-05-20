@@ -40,7 +40,12 @@ public class EmployeeRepositoryAdapterJPA implements EmployeeRepository {
 
     @Override
     public void update(Employee employee) {
-        EmployeeDAO employeeDao = conversionService.convert(employee, EmployeeDAO.class);
-        employeeRepositoryJPA.save(employeeDao);
+        Optional<EmployeeDAO> employeeDaoOptional = employeeRepositoryJPA.findByDomainId(employee.getId());
+
+       if (employeeDaoOptional.isPresent() ){
+            EmployeeDAO employeeDao = conversionService.convert(employee, EmployeeDAO.class);
+            employeeDao.setId(employeeDaoOptional.get().getId());
+            employeeRepositoryJPA.save(employeeDao);
+        }
     }
 }

@@ -33,4 +33,6 @@ public class ClientController {
                 createClientRequest.getBirthdate());
         return new ResponseEntity<>(conversionService.convert(client, ClientView.class), HttpStatus.CREATED);
     }
+
+    // TODO: 19.05.2022  update
 }
