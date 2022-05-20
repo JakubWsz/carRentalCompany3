@@ -27,12 +27,12 @@ class ClientServiceTest {
     @Test
     void shouldSetPassedPersonalData() {
         //when
-        Client createdAccount = clientService.createAccount(CLIENT_FIRSTNAME, CLIENT_LASTNAME,
+        Client createdAccount = clientService.createClient(CLIENT_FIRSTNAME, CLIENT_LASTNAME,
                 CLIENT_EMAIL, CLIENT_PASSWORD, CLIENT_BIRTHDATE);
 
         //then
-        assertTrue(Objects.nonNull(createdAccount.getId()));
-        assertFalse(createdAccount.getId().isBlank());
+        assertTrue(Objects.nonNull(createdAccount.getDomainId()));
+        assertFalse(createdAccount.getDomainId().isBlank());
         assertEquals(createdAccount.getFirstname(), CLIENT_FIRSTNAME);
         assertEquals(createdAccount.getLastname(), CLIENT_LASTNAME);
         assertEquals(createdAccount.getEmail(), CLIENT_EMAIL);
@@ -47,7 +47,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(null, CLIENT_LASTNAME, CLIENT_EMAIL,
+                () -> clientService.createClient(null, CLIENT_LASTNAME, CLIENT_EMAIL,
                         CLIENT_PASSWORD, CLIENT_BIRTHDATE));
         assertEquals("Pole z imieniem nie może być puste.", runtimeException.getMessage());
     }
@@ -58,7 +58,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount("Jannnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+                () -> clientService.createClient("Jannnnnnnnnnnnnnnnnnnnnnnnnnnnn",
                         CLIENT_LASTNAME, CLIENT_EMAIL,
                         CLIENT_PASSWORD, CLIENT_BIRTHDATE));
         assertEquals("Podane imię jest za długie.", runtimeException.getMessage());
@@ -69,13 +69,19 @@ class ClientServiceTest {
         //given
         ClientRepositoryMock repo = new ClientRepositoryMock();
         ClientService clientService = new ClientService(repo);
-        Client client = new Client("xyz", "Jan", "Rodo", "asd@gmail.com", "Password6^",
-                LocalDate.ofYearDay(1992, 246));
+        Client client = new Client.ClientBuilder()
+                .setId("xyz")
+                .setFirstname("Jan")
+                .setLastname("Rodo")
+                .setEmail("asd@gmail.com")
+                .setPassword("Password6^")
+                .setBirthdate(LocalDate.ofYearDay(1992, 246))
+                .build();
         //when
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , null, CLIENT_EMAIL,
                         CLIENT_PASSWORD, CLIENT_BIRTHDATE));
         assertEquals("Pole z nazwiskiem nie może być puste.", runtimeException.getMessage());
@@ -87,7 +93,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME,
+                () -> clientService.createClient(CLIENT_FIRSTNAME,
                         "Rodoooooooooooooooooooooooooooo", CLIENT_EMAIL,
                         CLIENT_PASSWORD, CLIENT_BIRTHDATE));
         assertEquals("Podane nazwisko jest za długie.", runtimeException.getMessage());
@@ -99,7 +105,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , CLIENT_LASTNAME, CLIENT_EMAIL,
                         CLIENT_PASSWORD, null));
         assertEquals("Pole z imieniem nie może być puste.", runtimeException.getMessage());
@@ -111,7 +117,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , CLIENT_LASTNAME, CLIENT_EMAIL,
                         CLIENT_PASSWORD, LocalDate.ofYearDay(2006, 246)));
         assertEquals("Klienet jest niepełnoletni.", runtimeException.getMessage());
@@ -123,7 +129,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , CLIENT_LASTNAME, null,
                         CLIENT_PASSWORD, CLIENT_BIRTHDATE));
         assertEquals("Pole z e-mailem nie może być puste.", runtimeException.getMessage());
@@ -135,7 +141,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , CLIENT_LASTNAME, CLIENT_EMAIL,
                         null, CLIENT_BIRTHDATE));
         assertEquals("Pole z hasłem nie może być puste.", runtimeException.getMessage());
@@ -147,7 +153,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , CLIENT_LASTNAME, "abrakadabra",
                         CLIENT_PASSWORD, CLIENT_BIRTHDATE));
         assertEquals("Podany email jest nieprawidłowy.", runtimeException.getMessage());
@@ -159,7 +165,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , CLIENT_LASTNAME, CLIENT_EMAIL,
                         "asdasdasdasdasdasdasdasdasL1@aa", CLIENT_BIRTHDATE));
         assertEquals("Podane hasło jest za długie.", runtimeException.getMessage());
@@ -171,7 +177,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , CLIENT_LASTNAME, CLIENT_EMAIL,
                         "L1@aaaa", CLIENT_BIRTHDATE));
         assertEquals("Podane hasło jest za krótkie.", runtimeException.getMessage());
@@ -183,7 +189,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , CLIENT_LASTNAME, CLIENT_EMAIL,
                         "l1@aaaaa", CLIENT_BIRTHDATE));
         assertEquals("Podane hasło nie zawierda minimum jednej dużej litery.", runtimeException.getMessage());
@@ -195,7 +201,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , CLIENT_LASTNAME, CLIENT_EMAIL,
                         "L1@AAAAAA", CLIENT_BIRTHDATE));
         assertEquals("Podane hasło nie zawierda minimum jednej małej litery.", runtimeException.getMessage());
@@ -207,7 +213,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , CLIENT_LASTNAME, CLIENT_EMAIL,
                         "l@AAAAAA", CLIENT_BIRTHDATE));
         assertEquals("Podane hasło nie zawierda minimum jednej cyfry.", runtimeException.getMessage());
@@ -219,7 +225,7 @@ class ClientServiceTest {
         //then
         RuntimeException runtimeException = assertThrows(
                 RuntimeException.class,
-                () -> clientService.createAccount(CLIENT_FIRSTNAME
+                () -> clientService.createClient(CLIENT_FIRSTNAME
                         , CLIENT_LASTNAME, CLIENT_EMAIL,
                         "l1AAAAAA", CLIENT_BIRTHDATE));
         assertEquals("Podane hasło nie zawierda minimum jednego znaku specjlanego.", runtimeException.getMessage());
@@ -229,11 +235,11 @@ class ClientServiceTest {
     void shouldSetIdWhenCreateAccount() {
         //when
         //then
-        Client createdAccount = clientService.createAccount(CLIENT_FIRSTNAME, CLIENT_LASTNAME,
+        Client createdAccount = clientService.createClient(CLIENT_FIRSTNAME, CLIENT_LASTNAME,
                 CLIENT_EMAIL, CLIENT_PASSWORD, CLIENT_BIRTHDATE);
 
         //then
-        assertTrue(Objects.nonNull(createdAccount.getId()));
-        assertFalse(createdAccount.getId().isBlank());
+        assertTrue(Objects.nonNull(createdAccount.getDomainId()));
+        assertFalse(createdAccount.getDomainId().isBlank());
     }
 }

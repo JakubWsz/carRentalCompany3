@@ -2,7 +2,7 @@ package com.kuba.carrentalcompany3.infrastructure.database.jpa.client;
 
 import com.kuba.carrentalcompany3.domain.client.ClientRepository;
 import com.kuba.carrentalcompany3.domain.client.model.Client;
-import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.entity.ClientDao;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.entity.ClientDAO;
 import org.springframework.core.convert.ConversionService;
 
 
@@ -17,7 +17,7 @@ public class ClientRepositoryAdapterJPA implements ClientRepository {
 
     @Override
     public Client save(Client client) {
-        ClientDao clientDao = clientRepositoryJPA.save(conversionService.convert(client, ClientDao.class));
+        ClientDAO clientDao = clientRepositoryJPA.save(conversionService.convert(client, ClientDAO.class));
         return conversionService.convert(clientDao, Client.class);
     }
 

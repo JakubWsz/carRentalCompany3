@@ -3,15 +3,15 @@ package com.kuba.carrentalcompany3.domain.client.model;
 import java.time.LocalDate;
 
 public class Client {
-    private final String id;
+    private final String domainId;
     private final String firstname;
     private final String lastname;
     private final String email;
     private final String password;
     private final LocalDate birthdate;
 
-    public Client(String id, String firstname, String lastname, String email, String password, LocalDate birthdate) {
-        this.id = id;
+    private Client(String id, String firstname, String lastname, String email, String password, LocalDate birthdate) {
+        this.domainId = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -19,9 +19,51 @@ public class Client {
         this.birthdate = birthdate;
     }
 
+    public static class ClientBuilder {
+        private String id;
+        private String firstname;
+        private String lastname;
+        private String email;
+        private String password;
+        private LocalDate birthdate;
 
-    public String getId() {
-        return id;
+        public ClientBuilder setId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public ClientBuilder setFirstname(String firstname) {
+            this.firstname = firstname;
+            return this;
+        }
+
+        public ClientBuilder setLastname(String lastname) {
+            this.lastname = lastname;
+            return this;
+        }
+
+        public ClientBuilder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public ClientBuilder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public ClientBuilder setBirthdate(LocalDate birthdate) {
+            this.birthdate = birthdate;
+            return this;
+        }
+
+        public Client build() {
+            return new Client(id, firstname, lastname, email, password, birthdate);
+        }
+    }
+
+    public String getDomainId() {
+        return domainId;
     }
 
     public String getFirstname() {
@@ -47,7 +89,7 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "id='" + id + '\'' +
+                "id='" + domainId + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
