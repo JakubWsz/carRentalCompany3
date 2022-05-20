@@ -2,12 +2,9 @@ package com.kuba.carrentalcompany3.domain.client;
 
 import com.kuba.carrentalcompany3.domain.client.model.Client;
 import com.kuba.carrentalcompany3.domain.client.model.ClientFieldType;
-import com.kuba.carrentalcompany3.domain.employee.EmployeeFieldsUpdater;
-import com.kuba.carrentalcompany3.domain.employee.model.Employee;
+import com.kuba.carrentalcompany3.domain.client.validator.ClientValidator;
 import com.kuba.carrentalcompany3.domain.exception.ClientExceptionCode;
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
-import com.kuba.carrentalcompany3.domain.client.validator.ClientValidator;
-import com.kuba.carrentalcompany3.domain.exception.EmployeeExceptionCode;
 
 import java.time.LocalDate;
 import java.util.Map;

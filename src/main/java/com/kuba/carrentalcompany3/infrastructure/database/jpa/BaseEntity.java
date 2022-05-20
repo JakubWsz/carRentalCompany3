@@ -11,22 +11,18 @@ import java.util.Objects;
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private LocalDateTime modificationDate;
 
     private boolean deleted;
 
-    public long getId() {
+    private long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    private void setId(long id) {
         this.id = id;
-    }
-
-    public LocalDateTime getModificationDate() {
-        return modificationDate;
     }
 
     public void setModificationDate(LocalDateTime modificationDate) {
@@ -39,6 +35,12 @@ public class BaseEntity {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public void assignIdForUpdatingObject(BaseEntity baseEntity){
+        if (this.id == null && baseEntity.id != null){
+            this.setId(baseEntity.getId());
+        }
     }
 
     @Override

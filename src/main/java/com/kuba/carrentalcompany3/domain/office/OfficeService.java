@@ -1,9 +1,6 @@
 package com.kuba.carrentalcompany3.domain.office;
 
 import com.kuba.carrentalcompany3.domain.Address;
-import com.kuba.carrentalcompany3.domain.employee.EmployeeFieldsUpdater;
-import com.kuba.carrentalcompany3.domain.employee.model.Employee;
-import com.kuba.carrentalcompany3.domain.employee.model.EmployeeFieldType;
 import com.kuba.carrentalcompany3.domain.exception.ClientExceptionCode;
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
