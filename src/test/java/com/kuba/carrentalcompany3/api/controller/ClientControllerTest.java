@@ -1,20 +1,34 @@
 package com.kuba.carrentalcompany3.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kuba.carrentalcompany3.api.dto.client.CreateClientRequest;
+import com.kuba.carrentalcompany3.api.dto.AddressDTO;
+import com.kuba.carrentalcompany3.api.dto.FieldUpdateDTO;
+import com.kuba.carrentalcompany3.api.dto.client.request.CreateClientRequest;
 import com.kuba.carrentalcompany3.api.dto.client.ClientView;
+import com.kuba.carrentalcompany3.api.dto.client.request.UpdateClientRequest;
+import com.kuba.carrentalcompany3.api.dto.office.OfficeView;
+import com.kuba.carrentalcompany3.api.dto.office.request.CreateOfficeRequest;
+import com.kuba.carrentalcompany3.api.dto.office.request.UpdateOfficeRequest;
+import com.kuba.carrentalcompany3.domain.client.model.Client;
+import com.kuba.carrentalcompany3.domain.client.model.ClientFieldType;
+import com.kuba.carrentalcompany3.domain.office.model.Office;
+import com.kuba.carrentalcompany3.domain.office.model.OfficeFieldType;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.ClientRepositoryJPA;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,12 +44,15 @@ class ClientControllerTest {
     private static final String CLIENT_PASSWORD = "Password6^";
     private static final LocalDate CLIENT_BIRTHDATE = LocalDate.ofYearDay(1992, 246);
     private static final String CREATE_ACCOUNT_ENDPOINT = "/client/create-account";
+    private static final String UPDATE_DATA_ENDPOINT = "/client/%s/update-data";
     @Autowired
     private MockMvc mvc;
     @Autowired
     private ObjectMapper mapper;
     @Autowired
     private ClientRepositoryJPA clientRepository;
+    @Autowired
+    private ConversionService conversionService;
 
     @BeforeEach
     void setUp() { clientRepository.deleteAll(); }
@@ -141,6 +158,27 @@ class ClientControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
+    @Test
+    public void updateClient_ShouldUpdatePassword() throws Exception {
+        //given
+        ClientView client = createExpectedClientViewResponse(status().isCreated());
+        String newPassword = "Nowe!6haslo";
+        UpdateClientRequest updateClientRequest = new UpdateClientRequest(List.of(
+                new FieldUpdateDTO<>(ClientFieldType.PASSWORD, newPassword)
+        ));
+        //when
+        HttpStatus updateStatusResponse = updateClientRequest(updateClientRequest, client.getId());
+        //then
+        Client clientFromDB = conversionService.convert(clientRepository.findByDomainId(client.getId()).get(), Client.class);
+        assertEquals(HttpStatus.OK, updateStatusResponse);
+        assertNotNull(clientFromDB);
+        assertEquals(clientFromDB.getPassword(), newPassword);
+        assertEquals(clientFromDB.getBirthdate(), client.getBirthdate());
+        assertEquals(clientFromDB.getEmail(), client.getEmail());
+        assertEquals(clientFromDB.getFirstname(), client.getFirstname());
+        assertEquals(clientFromDB.getLastname(), client.getLastname());
+    }
+
     private ResultActions createDefaultAccountRequest() throws Exception {
         CreateClientRequest request = new CreateClientRequest(CLIENT_FIRSTNAME, CLIENT_LASTNAME, CLIENT_EMAIL,
                 CLIENT_PASSWORD, CLIENT_BIRTHDATE);
@@ -152,5 +190,24 @@ class ClientControllerTest {
         return mvc.perform(MockMvcRequestBuilders.post(CREATE_ACCOUNT_ENDPOINT)
                 .content(mapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
+    }
+
+    private HttpStatus updateClientRequest(UpdateClientRequest clientRequest, String id) throws Exception {
+        return HttpStatus.resolve(mvc.perform(MockMvcRequestBuilders.patch(String.format(UPDATE_DATA_ENDPOINT, id))
+                        .content(mapper.writeValueAsString(clientRequest))
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse().getStatus());
+    }
+
+    private ClientView createExpectedClientViewResponse(ResultMatcher... matchers) throws Exception {
+        CreateClientRequest request = new CreateClientRequest(CLIENT_FIRSTNAME,CLIENT_LASTNAME,CLIENT_EMAIL,
+                CLIENT_PASSWORD,CLIENT_BIRTHDATE);
+
+        ResultActions createClientRequest = createAccountRequest(request)
+                .andExpectAll(matchers)
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+
+        return mapper.readValue(
+                createClientRequest.andReturn().getResponse().getContentAsString(), ClientView.class);
     }
 }

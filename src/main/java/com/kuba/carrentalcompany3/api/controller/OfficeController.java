@@ -1,7 +1,7 @@
 package com.kuba.carrentalcompany3.api.controller;
 
 import com.kuba.carrentalcompany3.api.dto.FieldUpdateDTO;
-import com.kuba.carrentalcompany3.api.dto.office.CreateOfficeRequest;
+import com.kuba.carrentalcompany3.api.dto.office.request.CreateOfficeRequest;
 import com.kuba.carrentalcompany3.api.dto.office.OfficeView;
 import com.kuba.carrentalcompany3.api.dto.office.request.UpdateOfficeRequest;
 import com.kuba.carrentalcompany3.domain.Address;
@@ -42,7 +42,7 @@ public class OfficeController {
     }
 
     @PatchMapping("/{id}/update-data")
-    public void updateEmployee(@RequestBody UpdateOfficeRequest updateOfficeRequest, @PathVariable String id) {
+    public void updateOffice(@RequestBody UpdateOfficeRequest updateOfficeRequest, @PathVariable String id) {
         Map<OfficeFieldType, String> fieldUpdates = updateOfficeRequest.getUpdateOffice().stream()
                 .collect(Collectors.toMap(FieldUpdateDTO::getFieldType, FieldUpdateDTO::getNewValue));
         officeService.updateOffice(fieldUpdates, id);
