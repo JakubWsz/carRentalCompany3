@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OfficeViewToOffice implements Converter<OfficeView, Office> {
-
     @Override
     public Office convert(OfficeView officeView) {
         AddressDTO addressDTO = officeView.getAddressDTO();

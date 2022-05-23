@@ -1,6 +1,5 @@
 package com.kuba.config.junit.repository;
 
-import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import com.kuba.carrentalcompany3.domain.office.OfficeRepository;
 import com.kuba.carrentalcompany3.domain.office.model.Office;
 
@@ -20,7 +19,7 @@ public class OfficeRepositoryMock implements OfficeRepository {
     @Override
     public Optional<Office> getOffice(String id) {
         return offices.stream()
-                .filter(office -> office.getDomainId().equals(id))
+                .filter(office -> office.getId().equals(id))
                 .findAny();
     }
 

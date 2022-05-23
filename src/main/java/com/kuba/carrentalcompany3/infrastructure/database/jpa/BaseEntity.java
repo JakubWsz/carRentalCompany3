@@ -1,5 +1,8 @@
 package com.kuba.carrentalcompany3.infrastructure.database.jpa;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,25 +12,15 @@ import java.util.Objects;
 
 @MappedSuperclass
 public class BaseEntity {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseEntity.class);
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private LocalDateTime modificationDate;
 
     private boolean deleted;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getModificationDate() {
-        return modificationDate;
-    }
 
     public void setModificationDate(LocalDateTime modificationDate) {
         this.modificationDate = modificationDate;
@@ -39,6 +32,12 @@ public class BaseEntity {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public void assignIdForUpdatingObject(BaseEntity baseEntity) {
+        if (this.id == null && baseEntity.id != null) {
+            this.id = baseEntity.id;
+        }
     }
 
     @Override

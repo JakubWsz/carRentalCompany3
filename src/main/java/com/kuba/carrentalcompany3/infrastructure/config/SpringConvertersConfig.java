@@ -1,5 +1,7 @@
 package com.kuba.carrentalcompany3.infrastructure.config;
 
+import com.kuba.carrentalcompany3.infrastructure.converter.AddressDAOToAddress;
+import com.kuba.carrentalcompany3.infrastructure.converter.AddressToAddressDAO;
 import com.kuba.carrentalcompany3.infrastructure.converter.AddressToAddressDTO;
 import com.kuba.carrentalcompany3.infrastructure.converter.car.api.CarToCarView;
 import com.kuba.carrentalcompany3.infrastructure.converter.car.jpa.CarDAOToCar;

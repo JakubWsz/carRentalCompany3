@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class EmployeeRepositoryAdapterJPA implements EmployeeRepository {
@@ -44,7 +45,8 @@ public class EmployeeRepositoryAdapterJPA implements EmployeeRepository {
 
        if (employeeDaoOptional.isPresent() ){
             EmployeeDAO employeeDao = conversionService.convert(employee, EmployeeDAO.class);
-            employeeDao.setId(employeeDaoOptional.get().getId());
+            employeeDao.assignIdForUpdatingObject(employeeDaoOptional.get());
+            employeeDao.setModificationDate(LocalDateTime.now());
             employeeRepositoryJPA.save(employeeDao);
         }
     }

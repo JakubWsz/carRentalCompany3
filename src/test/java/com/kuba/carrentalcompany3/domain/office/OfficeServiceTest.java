@@ -32,8 +32,8 @@ public class OfficeServiceTest {
         Office createdOffice = officeService.createOffice(OFFICE_ADDRESS, OFFICE_WEBSITE_URL, OFFICE_CEO);
 
         //then
-        assertTrue(Objects.nonNull(createdOffice.getDomainId()));
-        assertFalse(createdOffice.getDomainId().isBlank());
+        assertTrue(Objects.nonNull(createdOffice.getId()));
+        assertFalse(createdOffice.getId().isBlank());
         assertEquals(createdOffice.getAddress().getStreetAddress(), OFFICE_STREET_ADDRESS);
         assertEquals(createdOffice.getAddress().getPostalCode(), OFFICE_POSTAL_CODE);
         assertEquals(createdOffice.getAddress().getCityName(), OFFICE_CITY_NAME);

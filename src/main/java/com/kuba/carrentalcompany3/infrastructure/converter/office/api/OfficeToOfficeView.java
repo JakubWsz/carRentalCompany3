@@ -16,7 +16,7 @@ public class OfficeToOfficeView implements Converter<Office, OfficeView> {
     @Override
     public OfficeView convert(Office office) {
         return new OfficeView(
-                office.getDomainId(),
+                office.getId(),
                 conversionService.convert(office.getAddress(), AddressDTO.class),
                 office.getWebsiteURL(),
                 office.getOfficeCEO()

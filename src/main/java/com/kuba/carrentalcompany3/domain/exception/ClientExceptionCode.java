@@ -25,7 +25,6 @@ public enum ClientExceptionCode implements ExceptionCode {
     NAME_OR_SURNAME_IS_INVALID("C_19", "Imię lub nazwisko jest niepoprawne", 409),
     CLIENT_DOESNT_EXISTS("C_0020", "Klient nie istnieje.", 404);
 
-
     private final String code;
     private final String message;
     private final int status;

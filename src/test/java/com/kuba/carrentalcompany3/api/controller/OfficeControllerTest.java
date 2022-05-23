@@ -110,8 +110,8 @@ public class OfficeControllerTest {
 
     private void validateOffice(Office office) {
         assertTrue(Objects.nonNull(office));
-        assertTrue(Objects.nonNull(office.getDomainId()));
-        assertFalse(office.getDomainId().isBlank());
+        assertTrue(Objects.nonNull(office.getId()));
+        assertFalse(office.getId().isBlank());
         assertEquals(OFFICE_STREET_ADDRESS, office.getAddress().getStreetAddress());
         assertEquals(OFFICE_CITY_NAME, office.getAddress().getCityName());
         assertEquals(OFFICE_CITY_CODE, office.getAddress().getPostalCode());

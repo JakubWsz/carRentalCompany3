@@ -1,6 +1,5 @@
 package com.kuba.carrentalcompany3.infrastructure.converter.employee.api;
 
-import com.kuba.carrentalcompany3.api.dto.AddressDTO;
 import com.kuba.carrentalcompany3.api.dto.employee.EmployeeView;
 import com.kuba.carrentalcompany3.domain.Address;
 import com.kuba.carrentalcompany3.domain.employee.model.Employee;

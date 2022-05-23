@@ -2,13 +2,12 @@ package com.kuba.carrentalcompany3.infrastructure.database.jpa.client;
 
 import com.kuba.carrentalcompany3.domain.client.ClientRepository;
 import com.kuba.carrentalcompany3.domain.client.model.Client;
-import com.kuba.carrentalcompany3.domain.employee.model.Employee;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.client.entity.ClientDAO;
-import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.EmployeeDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class ClientRepositoryAdapterJPA implements ClientRepository {
@@ -49,7 +48,8 @@ public class ClientRepositoryAdapterJPA implements ClientRepository {
 
         if (clientDaoOptional.isPresent() ){
             ClientDAO clientDAO = conversionService.convert(client, ClientDAO.class);
-            clientDAO.setId(clientDaoOptional.get().getId());
+            clientDAO.assignIdForUpdatingObject(clientDaoOptional.get());
+            clientDAO.setModificationDate(LocalDateTime.now());
             clientRepositoryJPA.save(clientDAO);
         }
     }

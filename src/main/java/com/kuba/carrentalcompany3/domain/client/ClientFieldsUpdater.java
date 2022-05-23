@@ -3,9 +3,6 @@ package com.kuba.carrentalcompany3.domain.client;
 import com.kuba.carrentalcompany3.domain.UpdateFieldProcess;
 import com.kuba.carrentalcompany3.domain.client.model.Client;
 import com.kuba.carrentalcompany3.domain.client.model.ClientFieldType;
-import com.kuba.carrentalcompany3.domain.employee.EmployeeFieldsUpdater;
-import com.kuba.carrentalcompany3.domain.employee.model.Employee;
-import com.kuba.carrentalcompany3.domain.employee.model.EmployeeFieldType;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -18,7 +15,6 @@ public enum ClientFieldsUpdater {
 
     private final ClientFieldType clientFieldType;
     private final UpdateFieldProcess<Client> updateFieldProcess;
-
 
     ClientFieldsUpdater(ClientFieldType clientFieldType, UpdateFieldProcess<Client> updateFieldProcess) {
         this.clientFieldType = clientFieldType;

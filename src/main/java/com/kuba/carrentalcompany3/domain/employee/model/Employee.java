@@ -159,10 +159,6 @@ public class Employee {
         deleted = true;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
@@ -218,7 +214,6 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id='" + id + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", address='" + address + '\'' +

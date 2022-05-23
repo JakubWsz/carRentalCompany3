@@ -5,6 +5,7 @@ import com.kuba.carrentalcompany3.domain.office.model.Office;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.office.entity.OfficeDAO;
 import org.springframework.core.convert.ConversionService;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class OfficeRepositoryAdapterJPA implements OfficeRepository {
@@ -35,7 +36,8 @@ public class OfficeRepositoryAdapterJPA implements OfficeRepository {
     @Override
     public void update(Office office) {
         OfficeDAO officeDao = conversionService.convert(office, OfficeDAO.class);
-        officeDao.setId(getByDomainId(office.getDomainId()).getId());
+        officeDao.assignIdForUpdatingObject(getByDomainId(office.getId()));
+        officeDao.setModificationDate(LocalDateTime.now());
         officeRepositoryJPA.save(officeDao);
     }
 }

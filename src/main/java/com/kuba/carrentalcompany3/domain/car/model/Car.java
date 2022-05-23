@@ -6,14 +6,14 @@ import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.Gearbox
 
 public class Car {
     private String id;
-    private String brand;
-    private String model;
-    private CarType carType;
-    private FuelType fuelType;
-    private GearboxType gearboxType;
-    private int doorNumber;
-    private int bootCapacity;
-    private String officeId;
+    private final String brand;
+    private final String model;
+    private final CarType carType;
+    private final FuelType fuelType;
+    private final GearboxType gearboxType;
+    private final int doorNumber;
+    private final int bootCapacity;
+    private final String officeId;
     private boolean deleted;
 
     private Car(String id, String brand, String model, CarType carType, FuelType fuelType,
@@ -129,38 +129,6 @@ public class Car {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public void setCarType(CarType carType) {
-        this.carType = carType;
-    }
-
-    public void setFuelType(FuelType fuelType) {
-        this.fuelType = fuelType;
-    }
-
-    public void setGearboxType(GearboxType gearboxType) {
-        this.gearboxType = gearboxType;
-    }
-
-    public void setDoorNumber(int doorNumber) {
-        this.doorNumber = doorNumber;
-    }
-
-    public void setBootCapacity(int bootCapacity) {
-        this.bootCapacity = bootCapacity;
-    }
-
-    public void setOfficeId(String officeId) {
-        this.officeId = officeId;
     }
 
     public boolean isDeleted() {

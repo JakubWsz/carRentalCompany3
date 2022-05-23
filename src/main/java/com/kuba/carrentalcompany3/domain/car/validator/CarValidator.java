@@ -17,7 +17,6 @@ public class CarValidator {
         validateGearboxTypeIsNotNull(car.getGearboxType());
         validateDoorNumberIsNotNull(car.getDoorNumber());
         validateBootCapacityIsNotNull(car.getBootCapacity());
-
     }
 
     private static void validateBootCapacityIsNotNull(int bootCapacity) {

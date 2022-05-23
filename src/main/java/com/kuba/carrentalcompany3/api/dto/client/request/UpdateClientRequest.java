@@ -2,7 +2,6 @@ package com.kuba.carrentalcompany3.api.dto.client.request;
 
 import com.kuba.carrentalcompany3.api.dto.FieldUpdateDTO;
 import com.kuba.carrentalcompany3.domain.client.model.ClientFieldType;
-import com.kuba.carrentalcompany3.domain.employee.model.EmployeeFieldType;
 
 import java.util.List;
 
