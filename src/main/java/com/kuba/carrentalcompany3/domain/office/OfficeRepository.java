@@ -6,8 +6,6 @@ import java.util.Optional;
 
 public interface OfficeRepository {
     Office save(Office office);
-
     Optional<Office> getOffice(String id);
-
     void update(Office office);
 }

@@ -16,7 +16,6 @@ public enum ClientFieldsUpdater {
     private final ClientFieldType clientFieldType;
     private final UpdateFieldProcess<Client> updateFieldProcess;
 
-
     ClientFieldsUpdater(ClientFieldType clientFieldType, UpdateFieldProcess<Client> updateFieldProcess) {
         this.clientFieldType = clientFieldType;
         this.updateFieldProcess = updateFieldProcess;

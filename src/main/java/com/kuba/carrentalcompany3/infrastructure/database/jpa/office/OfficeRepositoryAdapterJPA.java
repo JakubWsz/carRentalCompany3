@@ -36,7 +36,7 @@ public class OfficeRepositoryAdapterJPA implements OfficeRepository {
     @Override
     public void update(Office office) {
         OfficeDAO officeDao = conversionService.convert(office, OfficeDAO.class);
-        officeDao.assignIdForUpdatingObject(getByDomainId(office.getDomainId()));
+        officeDao.assignIdForUpdatingObject(getByDomainId(office.getId()));
         officeDao.setModificationDate(LocalDateTime.now());
         officeRepositoryJPA.save(officeDao);
     }

@@ -20,7 +20,6 @@ public enum EmployeeExceptionCode implements ExceptionCode{
         this.status = status;
     }
 
-
     @Override
     public String getCode() {
         return code;

@@ -35,13 +35,13 @@ public class ApplicationConfig {
 
     @Bean
     public ClientRepository clientRepositoryAdapterJPA(ClientRepositoryJPA clientRepositoryJPA,
-                                                    ConversionService conversionService) {
+                                                       ConversionService conversionService) {
         return new ClientRepositoryAdapterJPA(clientRepositoryJPA, conversionService);
     }
 
     @Bean
     public OfficeRepositoryAdapterJPA officeRepositoryAdapterJPA(OfficeRepositoryJPA officeRepositoryJPA,
-                                                                 ConversionService conversionService){
+                                                                 ConversionService conversionService) {
         return new OfficeRepositoryAdapterJPA(officeRepositoryJPA, conversionService);
     }
 
@@ -58,29 +58,29 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public OfficeService officeService(OfficeRepository officeRepository){
+    public OfficeService officeService(OfficeRepository officeRepository) {
         return new OfficeService(officeRepository);
     }
 
     @Bean
     public EmployeeRepositoryAdapterJPA employeeRepositoryAdapterJPA(EmployeeRepositoryJPA employeeRepositoryJPA,
-                                                                     ConversionService conversionService){
+                                                                     ConversionService conversionService) {
         return new EmployeeRepositoryAdapterJPA(employeeRepositoryJPA, conversionService);
     }
 
     @Bean
-    public EmployeeService employeeService (EmployeeRepository employeeRepository){
+    public EmployeeService employeeService(EmployeeRepository employeeRepository) {
         return new EmployeeService(employeeRepository);
     }
 
     @Bean
     public CarRepositoryAdapterJPA carRepositoryAdapterJPA(CarRepositoryJPA carRepositoryJPA,
-                                                           ConversionService conversionService){
-        return new CarRepositoryAdapterJPA(carRepositoryJPA,conversionService);
+                                                           ConversionService conversionService) {
+        return new CarRepositoryAdapterJPA(carRepositoryJPA, conversionService);
     }
 
     @Bean
-    public CarService carService(CarRepository carRepository){
+    public CarService carService(CarRepository carRepository) {
         return new CarService(carRepository);
     }
 }

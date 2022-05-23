@@ -98,7 +98,8 @@ public class Office {
         address = new Address(address.getStreetAddress(), address.getPostalCode(), cityName);
     }
 
-    public String getDomainId() {return domainId;}
+    public String getId() {return domainId;}
+
     @Override
     public String toString() {
         return "Office{" +

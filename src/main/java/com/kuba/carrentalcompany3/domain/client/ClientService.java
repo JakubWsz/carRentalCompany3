@@ -29,7 +29,6 @@ public class ClientService {
                 .setPassword(password)
                 .setBirthdate(birthdate)
                 .build();
-
         ClientValidator.validateClient(client);
         return clientRepository.save(client);
     }
@@ -38,7 +37,6 @@ public class ClientService {
         if (clientRepository.isEmailExists(email))
             throw new DomainException(EMAIL_ALREADY_EXISTS, email);
     }
-
 
     public void updateClient(Map<ClientFieldType, String> fieldUpdates, String id) {
         Client client = getClient(id);

@@ -1,4 +1,4 @@
-package com.kuba.carrentalcompany3.infrastructure.converter.office.jpa;
+package com.kuba.carrentalcompany3.infrastructure.converter;
 
 import com.kuba.carrentalcompany3.domain.Address;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.AddressDAO;

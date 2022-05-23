@@ -16,7 +16,7 @@ public class OfficeToOfficeDAO implements Converter<Office, OfficeDAO> {
     @Override
     public OfficeDAO convert(Office office) {
         return new OfficeDAO(
-                office.getDomainId(),
+                office.getId(),
                 conversionService.convert(office.getAddress(), AddressDAO.class),
                 office.getWebsiteURL(),
                 office.getOfficeCEO(),

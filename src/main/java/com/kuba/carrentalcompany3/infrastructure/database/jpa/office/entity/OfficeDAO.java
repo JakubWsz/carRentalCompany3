@@ -14,14 +14,6 @@ public class OfficeDAO extends BaseEntity {
     private String websiteURL;
     private String officeCEO;
 
-
-    public OfficeDAO(String domainId, AddressDAO officeAddress, String websiteURL, String officeCEO) {
-        this.domainId = domainId;
-        this.officeAddress = officeAddress;
-        this.websiteURL = websiteURL;
-        this.officeCEO = officeCEO;
-    }
-
     public OfficeDAO(String domainId, AddressDAO officeAddress, String websiteURL, String officeCEO,
                      boolean deleted) {
         this.domainId = domainId;
