@@ -41,13 +41,10 @@ public class EmployeeRepositoryAdapterJPA implements EmployeeRepository {
 
     @Override
     public void update(Employee employee) {
-        Optional<EmployeeDAO> employeeDaoOptional = employeeRepositoryJPA.findByDomainId(employee.getId());
-
-       if (employeeDaoOptional.isPresent() ){
+        employeeRepositoryJPA.findByDomainId(employee.getId()).ifPresent(oldEmployeeDAO -> {
             EmployeeDAO employeeDao = conversionService.convert(employee, EmployeeDAO.class);
-            employeeDao.assignIdForUpdatingObject(employeeDaoOptional.get());
-            employeeDao.setModificationDate(LocalDateTime.now());
+            employeeDao.updateObject(oldEmployeeDAO.getId());
             employeeRepositoryJPA.save(employeeDao);
-        }
+        });
     }
 }

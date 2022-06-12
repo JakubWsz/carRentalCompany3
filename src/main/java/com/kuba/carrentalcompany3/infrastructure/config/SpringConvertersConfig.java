@@ -12,7 +12,7 @@ import com.kuba.carrentalcompany3.infrastructure.converter.client.jpa.ClientToDA
 import com.kuba.carrentalcompany3.infrastructure.converter.AddressDTOToAddress;
 import com.kuba.carrentalcompany3.infrastructure.converter.employee.api.EmployeeToEmployeeView;
 import com.kuba.carrentalcompany3.infrastructure.converter.employee.api.EmployeeViewToEmployee;
-import com.kuba.carrentalcompany3.infrastructure.converter.employee.jpa.EmployeeDAOToEmploy;
+import com.kuba.carrentalcompany3.infrastructure.converter.employee.jpa.EmployeeDAOToEmployee;
 import com.kuba.carrentalcompany3.infrastructure.converter.employee.jpa.EmployeeToEmployeeDAO;
 import com.kuba.carrentalcompany3.infrastructure.converter.office.api.*;
 import com.kuba.carrentalcompany3.infrastructure.converter.office.jpa.*;
@@ -40,7 +40,7 @@ public class SpringConvertersConfig implements WebMvcConfigurer {
         registry.addConverter(new OfficeToOfficeView(conversionService));
         registry.addConverter(new OfficeDAOOptionalToOffice(conversionService));
         registry.addConverter(new OfficeToOfficeDAO(conversionService));
-        registry.addConverter(new EmployeeDAOToEmploy());
+        registry.addConverter(new EmployeeDAOToEmployee());
         registry.addConverter(new EmployeeToEmployeeView(conversionService));
         registry.addConverter(new AddressDTOToAddress());
         registry.addConverter(new EmployeeToEmployeeDAO(conversionService));

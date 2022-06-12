@@ -7,8 +7,8 @@ public enum CarExceptionCode implements ExceptionCode {
     FUEL_TYPE_CANT_BE_NULL("Ca_004", "Pole z paliwem nie może być puste.", 409),
     GEARBOX_TYPE_CANT_BE_NULL("Ca_005", "Pole ze skrzynią biegów nie może być puste.", 409),
     DOOR_NUMBER_TYPE_CANT_BE_NULL("Ca_006", "Pole z liczbą drzwi nie może być puste.", 409),
-    BOOT_CAPACITY_TYPE_CANT_BE_NULL("Ca_007", "Pole z pojemnością bagarznika nie może być puste.",
-            409);
+    BOOT_CAPACITY_CANT_BE_NULL("Ca_007", "Pole z pojemnością bagarznika nie może być puste.", 409),
+    OFFICE_ID_CANT_BE_NULL("Ca_008", "Pole z identyfikatorem biura nie może być puste.", 409);
 
     private final String code;
     private final String message;

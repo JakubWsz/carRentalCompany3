@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class ClientRepositoryAdapterJPA implements ClientRepository {
@@ -44,13 +43,10 @@ public class ClientRepositoryAdapterJPA implements ClientRepository {
 
     @Override
     public void update(Client client) {
-        Optional<ClientDAO> clientDaoOptional = clientRepositoryJPA.findByDomainId(client.getDomainId());
-
-        if (clientDaoOptional.isPresent() ){
+        clientRepositoryJPA.findByDomainId(client.getDomainId()).ifPresent(oldClientDAO -> {
             ClientDAO clientDAO = conversionService.convert(client, ClientDAO.class);
-            clientDAO.assignIdForUpdatingObject(clientDaoOptional.get());
-            clientDAO.setModificationDate(LocalDateTime.now());
+            clientDAO.updateObject(oldClientDAO.getId());
             clientRepositoryJPA.save(clientDAO);
-        }
+        });
     }
 }

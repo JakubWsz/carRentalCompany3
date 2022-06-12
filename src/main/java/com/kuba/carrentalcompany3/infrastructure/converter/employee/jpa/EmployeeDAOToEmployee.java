@@ -6,7 +6,7 @@ import com.kuba.carrentalcompany3.infrastructure.database.jpa.AddressDAO;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.employee.entity.EmployeeDAO;
 import org.springframework.core.convert.converter.Converter;
 
-public class EmployeeDAOToEmploy implements Converter<EmployeeDAO, Employee> {
+public class EmployeeDAOToEmployee implements Converter<EmployeeDAO, Employee> {
     @Override
     public Employee convert(EmployeeDAO employeeDao) {
         AddressDAO addressDAO = employeeDao.getAddress();

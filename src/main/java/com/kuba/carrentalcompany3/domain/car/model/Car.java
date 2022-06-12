@@ -1,24 +1,27 @@
 package com.kuba.carrentalcompany3.domain.car.model;
 
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.CarType;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.DoorNumber;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.FuelType;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.GearboxType;
 
 public class Car {
-    private String id;
+    private final String id;
+    private final String registration;
     private final String brand;
     private final String model;
     private final CarType carType;
     private final FuelType fuelType;
     private final GearboxType gearboxType;
-    private final int doorNumber;
-    private final int bootCapacity;
+    private final DoorNumber doorNumber;
+    private final Double bootCapacity;
     private final String officeId;
     private boolean deleted;
 
-    private Car(String id, String brand, String model, CarType carType, FuelType fuelType,
-                GearboxType gearboxType, int doorNumber, int bootCapacity, String officeId) {
+    private Car(String id, String registration, String brand, String model, CarType carType, FuelType fuelType,
+                GearboxType gearboxType, DoorNumber doorNumber, Double bootCapacity, String officeId, boolean deleted) {
         this.id = id;
+        this.registration = registration;
         this.brand = brand;
         this.model = model;
         this.carType = carType;
@@ -27,22 +30,24 @@ public class Car {
         this.doorNumber = doorNumber;
         this.bootCapacity = bootCapacity;
         this.officeId = officeId;
-        this.deleted = false;
+        this.deleted = deleted;
     }
 
     public static class CarBuilder {
-        private String domainId;
+        private String id;
+        private String registration;
         private String brand;
         private String model;
         private CarType carType;
         private FuelType fuelType;
         private GearboxType gearboxType;
-        private int doorNumber;
-        private int bootCapacity;
+        private DoorNumber doorNumber;
+        private Double bootCapacity;
         private String officeId;
+        private boolean deleted;
 
-        public CarBuilder setDomainId(String domainId) {
-            this.domainId = domainId;
+        public CarBuilder setRegistration(String registration) {
+            this.registration = registration;
             return this;
         }
 
@@ -71,12 +76,12 @@ public class Car {
             return this;
         }
 
-        public CarBuilder setDoorNumber(int doorNumber) {
+        public CarBuilder setDoorNumber(DoorNumber doorNumber) {
             this.doorNumber = doorNumber;
             return this;
         }
 
-        public CarBuilder setBootCapacity(int bootCapacity) {
+        public CarBuilder setBootCapacity(Double bootCapacity) {
             this.bootCapacity = bootCapacity;
             return this;
         }
@@ -86,13 +91,24 @@ public class Car {
             return this;
         }
 
+        public CarBuilder setDeleted(boolean deleted) {
+            this.deleted = deleted;
+            return this;
+        }
+
+        public CarBuilder setId(String id) {
+            this.id = id;
+            return this;
+        }
+
         public Car build() {
-            return new Car(domainId, brand, model, carType, fuelType, gearboxType, doorNumber, bootCapacity, officeId);
+            return new Car(id, registration, brand, model, carType, fuelType, gearboxType, doorNumber, bootCapacity,
+                    officeId, deleted);
         }
     }
 
-    public String getId() {
-        return id;
+    public String getRegistration() {
+        return registration;
     }
 
     public String getBrand() {
@@ -115,11 +131,11 @@ public class Car {
         return gearboxType;
     }
 
-    public int getDoorNumber() {
+    public DoorNumber getDoorNumber() {
         return doorNumber;
     }
 
-    public int getBootCapacity() {
+    public Double getBootCapacity() {
         return bootCapacity;
     }
 
@@ -127,8 +143,8 @@ public class Car {
         return officeId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getId() {
+        return id;
     }
 
     public boolean isDeleted() {

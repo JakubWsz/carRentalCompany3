@@ -8,13 +8,15 @@ public class CarToCarView implements Converter<Car, CarView> {
     @Override
     public CarView convert(Car car) {
         return new CarView(
+                car.getId(),
+                car.getRegistration(),
                 car.getBrand(),
                 car.getModel(),
                 car.getCarType(),
                 car.getFuelType(),
                 car.getGearboxType(),
                 car.getDoorNumber(),
-                car.getBootCapacity()
-        );
+                car.getBootCapacity(),
+                car.getOfficeId());
     }
 }

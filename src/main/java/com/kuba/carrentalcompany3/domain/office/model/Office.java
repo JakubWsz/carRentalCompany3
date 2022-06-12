@@ -9,7 +9,7 @@ public class Office {
     private String officeCEO;
     private boolean deleted;
 
-   private Office(String id, Address address, String websiteURL, String officeCEO, boolean deleted) {
+    private Office(String id, Address address, String websiteURL, String officeCEO, boolean deleted) {
         this.domainId = id;
         this.address = address;
         this.websiteURL = websiteURL;
@@ -98,7 +98,9 @@ public class Office {
         address = new Address(address.getStreetAddress(), address.getPostalCode(), cityName);
     }
 
-    public String getId() {return domainId;}
+    public String getId() {
+        return domainId;
+    }
 
     @Override
     public String toString() {

@@ -2,9 +2,11 @@ package com.kuba.carrentalcompany3.domain.car;
 
 import com.kuba.carrentalcompany3.domain.car.model.Car;
 import com.kuba.carrentalcompany3.domain.car.validator.CarValidator;
+import com.kuba.carrentalcompany3.domain.exception.CarExceptionCode;
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.domain.exception.EmployeeExceptionCode;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.CarType;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.DoorNumber;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.FuelType;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.GearboxType;
 
@@ -18,9 +20,10 @@ public class CarService {
     }
 
     public Car createCar(String brand, String model, CarType carType, FuelType fuelType,
-                         GearboxType gearboxType, int doorNumber, int bootCapacity) {
+                         GearboxType gearboxType, DoorNumber doorNumber, Double bootCapacity, String officeId) {
         Car car = new Car.CarBuilder()
-                .setDomainId(UUID.randomUUID().toString())
+                .setId(UUID.randomUUID().toString())
+                .setRegistration(null)
                 .setBrand(brand)
                 .setModel(model)
                 .setCarType(carType)
@@ -28,15 +31,16 @@ public class CarService {
                 .setGearboxType(gearboxType)
                 .setDoorNumber(doorNumber)
                 .setBootCapacity(bootCapacity)
+                .setOfficeId(officeId)
                 .build();
         CarValidator.validateCar(car);
         return carRepository.save(car);
     }
 
-    public void removeCar(String domainId){
+    public void removeCar(String domainId) {
         Car car = getCar(domainId);
         car.markAsDeleted();
-        carRepository.save(car);
+        carRepository.update(car);
     }
 
     private Car getCar(String domainId) {

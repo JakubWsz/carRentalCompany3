@@ -21,7 +21,7 @@ public class CarController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CarView> createAccount(@RequestBody CreateCarRequest createCarRequest) {
+    public ResponseEntity<CarView> createCar(@RequestBody CreateCarRequest createCarRequest) {
         Car car = carService.createCar(
                 createCarRequest.getBrand(),
                 createCarRequest.getModel(),
@@ -29,7 +29,8 @@ public class CarController {
                 createCarRequest.getFuelType(),
                 createCarRequest.getGearboxType(),
                 createCarRequest.getDoorNumber(),
-                createCarRequest.getBootCapacity());
+                createCarRequest.getBootCapacity(),
+                createCarRequest.getOfficeId());
         return new ResponseEntity<>(conversionService.convert(car, CarView.class), HttpStatus.CREATED);
     }
 

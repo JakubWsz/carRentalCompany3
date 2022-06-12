@@ -26,8 +26,8 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @PostMapping("/create-account")
-    public ResponseEntity<ClientView> createAccount(@RequestBody CreateClientRequest createClientRequest) {
+    @PostMapping("/create")
+    public ResponseEntity<ClientView> createClient(@RequestBody CreateClientRequest createClientRequest) {
         Client client = clientService.createClient(
                 createClientRequest.getFirstname(),
                 createClientRequest.getLastname(),

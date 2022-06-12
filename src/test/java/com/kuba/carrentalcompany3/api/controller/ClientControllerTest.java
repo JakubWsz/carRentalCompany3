@@ -43,7 +43,7 @@ class ClientControllerTest {
     private static final String CLIENT_EMAIL = "asd@gmail.com";
     private static final String CLIENT_PASSWORD = "Password6^";
     private static final LocalDate CLIENT_BIRTHDATE = LocalDate.ofYearDay(1992, 246);
-    private static final String CREATE_ACCOUNT_ENDPOINT = "/client/create-account";
+    private static final String CREATE_ACCOUNT_ENDPOINT = "/client/create";
     private static final String UPDATE_DATA_ENDPOINT = "/client/%s/update-data";
     @Autowired
     private MockMvc mvc;

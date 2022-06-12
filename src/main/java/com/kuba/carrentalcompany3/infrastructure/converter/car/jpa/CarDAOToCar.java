@@ -8,7 +8,8 @@ public class CarDAOToCar implements Converter<CarDAO, Car>{
     @Override
     public Car convert(CarDAO carDAO) {
         return new Car.CarBuilder()
-                .setDomainId(carDAO.getDomainId())
+                .setId(carDAO.getDomainId())
+                .setRegistration(carDAO.getRegistration())
                 .setBrand(carDAO.getBrand())
                 .setModel(carDAO.getModel())
                 .setCarType(carDAO.getCarType())
@@ -17,6 +18,7 @@ public class CarDAOToCar implements Converter<CarDAO, Car>{
                 .setDoorNumber(carDAO.getDoorNumber())
                 .setBootCapacity(carDAO.getBootCapacity())
                 .setOfficeId(carDAO.getOfficeId())
+                .setDeleted(carDAO.isDeleted())
                 .build();
     }
 }

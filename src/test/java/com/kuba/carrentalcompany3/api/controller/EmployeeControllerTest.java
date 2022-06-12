@@ -39,8 +39,6 @@ class EmployeeControllerTest {
     private static final String CREATE_EMPLOYEE_ENDPOINT = "/employee/create";
     private static final String DELETE_EMPLOYEE_ENDPOINT = "/employee/%s/remove";
     private static final String UPDATE_EMPLOYEE_ENDPOINT = "/employee/%s/update-data";
-    private static final String RELOCATE_EMPLOYEE_ENDPOINT = "/office/%s/relocate";
-    private static final String CHANGE_EMPLOYEE_ENDPOINT = "/office/%s/changeCEO";
     private static final String FIRSTNAME = "Jan";
     private static final String LASTNAME = "Kowalski";
     private static final String STREET_ADDRESS = "Malinowa 19";

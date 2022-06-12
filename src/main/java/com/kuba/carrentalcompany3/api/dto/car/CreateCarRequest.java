@@ -1,6 +1,7 @@
 package com.kuba.carrentalcompany3.api.dto.car;
 
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.CarType;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.DoorNumber;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.FuelType;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.GearboxType;
 
@@ -10,12 +11,12 @@ public class CreateCarRequest {
     private final CarType carType;
     private final FuelType fuelType;
     private final GearboxType gearboxType;
-    private final int doorNumber;
-    private final int bootCapacity;
+    private final DoorNumber doorNumber;
+    private final Double bootCapacity;
     private final String officeId;
 
     public CreateCarRequest(String brand, String model, CarType carType, FuelType fuelType,
-                            GearboxType gearboxType, int doorNumber, int bootCapacity, String officeId) {
+                            GearboxType gearboxType, DoorNumber doorNumber, Double bootCapacity, String officeId) {
         this.brand = brand;
         this.model = model;
         this.carType = carType;
@@ -46,11 +47,11 @@ public class CreateCarRequest {
         return gearboxType;
     }
 
-    public int getDoorNumber() {
+    public DoorNumber getDoorNumber() {
         return doorNumber;
     }
 
-    public int getBootCapacity() {
+    public Double getBootCapacity() {
         return bootCapacity;
     }
 

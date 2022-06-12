@@ -2,6 +2,7 @@ package com.kuba.carrentalcompany3.domain.car.validator;
 import com.kuba.carrentalcompany3.domain.exception.CarExceptionCode;
 import com.kuba.carrentalcompany3.domain.exception.DomainException;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.CarType;
+import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.DoorNumber;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.FuelType;
 import com.kuba.carrentalcompany3.infrastructure.database.jpa.car.entity.GearboxType;
 import com.kuba.carrentalcompany3.lib.Assertion;
@@ -17,14 +18,15 @@ public class CarValidator {
         validateGearboxTypeIsNotNull(car.getGearboxType());
         validateDoorNumberIsNotNull(car.getDoorNumber());
         validateBootCapacityIsNotNull(car.getBootCapacity());
+        validateOfficeIdIsNotNull(car.getOfficeId());
     }
 
-    private static void validateBootCapacityIsNotNull(int bootCapacity) {
+    private static void validateBootCapacityIsNotNull(Double bootCapacity) {
         Assertion.notNull(bootCapacity, () -> new DomainException(
-                CarExceptionCode.BOOT_CAPACITY_TYPE_CANT_BE_NULL));
+                CarExceptionCode.BOOT_CAPACITY_CANT_BE_NULL));
     }
 
-    private static void validateDoorNumberIsNotNull(int doorNumber) {
+    private static void validateDoorNumberIsNotNull(DoorNumber doorNumber) {
         Assertion.notNull(doorNumber, () -> new DomainException(
                 CarExceptionCode.DOOR_NUMBER_TYPE_CANT_BE_NULL));
     }
@@ -56,5 +58,12 @@ public class CarValidator {
                 CarExceptionCode.BRAND_CANT_BE_NULL));
         Assertion.notEmpty(brand, () -> new DomainException(
                 CarExceptionCode.BRAND_CANT_BE_NULL));
+    }
+
+    private static void validateOfficeIdIsNotNull(String officeId) {
+        Assertion.notNull(officeId, () -> new DomainException(
+                CarExceptionCode.OFFICE_ID_CANT_BE_NULL));
+        Assertion.notEmpty(officeId, () -> new DomainException(
+                CarExceptionCode.OFFICE_ID_CANT_BE_NULL));
     }
 }
